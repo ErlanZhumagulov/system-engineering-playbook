@@ -9,8 +9,8 @@
     </mxCell>
 
     <!-- Lifeline headers -->
-    <mxCell id="h_student" value="&lt;b&gt;Студент&lt;/b&gt;&lt;br&gt;(Браузер)" style="shape=mxgraph.archimate3.actor;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
-      <mxGeometry x="80" y="70" width="100" height="80" as="geometry" />
+    <mxCell id="h_student" value="Студент&#xa;(Браузер)" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="80" width="100" height="60" as="geometry" />
     </mxCell>
     <mxCell id="h_gw" value="&lt;b&gt;API Gateway&lt;/b&gt;" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
       <mxGeometry x="280" y="80" width="130" height="60" as="geometry" />
@@ -24,8 +24,8 @@
     <mxCell id="h_webrtc" value="&lt;b&gt;WebRTC&lt;br&gt;Медиасервер&lt;/b&gt;" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
       <mxGeometry x="910" y="80" width="130" height="60" as="geometry" />
     </mxCell>
-    <mxCell id="h_proctor" value="&lt;b&gt;Проктор&lt;/b&gt;&lt;br&gt;(Браузер)" style="shape=mxgraph.archimate3.actor;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
-      <mxGeometry x="1120" y="70" width="100" height="80" as="geometry" />
+    <mxCell id="h_proctor" value="Проктор&#xa;(Браузер)" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1120" y="80" width="100" height="60" as="geometry" />
     </mxCell>
     <mxCell id="h_s3" value="&lt;b&gt;S3&lt;/b&gt;" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
       <mxGeometry x="1300" y="80" width="100" height="60" as="geometry" />
