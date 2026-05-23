@@ -1,0 +1,446 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Интерфейсы (ICD-lite) - system-engineering-playbook</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/_assets/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">system-engineering-playbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Интерфейсы-icd-lite--lmsp"><a class="header" href="#Интерфейсы-icd-lite--lmsp">Интерфейсы (ICD-lite) — LMS+P</a></h1>
+<hr />
+<p>Документ описывает контракты взаимодействия между компонентами LMS+P и с внешними системами. Для каждого контракта указаны: endpoint / событие, поля, коды ошибок, версионирование, идемпотентность и retry-поведение.</p>
+<hr />
+<h2 id="Контракт-1-Запуск-экзаменационной-сессии"><a class="header" href="#Контракт-1-Запуск-экзаменационной-сессии">Контракт №1: Запуск экзаменационной сессии</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Endpoint</strong></td><td><code>POST /api/v1/exams/{exam_id}/sessions</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Протокол</strong></td><td>HTTPS, синхронный</td></tr>
+<tr><td><strong>Аутентификация</strong></td><td>Bearer JWT (из SSO)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>Не требуется (409 при дублирующем вызове)</td></tr>
+<tr><td><strong>Retry</strong></td><td>Клиент может повторить при 503; 409 означает «уже создано»</td></tr>
+</tbody></table>
+</div>
+<p><strong>Заголовки запроса:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Заголовок</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>Authorization</code></td><td>string</td><td>✅ Да</td><td><code>Bearer &lt;JWT&gt;</code></td></tr>
+<tr><td><code>Content-Type</code></td><td>string</td><td>✅ Да</td><td><code>application/json</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Тело запроса:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>proctoring_mode</code></td><td>enum</td><td>✅ Да</td><td><code>none</code> / <code>async</code> / <code>realtime</code></td></tr>
+<tr><td><code>device_info</code></td><td>object</td><td>❌ Нет</td><td><code>{"browser": "Chrome/120", "os": "Windows 11"}</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Пример запроса:</strong></p>
+<pre><code class="language-json">{
+  "proctoring_mode": "realtime",
+  "device_info": {"browser": "Chrome/120", "os": "macOS 14"}
+}
+</code></pre>
+<p><strong>Ответы:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>HTTP код</th><th>Ситуация</th><th>Тело ответа</th></tr></thead><tbody>
+<tr><td>201 Created</td><td>Сессия создана</td><td><code>{"session_id": "uuid", "webrtc_offer_url": "wss://...", "start_time": "ISO8601", "duration_minutes": 90}</code></td></tr>
+<tr><td>400 Bad Request</td><td>Неверный режим прокторинга</td><td><code>{"error": "invalid_proctoring_mode", "code": 400, "details": "allowed: none, async, realtime"}</code></td></tr>
+<tr><td>401 Unauthorized</td><td>Токен истёк или отсутствует</td><td><code>{"error": "unauthorized", "code": 401}</code></td></tr>
+<tr><td>403 Forbidden</td><td>Студент не зачислен на курс</td><td><code>{"error": "not_enrolled", "code": 403}</code></td></tr>
+<tr><td>409 Conflict</td><td>Активная сессия уже существует</td><td><code>{"error": "session_already_active", "session_id": "uuid", "code": 409}</code></td></tr>
+<tr><td>423 Locked</td><td>Экзамен вне временного окна</td><td><code>{"error": "exam_not_available", "available_from": "ISO8601", "code": 423}</code></td></tr>
+<tr><td>503 Service Unavailable</td><td>Медиасервер недоступен</td><td><code>{"error": "media_server_unavailable", "suggestion": "async_mode", "code": 503}</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Версионирование:</strong> При breaking changes — <code>/api/v2/exams/{exam_id}/sessions</code>. Старая версия поддерживается 6 месяцев с предупреждением в заголовке ответа <code>Deprecation: true</code>.</p>
+<hr />
+<h2 id="Контракт-2-Сохранение-ответа-студента"><a class="header" href="#Контракт-2-Сохранение-ответа-студента">Контракт №2: Сохранение ответа студента</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Endpoint</strong></td><td><code>POST /api/v1/sessions/{session_id}/answers</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Протокол</strong></td><td>HTTPS, синхронный</td></tr>
+<tr><td><strong>Аутентификация</strong></td><td>Bearer JWT</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>✅ Заголовок <code>Idempotency-Key</code> обязателен. Повторный запрос с тем же ключом возвращает 409 с исходным <code>answer_id</code></td></tr>
+<tr><td><strong>Retry</strong></td><td>Клиент повторяет при 5xx или timeout, используя тот же <code>Idempotency-Key</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Заголовки запроса:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Заголовок</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>Authorization</code></td><td>string</td><td>✅ Да</td><td><code>Bearer &lt;JWT&gt;</code></td></tr>
+<tr><td><code>Idempotency-Key</code></td><td>string(36)</td><td>✅ Да</td><td>UUID, генерируется клиентом. Хранится в Redis 24ч</td></tr>
+<tr><td><code>Content-Type</code></td><td>string</td><td>✅ Да</td><td><code>application/json</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Тело запроса:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>question_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID вопроса</td></tr>
+<tr><td><code>answer</code></td><td>object</td><td>✅ Да</td><td>Зависит от типа вопроса</td></tr>
+<tr><td><code>answer.selected_ids</code></td><td>array[string]</td><td>Для выбора</td><td>UUID выбранных вариантов</td></tr>
+<tr><td><code>answer.text</code></td><td>string</td><td>Для текста</td><td>Текстовый ответ (макс. 10 000 символов)</td></tr>
+<tr><td><code>answer.pairs</code></td><td>array[object]</td><td>Для сопоставления</td><td><code>[{"left_id": "uuid", "right_id": "uuid"}]</code></td></tr>
+<tr><td><code>client_timestamp</code></td><td>int64</td><td>✅ Да</td><td>Unix timestamp на устройстве студента (мс)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Пример запроса (одиночный выбор):</strong></p>
+<pre><code class="language-json">{
+  "question_id": "550e8400-e29b-41d4-a716-446655440000",
+  "answer": {"selected_ids": ["b1a2c3d4-..."]},
+  "client_timestamp": 1716451200000
+}
+</code></pre>
+<p><strong>Ответы:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>HTTP код</th><th>Ситуация</th><th>Тело ответа</th></tr></thead><tbody>
+<tr><td>200 OK</td><td>Ответ сохранён</td><td><code>{"answer_id": "uuid", "saved_at": "ISO8601", "question_id": "uuid"}</code></td></tr>
+<tr><td>400 Bad Request</td><td>Неверный формат ответа</td><td><code>{"error": "invalid_answer_format", "code": 400, "details": "text answer exceeds 10000 chars"}</code></td></tr>
+<tr><td>401 Unauthorized</td><td>Токен истёк</td><td><code>{"error": "unauthorized", "code": 401}</code></td></tr>
+<tr><td>403 Forbidden</td><td>Сессия не принадлежит студенту</td><td><code>{"error": "forbidden", "code": 403}</code></td></tr>
+<tr><td>409 Conflict</td><td>Idempotency-Key уже использован</td><td><code>{"answer_id": "uuid", "status": "existing", "code": 409}</code></td></tr>
+<tr><td>410 Gone</td><td>Сессия завершена (время вышло)</td><td><code>{"error": "session_expired", "completed_at": "ISO8601", "code": 410}</code></td></tr>
+<tr><td>422 Unprocessable</td><td>question_id не принадлежит данной сессии</td><td><code>{"error": "question_not_in_session", "code": 422}</code></td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="Контракт-3-Событие-тревоги-от-proctoring-service-асинхронное"><a class="header" href="#Контракт-3-Событие-тревоги-от-proctoring-service-асинхронное">Контракт №3: Событие тревоги от Proctoring Service (асинхронное)</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Event</strong></td><td><code>proctoring.alert.detected</code></td></tr>
+<tr><td><strong>Протокол</strong></td><td>RabbitMQ, fanout exchange <code>proctoring_events</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Потребители</strong></td><td>Notification Service (push проктору), Proctoring DB Writer (сохранение в PostgreSQL)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>Потребители используют <code>event_id</code> для дедупликации</td></tr>
+<tr><td><strong>Retry / DLQ</strong></td><td>При ошибке обработки — до 3 повторных попыток, затем Dead Letter Queue; алерт администратору</td></tr>
+</tbody></table>
+</div>
+<p><strong>Поля события:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>event_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID события (для дедупликации)</td></tr>
+<tr><td><code>event_version</code></td><td>string</td><td>✅ Да</td><td><code>"v1"</code></td></tr>
+<tr><td><code>session_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID экзаменационной сессии</td></tr>
+<tr><td><code>student_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID студента</td></tr>
+<tr><td><code>exam_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID экзамена</td></tr>
+<tr><td><code>event_type</code></td><td>enum</td><td>✅ Да</td><td><code>face_absent</code> / <code>multiple_faces</code> / <code>tab_switch</code> / <code>foreign_audio</code> / <code>screen_change</code></td></tr>
+<tr><td><code>timestamp</code></td><td>int64</td><td>✅ Да</td><td>Unix timestamp события (мс)</td></tr>
+<tr><td><code>confidence_score</code></td><td>float</td><td>✅ Да</td><td>0.0 – 1.0</td></tr>
+<tr><td><code>frame_url</code></td><td>string</td><td>❌ Нет</td><td>Pre-signed URL скриншота (для face-событий), TTL 1 ч</td></tr>
+<tr><td><code>duration_ms</code></td><td>int</td><td>❌ Нет</td><td>Длительность события в мс (<code>tab_switch</code>, <code>face_absent</code>)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Пример события:</strong></p>
+<pre><code class="language-json">{
+  "event_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "event_version": "v1",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "student_id": "3f2504e0-4f89-11d3-9a0c-0305e82c3301",
+  "exam_id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+  "event_type": "tab_switch",
+  "timestamp": 1716451320000,
+  "confidence_score": 0.95,
+  "duration_ms": 4200
+}
+</code></pre>
+<p><strong>Поведение при ошибках:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Ситуация</th><th>Поведение</th></tr></thead><tbody>
+<tr><td>Ошибка сохранения в PostgreSQL</td><td>Сообщение → DLQ, алерт администратору</td></tr>
+<tr><td>Notification Service недоступен</td><td>Логирует ошибку, не повторяет (push некритичен для хода экзамена)</td></tr>
+<tr><td>Неизвестный <code>event_type</code></td><td>Сообщение отклоняется, пишется в error-лог с <code>event_id</code></td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="Контракт-4-Передача-оценок-в-sis"><a class="header" href="#Контракт-4-Передача-оценок-в-sis">Контракт №4: Передача оценок в SIS</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Endpoint</strong></td><td><code>POST /api/v1/grades</code> (SIS API)</td></tr>
+<tr><td><strong>Версия</strong></td><td>v1 (адаптируется к версии API конкретного SIS через адаптер)</td></tr>
+<tr><td><strong>Протокол</strong></td><td>HTTPS, синхронный</td></tr>
+<tr><td><strong>Аутентификация</strong></td><td>API-ключ (заголовок <code>X-LMS-API-Key</code>)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>✅ SIS должен принимать повторный POST с теми же <code>student_id</code>+<code>course_id</code> без создания дубля (409 = уже записано)</td></tr>
+<tr><td><strong>Retry</strong></td><td>SIS Sync Service: 1, 5, 15, 60 мин; после 5 попыток — алерт администратору</td></tr>
+</tbody></table>
+</div>
+<p><strong>Тело запроса (LMS+P → SIS):</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>student_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID студента в SIS</td></tr>
+<tr><td><code>course_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID курса в SIS</td></tr>
+<tr><td><code>grade</code></td><td>decimal(5,2)</td><td>✅ Да</td><td>Итоговая оценка</td></tr>
+<tr><td><code>grade_scale</code></td><td>string</td><td>✅ Да</td><td><code>100</code> / <code>5</code> / <code>pass_fail</code></td></tr>
+<tr><td><code>grade_date</code></td><td>date</td><td>✅ Да</td><td>Дата выставления (YYYY-MM-DD)</td></tr>
+<tr><td><code>status</code></td><td>enum</td><td>✅ Да</td><td><code>passed</code> / <code>failed</code> / <code>absent</code></td></tr>
+<tr><td><code>lms_submission_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID передачи из LMS+P (для идемпотентности)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Ответы SIS:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>HTTP код</th><th>Ситуация</th><th>Поведение LMS+P</th></tr></thead><tbody>
+<tr><td>200 OK</td><td>Оценка принята</td><td>Статус <code>transferred</code>, запись в аудит-лог, уведомление студенту</td></tr>
+<tr><td>404 Not Found</td><td><code>student_id</code> или <code>course_id</code> не найден</td><td>Статус <code>error</code>, уведомление администратору с деталями</td></tr>
+<tr><td>409 Conflict</td><td>Оценка уже существует</td><td>Статус <code>skipped_duplicate</code>, запись в лог</td></tr>
+<tr><td>422 Unprocessable</td><td>Нарушение бизнес-правил SIS</td><td>Статус <code>error</code>, детали ошибки — администратору</td></tr>
+<tr><td>500 / 503</td><td>SIS недоступен</td><td>Retry: 1/5/15/60 мин; после 5 попыток — алерт</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="Контракт-5-Вердикт-проктора-асинхронное-событие"><a class="header" href="#Контракт-5-Вердикт-проктора-асинхронное-событие">Контракт №5: Вердикт проктора (асинхронное событие)</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Event</strong></td><td><code>proctoring.verdict.submitted</code></td></tr>
+<tr><td><strong>Протокол</strong></td><td>RabbitMQ, direct exchange <code>proctoring_verdicts</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Потребители</strong></td><td>Assessment Service (обновление статуса результата), Notification Service (уведомление преподавателю)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>✅ Assessment Service использует <code>session_id</code> для предотвращения двойного применения вердикта</td></tr>
+<tr><td><strong>Retry</strong></td><td>При ошибке Assessment Service — до 3 повторных попыток с задержкой 30 сек, затем DLQ</td></tr>
+</tbody></table>
+</div>
+<p><strong>Поля события:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>event_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID события</td></tr>
+<tr><td><code>event_version</code></td><td>string</td><td>✅ Да</td><td><code>"v1"</code></td></tr>
+<tr><td><code>session_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID экзаменационной сессии</td></tr>
+<tr><td><code>proctor_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID проктора</td></tr>
+<tr><td><code>overall_verdict</code></td><td>enum</td><td>✅ Да</td><td><code>approved</code> / <code>rejected</code> / <code>escalated</code></td></tr>
+<tr><td><code>violation_events</code></td><td>array[object]</td><td>❌ Нет</td><td>Список подтверждённых нарушений: <code>[{"event_id": "uuid", "event_type": "...", "timestamp": int}]</code></td></tr>
+<tr><td><code>comment</code></td><td>string</td><td>❌ Нет</td><td>Комментарий проктора (макс. 2000 символов)</td></tr>
+<tr><td><code>verdict_timestamp</code></td><td>int64</td><td>✅ Да</td><td>Unix timestamp вердикта (мс)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Поведение потребителей:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Потребитель</th><th>Действие при <code>approved</code></th><th>Действие при <code>rejected</code></th><th>Действие при <code>escalated</code></th></tr></thead><tbody>
+<tr><td>Assessment Service</td><td>Итоговый результат доступен студенту</td><td>Результат аннулирован, статус <code>invalidated</code></td><td>Результат заморожен, ждёт решения администратора</td></tr>
+<tr><td>Notification Service</td><td>Email преподавателю: «Вердикт вынесен: допущен»</td><td>Email преподавателю: «Нарушение подтверждено»</td><td>Email администратору: «Требует эскалации»</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="Контракт-6-Получение-pre-signed-url-для-видеозаписи"><a class="header" href="#Контракт-6-Получение-pre-signed-url-для-видеозаписи">Контракт №6: Получение pre-signed URL для видеозаписи</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Endpoint</strong></td><td><code>GET /api/v1/sessions/{session_id}/recording</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Протокол</strong></td><td>HTTPS, синхронный</td></tr>
+<tr><td><strong>Аутентификация</strong></td><td>Bearer JWT (роль: Проктор или Администратор)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>Каждый вызов генерирует новый pre-signed URL с новым TTL</td></tr>
+<tr><td><strong>Retry</strong></td><td>Клиент может повторить при 503</td></tr>
+</tbody></table>
+</div>
+<p><strong>Ответы:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>HTTP код</th><th>Ситуация</th><th>Тело ответа</th></tr></thead><tbody>
+<tr><td>200 OK</td><td>URL сгенерирован</td><td><code>{"url": "https://s3.../...", "expires_at": "ISO8601", "ttl_seconds": 14400}</code></td></tr>
+<tr><td>403 Forbidden</td><td>Недостаточно прав (роль Студент)</td><td><code>{"error": "forbidden", "code": 403}</code></td></tr>
+<tr><td>404 Not Found</td><td>Запись не найдена в S3</td><td><code>{"error": "recording_not_found", "code": 404}</code></td></tr>
+<tr><td>503 Service Unavailable</td><td>S3 недоступен</td><td><code>{"error": "storage_unavailable", "code": 503}</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Аудит:</strong> Каждый вызов фиксируется в <code>access_audit_log</code>: <code>user_id</code>, <code>role</code>, <code>session_id</code>, <code>action=view</code>, <code>access_timestamp</code>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="architecture.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="risks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="architecture.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="risks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

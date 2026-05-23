@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Verification &amp; Validation - system-engineering-playbook</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/_assets/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">system-engineering-playbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="verification--validation-vv--lmsp"><a class="header" href="#verification--validation-vv--lmsp">Verification &amp; Validation (V&amp;V) — LMS+P</a></h1>
+<hr />
+<h2 id="Содержание"><a class="header" href="#Содержание">Содержание</a></h2>
+<ol>
+<li><a href="#1-%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0-%D1%82%D1%80%D0%B0%D1%81%D1%81%D0%B8%D1%80%D1%83%D0%B5%D0%BC%D0%BE%D1%81%D1%82%D0%B8">Матрица трассируемости</a></li>
+<li><a href="#2-%D1%82%D0%B5%D1%81%D1%82-%D0%BA%D0%B5%D0%B9%D1%81%D1%8B">Тест-кейсы</a></li>
+</ol>
+<hr />
+<h2 id="1-Матрица-трассируемости"><a class="header" href="#1-Матрица-трассируемости">1. Матрица трассируемости</a></h2>
+<p>Матрица связывает требования (SR, SYS, NFR) с методом проверки и конкретным артефактом/тест-кейсом.</p>
+<p><strong>Методы проверки:</strong></p>
+<ul>
+<li><strong>Тест</strong> — функциональный или интеграционный тест-кейс</li>
+<li><strong>Нагрузочный тест</strong> — тест производительности (k6 / JMeter)</li>
+<li><strong>Инспекция</strong> — проверка кода, конфигурации или документации</li>
+<li><strong>Анализ</strong> — расчёт или моделирование без запуска системы</li>
+<li><strong>Демо</strong> — демонстрация работающей системы</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>ID требования</th><th>Описание (кратко)</th><th>Метод проверки</th><th>Артефакт / тест-кейс</th></tr></thead><tbody>
+<tr><td><strong>SR-01</strong></td><td>Запуск экзамена без доп. ПО</td><td>Тест + Демо</td><td>ТК-01</td></tr>
+<tr><td><strong>SR-02</strong></td><td>Студент видит политику прокторинга до старта</td><td>Инспекция + Демо</td><td>ТК-01 (шаг согласия)</td></tr>
+<tr><td><strong>SR-03</strong></td><td>Создание курса без IT-специалиста</td><td>Демо</td><td>ТК-13</td></tr>
+<tr><td><strong>SR-04</strong></td><td>Отчётность успеваемости в реальном времени</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SR-05</strong></td><td>Проктор наблюдает ≥20 сессий одновременно</td><td>Нагрузочный тест</td><td>ТК-09</td></tr>
+<tr><td><strong>SR-06</strong></td><td>Просмотр записи перед вердиктом</td><td>Тест</td><td>ТК-05, ТК-12</td></tr>
+<tr><td><strong>SR-07</strong></td><td>Автопередача оценок в SIS с retry</td><td>Тест</td><td>ТК-08</td></tr>
+<tr><td><strong>SR-08</strong></td><td>Управление ролями через UI</td><td>Демо + Инспекция</td><td>Демонстрационный сценарий</td></tr>
+<tr><td><strong>SR-09</strong></td><td>GDPR: удаление данных, аудит-лог</td><td>Тест + Инспекция</td><td>ТК-12</td></tr>
+<tr><td><strong>SR-10</strong></td><td>Доступность ≥99.9% в период сессии</td><td>Анализ + Мониторинг</td><td>Отчёт нагрузочного теста</td></tr>
+<tr><td><strong>SR-11</strong></td><td>Асинхронный прокторинг работает</td><td>Тест</td><td>ТК-06</td></tr>
+<tr><td><strong>SR-12</strong></td><td>Push-уведомление проктору ≤5 сек</td><td>Тест</td><td>ТК-04</td></tr>
+<tr><td><strong>SR-13</strong></td><td>Экспорт CSV/PDF</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-01</strong></td><td>Аутентификация через OIDC/SAML</td><td>Тест + Инспекция</td><td>ТК-01 (шаг SSO)</td></tr>
+<tr><td><strong>SYS-02</strong></td><td>RBAC: 4 роли, явные разрешения</td><td>Инспекция кода</td><td>Обзор кода IAM-модуля</td></tr>
+<tr><td><strong>SYS-03</strong></td><td>JWT TTL = 8 ч, редирект на IdP</td><td>Тест</td><td>Функциональный тест сессий</td></tr>
+<tr><td><strong>SYS-04</strong></td><td>При недоступном IdP: страница ошибки, активные сессии не прерываются</td><td>Тест</td><td>ТК-01 (failure path)</td></tr>
+<tr><td><strong>SYS-05</strong></td><td>Иерархия курсов (≥3 уровня)</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-06</strong></td><td>Форматы файлов, лимит 2 ГБ</td><td>Тест</td><td>ТК-13 (boundary test)</td></tr>
+<tr><td><strong>SYS-07</strong></td><td>Конструктор тестов: 4 типа вопросов</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-08</strong></td><td>Автозачисление из SIS при публикации</td><td>Тест + Интеграционный</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-09</strong></td><td>Автосохранение ответов при разрыве</td><td>Тест</td><td>ТК-03</td></tr>
+<tr><td><strong>SYS-10</strong></td><td>Автозавершение сессии по end_time</td><td>Тест</td><td>ТК-07</td></tr>
+<tr><td><strong>SYS-11</strong></td><td>Автооценивание закрытых вопросов</td><td>Тест</td><td>ТК-07 (пост-условие)</td></tr>
+<tr><td><strong>SYS-12</strong></td><td>Очередь ручной проверки</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-13</strong></td><td>Итоговый балл только после всех проверок</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-14</strong></td><td>Три режима прокторинга</td><td>Тест</td><td>ТК-01, ТК-06</td></tr>
+<tr><td><strong>SYS-15</strong></td><td>WebRTC-соединение ≤30 сек (p95)</td><td>Нагрузочный тест</td><td>ТК-09</td></tr>
+<tr><td><strong>SYS-16</strong></td><td>Запись в S3 ≤5 мин после завершения</td><td>Тест</td><td>ТК-07 (пост-условие)</td></tr>
+<tr><td><strong>SYS-17</strong></td><td>Детекция 4 типов событий</td><td>Тест</td><td>ТК-04</td></tr>
+<tr><td><strong>SYS-18</strong></td><td>Событие тревоги с атрибутами (confidence_score, timestamp)</td><td>Инспекция + Тест</td><td>ТК-04</td></tr>
+<tr><td><strong>SYS-19</strong></td><td>Вердикт проктора с proctor_id и timestamp</td><td>Тест</td><td>ТК-05</td></tr>
+<tr><td><strong>SYS-20</strong></td><td>Видеоплеер с временной шкалой событий</td><td>Тест</td><td>ТК-05</td></tr>
+<tr><td><strong>SYS-21</strong></td><td>Блокировка вне временного окна (HTTP 423)</td><td>Тест</td><td>ТК-02</td></tr>
+<tr><td><strong>SYS-22</strong></td><td>Email за 24 ч и 1 ч до экзамена</td><td>Тест</td><td>Интеграционный тест SMTP</td></tr>
+<tr><td><strong>SYS-23</strong></td><td>Push проктору при confidence &gt; 0.8, ≤5 сек</td><td>Тест</td><td>ТК-04</td></tr>
+<tr><td><strong>SYS-24</strong></td><td>Передача оценок в SIS</td><td>Тест</td><td>ТК-08</td></tr>
+<tr><td><strong>SYS-25</strong></td><td>Retry 1/5/15/60 мин при сбое SIS</td><td>Тест</td><td>ТК-08</td></tr>
+<tr><td><strong>SYS-26</strong></td><td>Отчёт с метриками успеваемости</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-27</strong></td><td>Экспорт CSV/PDF ≤10 сек (10k записей)</td><td>Тест + Нагрузочный</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-28</strong></td><td>HTTPS TLS 1.2+, HSTS</td><td>Инспекция конфигурации</td><td>SSL Labs / конфиг-аудит</td></tr>
+<tr><td><strong>SYS-29</strong></td><td>Pre-signed URL TTL ≤4 ч</td><td>Тест</td><td>ТК-12</td></tr>
+<tr><td><strong>SYS-30</strong></td><td>GDPR: удаление данных ≤30 дней</td><td>Тест</td><td>ТК-12</td></tr>
+<tr><td><strong>SYS-31</strong></td><td>Аудит-лог доступов к записям</td><td>Инспекция + Тест</td><td>ТК-12</td></tr>
+<tr><td><strong>SYS-32</strong></td><td>Автоудаление записей по TTL</td><td>Инспекция конфигурации S3</td><td>Аудит S3 lifecycle policy</td></tr>
+<tr><td><strong>SYS-33</strong></td><td>Rate limiting: 20 req/min неавторизован</td><td>Тест</td><td>ТК-09 (нагрузочный)</td></tr>
+<tr><td><strong>SYS-35</strong></td><td>Circuit breaker для внешних систем</td><td>Тест</td><td>ТК-06, ТК-08</td></tr>
+<tr><td><strong>NFR-01</strong></td><td>Uptime ≥99.9% в период сессии</td><td>Анализ + Мониторинг</td><td>Отчёт мониторинга Prometheus</td></tr>
+<tr><td><strong>NFR-02</strong></td><td>Задержка видео ≤500 мс</td><td>Инструментальный тест</td><td>ТК-09</td></tr>
+<tr><td><strong>NFR-03</strong></td><td>API p95 ≤500 мс</td><td>Нагрузочный тест</td><td>Отчёт k6/JMeter</td></tr>
+<tr><td><strong>NFR-04</strong></td><td>100% шифрование записей, 0 нарушений TTL</td><td>Инспекция + Тест</td><td>ТК-12</td></tr>
+<tr><td><strong>NFR-05</strong></td><td>FPR ≤15%</td><td>Анализ вердиктов</td><td>Аналитический отчёт за период</td></tr>
+<tr><td><strong>NFR-06</strong></td><td>≥500 одновременных сессий</td><td>Нагрузочный тест</td><td>ТК-09</td></tr>
+<tr><td><strong>NFR-07</strong></td><td>0 критических уязвимостей</td><td>Penetration testing</td><td>Отчёт пентеста (OWASP)</td></tr>
+<tr><td><strong>NFR-08</strong></td><td>0% потери ответов при разрыве</td><td>Тест</td><td>ТК-03</td></tr>
+<tr><td><strong>NFR-09</strong></td><td>MTTD ≤2 мин</td><td>Анализ + Мониторинг</td><td>Конфигурация алертов Grafana</td></tr>
+<tr><td><strong>NFR-10</strong></td><td>WebRTC в Chrome/Firefox/Edge/Safari</td><td>Тест на матрице</td><td>ТК-10</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="2-Тест-кейсы"><a class="header" href="#2-Тест-кейсы">2. Тест-кейсы</a></h2>
+<hr />
+<h3 id="ТК-01-Запуск-экзамена-с-прокторингом-в-реальном-времени-e2e-happy-path"><a class="header" href="#ТК-01-Запуск-экзамена-с-прокторингом-в-реальном-времени-e2e-happy-path">ТК-01. Запуск экзамена с прокторингом в реальном времени (E2E happy path)</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-001</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SR-01, SR-02, SYS-01, SYS-14, SYS-15, SYS-16</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>1. Студент авторизован через SSO. 2. Экзамен опубликован с режимом <code>realtime</code>. 3. Текущее время — в пределах окна. 4. Медиасервер доступен. 5. Проктор назначен и авторизован.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент открывает страницу экзамена. 2. Читает политику прокторинга, нажимает «Согласен». 3. Система выполняет camera check. 4. Студент нажимает «Начать экзамен». 5. LMS+P устанавливает WebRTC-соединение с медиасервером. 6. Студент видит вопросы; в углу — «Запись ведётся». 7. Проктор видит видеопоток студента в портале.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Политика прокторинга отображена. 2. WebRTC-соединение установлено ≤30 сек. 3. Видеопоток у проктора. 4. В БД: запись сессии <code>status=active</code>.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td><code>proctoring_sessions</code>: <code>status=active</code>, <code>start_time</code> заполнен.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд, тестовые аккаунты, mock SSO.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-02-Блокировка-доступа-к-экзамену-вне-временного-окна"><a class="header" href="#ТК-02-Блокировка-доступа-к-экзамену-вне-временного-окна">ТК-02. Блокировка доступа к экзамену вне временного окна</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-002</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-21</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Экзамен с окном 10:00–12:00. Студент авторизован.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. В 09:45 студент нажимает «Начать». 2. Фиксировать ответ системы. 3. В 12:05 — повторная попытка.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. 09:45: «Экзамен начнётся в 10:00», кнопка неактивна, HTTP 423. 2. 12:05: «Экзамен завершён», HTTP 423.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Записи о сессиях в БД не созданы.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд с возможностью подмены системного времени.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-03-Сохранение-ответов-при-разрыве-соединения"><a class="header" href="#ТК-03-Сохранение-ответов-при-разрыве-соединения">ТК-03. Сохранение ответов при разрыве соединения</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-003</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-09, NFR-08</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Студент в активной сессии, ответил на 5 вопросов из 10.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент переходит к вопросу №6. 2. Симуляция разрыва (DevTools → Offline). 3. Студент вводит ответ на вопрос №6. 4. Соединение восстанавливается. 5. Студент обновляет страницу.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Ответы 1–5 сохранены на сервере. 2. Ответ №6 из localStorage синхронизирован при восстановлении. 3. Прогресс «5/10» или «6/10» отображён корректно.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Таблица <code>answers</code>: 5 или 6 записей для данной сессии.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Chrome DevTools, тестовый стенд.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-04-Детекция-тревоги--смена-браузерной-вкладки"><a class="header" href="#ТК-04-Детекция-тревоги--смена-браузерной-вкладки">ТК-04. Детекция тревоги — смена браузерной вкладки</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-004</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-17, SYS-18, SYS-23, SR-12</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Студент в активной сессии <code>realtime</code>. Проктор авторизован и наблюдает.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент переключается на другую вкладку и остаётся там 4 секунды. 2. Студент возвращается на страницу экзамена.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Проктор получает push-уведомление о <code>tab_switch</code> в течение 5 сек. 2. В <code>proctoring_events</code>: запись с <code>event_type=tab_switch</code>, <code>confidence_score</code>, <code>duration_ms≈4000</code>. 3. Студенту NOT показывается сообщение о тревоге.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Событие сохранено в БД; студент не уведомлён.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Два браузера (студент + проктор), тестовый стенд.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-05-Вынесение-вердикта-проктором"><a class="header" href="#ТК-05-Вынесение-вердикта-проктором">ТК-05. Вынесение вердикта проктором</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-005</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-19, SYS-20, SR-06</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Сессия завершена. Запись в S3. 2 события: <code>tab_switch</code> и <code>multiple_faces</code>.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Проктор открывает сессию. 2. Нажимает на <code>tab_switch</code> → «Не нарушение». 3. Нажимает на <code>multiple_faces</code>, просматривает скриншот → «Нарушение», тип: «Посторонний», комментарий. 4. «Завершить проверку» → итог: «Не зачтено».</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Оба события получили вердикт с <code>proctor_id</code> и <code>verdict_timestamp</code>. 2. Итоговый статус сессии: <code>rejected</code>. 3. В Assessment Service — событие <code>proctoring.verdict.submitted</code>. 4. Преподаватель уведомлён.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Результат помечен «Аннулирован (нарушение прокторинга)».</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд, предзаполненные данные с mock-событиями.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-06-Переключение-в-асинхронный-режим-при-отказе-медиасервера"><a class="header" href="#ТК-06-Переключение-в-асинхронный-режим-при-отказе-медиасервера">ТК-06. Переключение в асинхронный режим при отказе медиасервера</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-006</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-15, NFR-08, SR-11</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Медиасервер в офлайн (симуляция). Студент начинает экзамен с режимом <code>realtime</code>.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент нажимает «Начать экзамен». 2. Система пытается WebRTC — таймаут 10 сек. 3. Студент видит сообщение и выбирает «Продолжить».</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Через 10 сек: «Прямое наблюдение недоступно. Экзамен будет записан и проверен после». 2. Сессия запускается в <code>async</code> режиме. 3. API: HTTP 503 с <code>suggestion: async_mode</code>.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Сессия создана с <code>proctoring_mode=async_fallback</code>.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд с отключённым медиасервером.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-07-Автоматическое-завершение-сессии-по-истечении-времени"><a class="header" href="#ТК-07-Автоматическое-завершение-сессии-по-истечении-времени">ТК-07. Автоматическое завершение сессии по истечении времени</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-007</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-10, SYS-21, SYS-16</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Экзамен на 5 минут. Студент в активной сессии, ответил на 3 из 5 вопросов.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент не нажимает «Завершить». 2. Истекает 5 минут.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Сессия завершена системой в течение 10 сек после <code>end_time</code>. 2. Сохранены все 3 ответа. 3. Студент видит «Время вышло. Ответы сохранены». 4. Статус: <code>completed</code>, <code>completed_by=system</code>. 5. Начат процесс загрузки записи в S3.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Запись видео завершена, идёт загрузка в S3.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд с ускоренным таймером.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-08-Передача-оценок-в-sis-с-retry-при-сбое"><a class="header" href="#ТК-08-Передача-оценок-в-sis-с-retry-при-сбое">ТК-08. Передача оценок в SIS с retry при сбое</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-008</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SR-07, SYS-24, SYS-25</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Преподаватель подтвердил оценки (3 студента). SIS-мок: первые 2 вызова → 503, третий → 200.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Преподаватель нажимает «Передать в деканат». 2. 1-я попытка → 503. 3. Retry через 1 мин → 503. 4. Retry через 5 мин → 200.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. После 3-й попытки оценки переданы. 2. Статус UI: «Передано в деканат». 3. В аудит-логе: 3 записи с кодами 503, 503, 200. 4. Студенты получили email.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td><code>grade_sync_log</code>: 3 записи для данного курса.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>SIS-мок (возвращает 503 первые 2 раза).</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-09-Нагрузочный-тест-500-одновременных-сессий"><a class="header" href="#ТК-09-Нагрузочный-тест-500-одновременных-сессий">ТК-09. Нагрузочный тест: 500 одновременных сессий</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-009</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>NFR-02, NFR-03, NFR-06, SR-10</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>2 реплики каждого сервиса. 500 тестовых аккаунтов. Медиасервер с 4 воркерами.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. k6 запускает 500 сессий за 5 мин (ramp-up). 2. Поддерживает 500 активных сессий 30 мин. 3. Каждая сессия отправляет ответы каждые 30 сек. 4. Фиксируются: latency p95/p99, error rate, время WebRTC.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. API p95 latency ≤ 500 мс. 2. Error rate ≤ 1%. 3. WebRTC установлен у ≥97% сессий ≤30 сек. 4. CPU медиасервера ≤ 80%.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Все 500 сессий завершились корректно; ни один ответ не потерян.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Нагрузочный стенд, k6, Grafana.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-10-Совместимость-с-браузерами-матрица"><a class="header" href="#ТК-10-Совместимость-с-браузерами-матрица">ТК-10. Совместимость с браузерами (матрица)</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-010</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>NFR-10</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Chrome 120, Firefox 121, Edge 120, Safari 17. Один тестовый аккаунт.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>В каждом браузере: 1. SSO-авторизация. 2. Открыть экзамен. 3. Разрешить камеру. 4. Начать сессию. 5. Ответить на 1 вопрос. 6. Завершить.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>Во всех 4 браузерах: WebRTC установлен, ответ сохранён, сессия завершена корректно.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>4 записи в <code>proctoring_sessions</code> с <code>status=completed</code>.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>BrowserStack или локальный стенд с 4 браузерами.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-11-Идемпотентность-сохранения-ответа"><a class="header" href="#ТК-11-Идемпотентность-сохранения-ответа">ТК-11. Идемпотентность сохранения ответа</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-011</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-09</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Студент в активной сессии. <code>Idempotency-Key = uuid-456</code>.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. POST <code>/answers</code> с ключом uuid-456 → 200, <code>answer_id=A1</code>. 2. Тот же запрос с uuid-456.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Второй запрос: HTTP 409 с <code>answer_id=A1</code>. 2. В таблице <code>answers</code> — одна запись (нет дубля).</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>—</td></tr>
+<tr><td><strong>Окружение</strong></td><td>curl / Postman, тестовый стенд.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-12-Доступ-к-видеозаписи-аудит-лог-и-ttl-url"><a class="header" href="#ТК-12-Доступ-к-видеозаписи-аудит-лог-и-ttl-url">ТК-12. Доступ к видеозаписи, аудит-лог и TTL URL</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-012</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-29, SYS-30, SYS-31, NFR-04, SR-09</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Сессия завершена. Запись в S3. Проктор авторизован.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Проктор открывает запись. 2. LMS+P генерирует pre-signed URL (TTL = 4 ч). 3. Запись воспроизводится. 4. Через 4 ч 5 мин — повторная попытка открыть ту же ссылку.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. URL выдан; запись воспроизводится. 2. В <code>access_audit_log</code>: запись с <code>role=proctor</code>, <code>action=view</code>, <code>session_id</code>. 3. Через 4ч 5мин: ссылка недействительна (403 от S3).</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td><code>access_audit_log</code>: 1 запись для данного проктора.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд, тестовый S3 (MinIO).</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-13-Полный-цикл-создания-курса-и-получения-результатов"><a class="header" href="#ТК-13-Полный-цикл-создания-курса-и-получения-результатов">ТК-13. Полный цикл создания курса и получения результатов</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-013</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SR-03, SR-04, SR-13, SYS-05, SYS-06, SYS-07, SYS-08, SYS-12, SYS-26, SYS-27</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Преподаватель авторизован. SIS-мок доступен и возвращает 1 студента.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Преподаватель создаёт курс с 2 модулями и тестом (3 вопроса: 2 закрытых + 1 открытый). 2. Загружает PDF-материал (&lt;2 ГБ). 3. Публикует курс. 4. Студент отвечает на тест и завершает его. 5. Преподаватель проверяет открытый вопрос. 6. Преподаватель открывает отчёт успеваемости и экспортирует CSV.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Курс создан с иерархией ≥3 уровня. 2. PDF загружен. 3. Студент зачислен автоматически из SIS. 4. Закрытые вопросы оценены автоматически; открытый — в очереди. 5. После ручной проверки — статус «Проверено», итоговый балл рассчитан. 6. Отчёт содержит: средний балл, распределение, прогресс. CSV скачан ≤10 сек.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>В БД: курс, тест, 3 ответа, итоговый балл, запись в <code>grade_sync_queue</code>.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд, SIS-мок.</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="risks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="risks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

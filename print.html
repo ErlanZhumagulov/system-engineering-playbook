@@ -1,0 +1,1695 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>system-engineering-playbook</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/_assets/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">system-engineering-playbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Контекст-и-границы-soi--lmsp"><a class="header" href="#Контекст-и-границы-soi--lmsp">Контекст и границы SoI — LMS+P</a></h1>
+<hr />
+<h2 id="Содержание"><a class="header" href="#Содержание">Содержание</a></h2>
+<ol>
+<li><a href="soi.html#1-%D1%81%D1%83%D1%82%D1%8C-%D0%BA%D0%B5%D0%B9%D1%81%D0%B0-%D0%B8-%D0%BC%D0%B8%D1%81%D1%81%D0%B8%D1%8F">Суть кейса и миссия</a></li>
+<li><a href="soi.html#2-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%BA%D1%81%D1%82--%D0%B2%D0%BD%D0%B5%D1%88%D0%BD%D0%B8%D0%B5-%D1%81%D1%83%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%B8-%D0%BF%D0%BE%D1%82%D0%BE%D0%BA%D0%B8">Контекст — внешние сущности и потоки</a>
+<ul>
+<li><a href="soi.html#21-%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D0%B8">Пользователи</a></li>
+<li><a href="soi.html#22-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D0%B8">Исполнители</a></li>
+<li><a href="soi.html#23-%D0%B8%D0%BD%D1%82%D0%B5%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D1%81-%D0%B2%D0%BD%D0%B5%D1%88%D0%BD%D0%B8%D0%BC%D0%B8-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0%D0%BC%D0%B8">Интеграции с внешними системами</a></li>
+</ul>
+</li>
+<li><a href="soi.html#3-%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-soi">Границы системы SoI</a>
+<ul>
+<li><a href="soi.html#31-%D0%B2%D0%BD%D1%83%D1%82%D1%80%D0%B8-soi">Внутри SoI</a></li>
+<li><a href="soi.html#32-%D1%81%D0%BD%D0%B0%D1%80%D1%83%D0%B6%D0%B8-soi">Снаружи SoI</a></li>
+</ul>
+</li>
+<li><a href="soi.html#4-%D0%B4%D0%BE%D0%BF%D1%83%D1%89%D0%B5%D0%BD%D0%B8%D1%8F">Допущения</a></li>
+</ol>
+<hr />
+<h2 id="1-Суть-кейса-и-миссия"><a class="header" href="#1-Суть-кейса-и-миссия">1. Суть кейса и миссия</a></h2>
+<p><strong>Система:</strong> LMS+P — платформа дистанционного обучения с интегрированным прокторингом.</p>
+<p><strong>Цель системы:</strong> Обеспечить образовательным организациям надёжный, доступный и справедливый инструмент дистанционного обучения и верифицированной оценки знаний — с защитой от академической нечестности, соблюдением требований приватности и минимальной нагрузкой на административный персонал.</p>
+<p><strong>Ключевые задачи LMS+P:</strong></p>
+<ul>
+<li>Размещение курсов, лекций, заданий и учебных материалов</li>
+<li>Проведение тестов и экзаменов с автоматической проверкой</li>
+<li>Видеопрокторинг в реальном времени и в асинхронном режиме</li>
+<li>Автодетекция нарушений (смена вкладок, посторонние лица, посторонний звук)</li>
+<li>Передача итоговых оценок в систему деканата (SIS)</li>
+<li>Отчётность об успеваемости для студентов, преподавателей и администрации</li>
+<li>Единый вход через SSO организации</li>
+</ul>
+<hr />
+<h2 id="2-Контекст--внешние-сущности-и-потоки"><a class="header" href="#2-Контекст--внешние-сущности-и-потоки">2. Контекст — внешние сущности и потоки</a></h2>
+<p>LMS+P функционирует в экосистеме образовательной организации. Система выступает как связующий слой между IdP/SSO, системой деканата (SIS), медиасервером, объектным хранилищем и почтовым сервером — объединяя процессы обучения, оценивания, прокторинга и академической отчётности в единый управляемый контур.</p>
+<iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/c4-context.drawio"></iframe>
+<h3 id="Таблица-внешних-сущностей-и-потоков"><a class="header" href="#Таблица-внешних-сущностей-и-потоков">Таблица внешних сущностей и потоков</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Внешняя сущность</th><th>Тип</th><th>Входящие в LMS+P</th><th>Исходящие из LMS+P</th></tr></thead><tbody>
+<tr><td><strong>Студент</strong></td><td>Пользователь</td><td>Ответы на задания, видеопоток (камера/экран), запуск/завершение сессии</td><td>Материалы курсов, результаты тестов, оценки, уведомления о расписании</td></tr>
+<tr><td><strong>Преподаватель</strong></td><td>Исполнитель</td><td>Учебные материалы, вопросы для тестов, настройки прокторинга, оценки за эссе</td><td>Отчёты успеваемости, события нарушений, список задач ручной проверки</td></tr>
+<tr><td><strong>Проктор</strong></td><td>Исполнитель</td><td>Вердикт по нарушению (подтверждено / снято)</td><td>Видеопоток сессии, события тревоги, записи для асинхронного просмотра</td></tr>
+<tr><td><strong>Администратор</strong></td><td>Исполнитель</td><td>Настройки пользователей, курсов, интеграций</td><td>Системные логи, отчёты, статусы интеграций</td></tr>
+<tr><td><strong>IdP / SSO</strong> (Keycloak, Azure AD)</td><td>Система аутентификации</td><td>Токен + атрибуты пользователя, роли из LDAP/AD</td><td>Redirect-запрос аутентификации</td></tr>
+<tr><td><strong>WebRTC Медиасервер</strong> (Janus / MediaSoup)</td><td>Стриминговая платформа</td><td>Видео/аудио поток студента (via WebRTC)</td><td>Сигналы инициализации соединения, команды записи</td></tr>
+<tr><td><strong>S3-хранилище</strong></td><td>Объектное хранилище</td><td>URL-ссылка на загруженную запись</td><td>Видеозапись экзаменационной сессии</td></tr>
+<tr><td><strong>SIS / Деканат</strong></td><td>Учётная система</td><td>Данные о зачислении, учебные планы, расписание экзаменов</td><td>Итоговые оценки, статусы прохождения экзаменов</td></tr>
+<tr><td><strong>SMTP / Почтовый сервер</strong></td><td>Канал связи</td><td>Статус доставки, bounce-уведомления</td><td>Письма студентам, преподавателям, проктарам</td></tr>
+<tr><td><strong>Античит-агент</strong> (опционально)</td><td>Агент на устройстве</td><td>Статус lockdown-браузера (активен / нарушение)</td><td>Команда активации / деактивации</td></tr>
+<tr><td><strong>APM / Мониторинг</strong> (Prometheus/Grafana)</td><td>Наблюдаемость</td><td>Алерты о превышении порогов</td><td>Метрики, трейсы, логи</td></tr>
+<tr><td><strong>BI / Аналитика</strong> (опционально)</td><td>Аналитическая система</td><td>—</td><td>Агрегированные данные успеваемости (ETL-выгрузка)</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="21-Пользователи"><a class="header" href="#21-Пользователи">2.1 Пользователи</a></h3>
+<p>Пользователи взаимодействуют с системой через веб-портал или мобильное приложение.</p>
+<h4 id="Студент"><a class="header" href="#Студент">Студент</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Действие</th><th>Описание</th><th>Способ взаимодействия</th></tr></thead><tbody>
+<tr><td>Вход в систему</td><td>Авторизуется через SSO организации</td><td>Редирект на IdP, возврат токена</td></tr>
+<tr><td>Просмотр курса</td><td>Просматривает лекции, материалы, задания</td><td>Веб-портал студента</td></tr>
+<tr><td>Прохождение теста</td><td>Отвечает на вопросы в отведённое время</td><td>Тестовый модуль LMS+P</td></tr>
+<tr><td>Запуск экзамена</td><td>Инициирует сессию, разрешает доступ к камере и экрану</td><td>Модуль прокторинга</td></tr>
+<tr><td>Завершение экзамена</td><td>Отправляет ответы, система закрывает сессию и сохраняет запись</td><td>Автоматически или вручную</td></tr>
+<tr><td>Просмотр результатов</td><td>Видит баллы, обратную связь от преподавателя</td><td>Личный кабинет</td></tr>
+</tbody></table>
+</div>
+<p><strong>Поведенческий профиль:</strong> Студент ожидает стабильной работы видеосвязи и справедливой оценки. Технические сбои во время экзамена вызывают стресс и жалобы. Задержка результатов снижает удовлетворённость.</p>
+<h4 id="Преподаватель"><a class="header" href="#Преподаватель">Преподаватель</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Действие</th><th>Описание</th><th>Способ взаимодействия</th></tr></thead><tbody>
+<tr><td>Создание курса</td><td>Загружает материалы, структурирует модули</td><td>Редактор курсов</td></tr>
+<tr><td>Создание теста</td><td>Формирует вопросы, задаёт настройки прокторинга</td><td>Конструктор тестов</td></tr>
+<tr><td>Просмотр успеваемости</td><td>Смотрит сводку по группе, отдельным студентам</td><td>Раздел отчётности</td></tr>
+<tr><td>Ручная проверка</td><td>Оценивает эссе и открытые вопросы</td><td>Очередь задач проверки</td></tr>
+<tr><td>Управление нарушениями</td><td>Получает уведомление о тревогах, принимает решение</td><td>Журнал событий</td></tr>
+</tbody></table>
+</div>
+<p><strong>Поведенческий профиль:</strong> Преподаватель ожидает минимального времени на административные задачи. Ручная передача оценок в деканат недопустима. Отсутствие отчётности в реальном времени снижает управляемость группой.</p>
+<hr />
+<h3 id="22-Исполнители"><a class="header" href="#22-Исполнители">2.2 Исполнители</a></h3>
+<p>Исполнители — сотрудники образовательной организации, использующие систему как инструмент управления учебным процессом.</p>
+<div class="table-wrapper"><table><thead><tr><th>Роль</th><th>Основные действия</th><th>Частота</th><th>Требования к интерфейсу</th></tr></thead><tbody>
+<tr><td><strong>Преподаватель</strong></td><td>Создание курсов и тестов, просмотр успеваемости, ручная проверка, реакция на нарушения</td><td>Ежедневно</td><td>Полнофункциональный редактор, отчёты</td></tr>
+<tr><td><strong>Проктор</strong></td><td>Мониторинг видеосессий в реальном времени, просмотр записей, вынесение вердиктов</td><td>В период экзаменов</td><td>Минималистичный, быстрый, плитки сессий</td></tr>
+<tr><td><strong>Администратор</strong></td><td>Управление учётными записями, ролями, интеграциями, системными настройками</td><td>По мере необходимости</td><td>Панель управления, аудит-логи, статусы</td></tr>
+</tbody></table>
+</div>
+<p><strong>Поведенческий профиль исполнителей:</strong></p>
+<ul>
+<li><strong>Проктор</strong> должен успевать наблюдать за ≥20 сессиями одновременно — интерфейс обязан быть минималистичным, тревоги должны выводиться автоматически на первый план без ручного поиска.</li>
+<li><strong>Администратор</strong> не должен вручную переносить данные между LMS и деканатом — любая синхронизация должна выполняться системой автоматически с уведомлением об ошибках.</li>
+</ul>
+<hr />
+<h3 id="23-Интеграции-с-внешними-системами"><a class="header" href="#23-Интеграции-с-внешними-системами">2.3 Интеграции с внешними системами</a></h3>
+<h4 id="Интеграция-1-idp--sso-oidc--saml-20"><a class="header" href="#Интеграция-1-idp--sso-oidc--saml-20">Интеграция №1: IdP / SSO (OIDC / SAML 2.0)</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Тип</strong></td><td>Федеративная аутентификация</td></tr>
+<tr><td><strong>Протокол</strong></td><td>OIDC (OpenID Connect) или SAML 2.0</td></tr>
+<tr><td><strong>Данные от IdP → LMS+P</strong></td><td><code>sub</code> (user_id), <code>email</code>, <code>name</code>, <code>roles</code>, <code>groups</code></td></tr>
+<tr><td><strong>Данные от LMS+P → IdP</strong></td><td>Authorization Request, redirect_uri</td></tr>
+<tr><td><strong>Поведение при недоступности</strong></td><td>Отображает страницу ошибки «Сервис авторизации недоступен», активные сессии (JWT) не прерываются до истечения TTL 8 ч</td></tr>
+<tr><td><strong>Настройка</strong></td><td>Администратор указывает Issuer URL, Client ID и Secret в настройках интеграции</td></tr>
+</tbody></table>
+</div>
+<p><strong>Обоснование:</strong> LMS+P не хранит пароли и не проводит первичную аутентификацию. Использование корпоративного IdP позволяет применять уже существующую политику паролей и MFA организации, сокращая поверхность атаки и затраты на управление учётными записями. OIDC предпочтителен перед SAML как более современный и гибкий протокол; SAML поддерживается для интеграции с legacy-системами.</p>
+<hr />
+<h4 id="Интеграция-2-webrtc-Медиасервер-janus--mediasoup"><a class="header" href="#Интеграция-2-webrtc-Медиасервер-janus--mediasoup">Интеграция №2: WebRTC Медиасервер (Janus / MediaSoup)</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Тип</strong></td><td>Видеостриминг реального времени (SFU — Selective Forwarding Unit)</td></tr>
+<tr><td><strong>Протокол</strong></td><td>WebRTC (DTLS-SRTP) + Signaling через WebSocket</td></tr>
+<tr><td><strong>Данные от браузера студента → Медиасервер</strong></td><td>SDP-оффер, ICE-кандидаты, видео/аудио медиапоток</td></tr>
+<tr><td><strong>Данные от Медиасервера → LMS+P</strong></td><td>Статус подключения, ID потока, событие о разрыве</td></tr>
+<tr><td><strong>Данные от Медиасервера → Проктор</strong></td><td>Видеопоток в реальном времени</td></tr>
+<tr><td><strong>Поведение при недоступности</strong></td><td>Система переключается в асинхронный режим — студент продолжает экзамен, видео записывается локально</td></tr>
+</tbody></table>
+</div>
+<p><strong>Обоснование:</strong> Прямое P2P WebRTC-соединение между студентом и проктором не масштабируется (один проктор не может наблюдать за 20+ студентами через P2P) и не позволяет сохранять запись на сервере. Медиасервер типа SFU решает обе проблемы: проктор подписывается на нужные потоки без нагрузки на устройство студента, а запись формируется централизованно.</p>
+<hr />
+<h4 id="Интеграция-3-sis--Деканат"><a class="header" href="#Интеграция-3-sis--Деканат">Интеграция №3: SIS / Деканат</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Тип</strong></td><td>REST API двусторонний</td></tr>
+<tr><td><strong>Протокол</strong></td><td>HTTPS, JSON</td></tr>
+<tr><td><strong>Данные от SIS → LMS+P</strong></td><td>Список зачисленных студентов, учебные планы, расписание экзаменов</td></tr>
+<tr><td><strong>Данные от LMS+P → SIS</strong></td><td>Итоговые оценки: <code>student_id</code>, <code>course_id</code>, <code>grade</code>, <code>date</code>, <code>status</code></td></tr>
+<tr><td><strong>Синхронизация</strong></td><td>Автоматически при выставлении итоговой оценки; ручной запуск доступен администратору</td></tr>
+<tr><td><strong>Поведение при недоступности</strong></td><td>LMS+P сохраняет оценки в очередь и отправляет при восстановлении (retry: 1/5/15/60 мин)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Обоснование:</strong> Ручной перенос оценок между LMS и деканатом является источником ошибок и задержек. REST API обеспечивает автоматическую двустороннюю синхронизацию: LMS+P получает актуальный список студентов из SIS при публикации курса, а оценки передаются обратно без участия администратора. Очередь с retry исключает потерю данных при временной недоступности SIS.</p>
+<hr />
+<h4 id="Интеграция-4-s3-хранилище"><a class="header" href="#Интеграция-4-s3-хранилище">Интеграция №4: S3-хранилище</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Тип</strong></td><td>Объектное хранилище</td></tr>
+<tr><td><strong>Протокол</strong></td><td>S3 API (совместимый: AWS S3, MinIO, Yandex Object Storage)</td></tr>
+<tr><td><strong>Данные от LMS+P → S3</strong></td><td>Видеозапись сессии (MP4/WebM), метаданные (<code>student_id</code>, <code>exam_id</code>, <code>timestamp</code>)</td></tr>
+<tr><td><strong>Данные от S3 → LMS+P</strong></td><td>Pre-signed URL для просмотра записи проктором</td></tr>
+<tr><td><strong>Срок хранения</strong></td><td>Настраивается администратором (по умолчанию 90 дней, S3 lifecycle policy)</td></tr>
+<tr><td><strong>Шифрование</strong></td><td>AES-256 на стороне S3 (SSE-S3 или SSE-KMS)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Обоснование:</strong> Видеозапись одной экзаменационной сессии составляет 1–2 ГБ. Хранение в реляционной СУБД невозможно, в файловой системе сервиса — не масштабируется и усложняет резервное копирование. S3-совместимое хранилище обеспечивает горизонтальную масштабируемость, встроенное шифрование, автоматическое управление жизненным циклом объектов (TTL-удаление) и возможность выдачи временных pre-signed URL — без раскрытия прямых ссылок на файлы.</p>
+<hr />
+<h2 id="3-Границы-системы-soi"><a class="header" href="#3-Границы-системы-soi">3. Границы системы SoI</a></h2>
+<h3 id="31-Внутри-soi"><a class="header" href="#31-Внутри-soi">3.1 Внутри SoI</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Компонент / Сервис</th><th>Обязанность</th></tr></thead><tbody>
+<tr><td><strong>Портал студента</strong></td><td>UI для просмотра курсов, прохождения тестов и экзаменов, просмотра оценок</td></tr>
+<tr><td><strong>Портал преподавателя</strong></td><td>UI для создания курсов, тестов, просмотра успеваемости, ручной проверки</td></tr>
+<tr><td><strong>Портал проктора</strong></td><td>UI для мониторинга сессий в реальном времени и постфактум, вынесения вердиктов</td></tr>
+<tr><td><strong>Административная панель</strong></td><td>UI управления пользователями, ролями, интеграциями, настройками</td></tr>
+<tr><td><strong>API Gateway</strong></td><td>Аутентификация JWT, rate limiting, маршрутизация запросов к сервисам</td></tr>
+<tr><td><strong>Course Service</strong></td><td>Хранение структуры курсов, модулей, учебных материалов, заданий</td></tr>
+<tr><td><strong>Assessment Service</strong></td><td>Генерация вопросников, приём ответов, автоматическая и ручная проверка, расчёт баллов</td></tr>
+<tr><td><strong>Proctoring Service</strong></td><td>Управление экзаменационными сессиями, детекция тревог, передача видеопотока, хранение вердиктов</td></tr>
+<tr><td><strong>Notification Service</strong></td><td>Рассылка email и push-уведомлений по событиям (старт экзамена, результат, нарушение)</td></tr>
+<tr><td><strong>Reporting Service</strong></td><td>Формирование отчётов об успеваемости для всех ролей, экспорт CSV/PDF</td></tr>
+<tr><td><strong>SIS Sync Service</strong></td><td>Передача итоговых оценок в SIS, retry-механизм, очередь</td></tr>
+<tr><td><strong>IAM-модуль</strong></td><td>Управление сессиями после SSO, разграничение доступа по ролям (RBAC)</td></tr>
+<tr><td><strong>PostgreSQL</strong></td><td>Транзакционные данные: пользователи, курсы, результаты тестов, события прокторинга, вердикты</td></tr>
+<tr><td><strong>Redis</strong></td><td>Кэш сессий, расписания, горячих профилей пользователей, rate limiting счётчики</td></tr>
+<tr><td><strong>RabbitMQ</strong></td><td>Брокер асинхронных событий для уведомлений, синхронизации с SIS, передачи вердиктов</td></tr>
+</tbody></table>
+</div>
+<h3 id="32-Снаружи-soi"><a class="header" href="#32-Снаружи-soi">3.2 Снаружи SoI</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Внешняя сущность</th><th>Данные на входе в SoI</th><th>Данные на выходе из SoI</th><th>Почему вне границ</th></tr></thead><tbody>
+<tr><td><strong>IdP / SSO</strong></td><td>Токен + атрибуты пользователя</td><td>Authorization Request</td><td>Корпоративная система организации; LMS+P только проверяет токены</td></tr>
+<tr><td><strong>WebRTC Медиасервер</strong></td><td>Статус соединения, ID потока</td><td>Видеопоток студента, команды записи</td><td>Специализированная медиаинфраструктура, масштабируется отдельно</td></tr>
+<tr><td><strong>S3-хранилище</strong></td><td>Pre-signed URL</td><td>Видеозапись сессии</td><td>Объектное хранилище — сторонний сервис с собственным управлением жизненным циклом</td></tr>
+<tr><td><strong>SIS / Деканат</strong></td><td>Данные зачисления, учебные планы</td><td>Итоговые оценки, статусы</td><td>Академическая система организации; LMS+P только обменивается данными по API</td></tr>
+<tr><td><strong>SMTP</strong></td><td>Статус доставки</td><td>Письма участникам</td><td>Инфраструктура почтовой доставки — вне ответственности LMS+P</td></tr>
+<tr><td><strong>Античит-агент</strong></td><td>Статус lockdown</td><td>Команда активации</td><td>Опциональный клиентский агент; разрабатывается/поставляется отдельно</td></tr>
+<tr><td><strong>APM / Мониторинг</strong></td><td>Алерты</td><td>Метрики, трейсы, логи</td><td>Инфраструктурный сервис наблюдаемости; LMS+P только публикует данные</td></tr>
+<tr><td><strong>BI / Аналитика</strong></td><td>—</td><td>Агрегированные данные (ETL)</td><td>Аналитическая платформа организации; LMS+P предоставляет данные для выгрузки</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="4-Допущения"><a class="header" href="#4-Допущения">4. Допущения</a></h2>
+<p>Следующие допущения приняты при проектировании системы и ограничивают область проектных решений.</p>
+<div class="table-wrapper"><table><thead><tr><th>№</th><th>Допущение</th><th>Последствие нарушения</th></tr></thead><tbody>
+<tr><td>A-01</td><td>Организация располагает корпоративным IdP (Keycloak, Azure AD или совместимым), поддерживающим OIDC/SAML 2.0</td><td>Потребуется разработка альтернативного механизма аутентификации</td></tr>
+<tr><td>A-02</td><td>У студента есть стабильное интернет-соединение ≥ 2 Мбит/с и устройство с работающей веб-камерой при прокторинге</td><td>При худших условиях падает качество детекции и вероятность успешного WebRTC</td></tr>
+<tr><td>A-03</td><td>SIS организации предоставляет REST API для чтения зачислений и записи оценок</td><td>При отсутствии API потребуется ручной или файловый импорт/экспорт</td></tr>
+<tr><td>A-04</td><td>S3-совместимое хранилище (AWS S3, MinIO, Yandex Object Storage) доступно и настроено администратором</td><td>Без хранилища невозможен асинхронный прокторинг и хранение записей</td></tr>
+<tr><td>A-05</td><td>Организация соблюдает требования GDPR / 152-ФЗ и явно получает согласие студентов на видеозапись</td><td>Без согласия использование видеопрокторинга юридически недопустимо</td></tr>
+<tr><td>A-06</td><td>Нагрузка на систему прогнозируема: пиковое число одновременных сессий ≤ 500, пиковое число пользователей ≤ 10 000</td><td>При значительном превышении потребуется пересмотр архитектуры медиасервера</td></tr>
+<tr><td>A-07</td><td>Плановое обслуживание системы выполняется вне периодов экзаменационных сессий</td><td>Нарушение требует blue/green deployment и zero-downtime upgrade</td></tr>
+<tr><td>A-08</td><td>Роли пользователей (Студент, Преподаватель, Проктор, Администратор) передаются из IdP в атрибутах токена и не управляются вручную внутри LMS+P</td><td>Если роли не передаются IdP, требуется дополнительный механизм назначения ролей</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="conops--opscon--lmsp"><a class="header" href="#conops--opscon--lmsp">CONOPS / OPSCON — LMS+P</a></h1>
+<hr />
+<h2 id="Содержание-1"><a class="header" href="#Содержание-1">Содержание</a></h2>
+<ol>
+<li><a href="conops.html#1-%D1%80%D0%BE%D0%BB%D0%B8-%D1%83%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2">Роли участников</a></li>
+<li><a href="conops.html#2-%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B8-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F">Сценарии использования</a>
+<ul>
+<li><a href="conops.html#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-1-%D1%8D%D0%BA%D0%B7%D0%B0%D0%BC%D0%B5%D0%BD-%D1%81-%D0%BF%D1%80%D0%BE%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3%D0%BE%D0%BC-%D0%B2-%D1%80%D0%B5%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%BC-%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8">Сценарий 1: Экзамен с прокторингом в реальном времени</a></li>
+<li><a href="conops.html#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-2-%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BA%D1%83%D1%80%D1%81%D0%B0-%D0%B8-%D0%B7%D0%B0%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2">Сценарий 2: Создание курса и зачисление студентов</a></li>
+<li><a href="conops.html#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-3-%D0%B0%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3--%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B8">Сценарий 3: Асинхронный прокторинг — проверка записи</a></li>
+<li><a href="conops.html#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-4-%D1%80%D1%83%D1%87%D0%BD%D0%B0%D1%8F-%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8B%D1%85-%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2">Сценарий 4: Ручная проверка открытых вопросов</a></li>
+<li><a href="conops.html#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-5-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87%D0%B0-%D0%B8%D1%82%D0%BE%D0%B3%D0%BE%D0%B2%D1%8B%D1%85-%D0%BE%D1%86%D0%B5%D0%BD%D0%BE%D0%BA-%D0%B2-%D0%B4%D0%B5%D0%BA%D0%B0%D0%BD%D0%B0%D1%82">Сценарий 5: Передача итоговых оценок в деканат</a></li>
+</ul>
+</li>
+<li><a href="conops.html#3-%D1%81%D0%B2%D0%BE%D0%B4%D0%BD%D0%B0%D1%8F-%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0-%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B5%D0%B2">Сводная таблица сценариев</a></li>
+</ol>
+<hr />
+<h2 id="1-Роли-участников"><a class="header" href="#1-Роли-участников">1. Роли участников</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Роль</th><th>Определение</th><th>Основные действия</th><th>Привилегии в LMS+P</th></tr></thead><tbody>
+<tr><td><strong>Студент</strong></td><td>Обучающийся, зачисленный на курс</td><td>Просматривает курсы, проходит тесты и экзамены, получает оценки</td><td>Доступ только к своим курсам и результатам</td></tr>
+<tr><td><strong>Преподаватель</strong></td><td>Автор курса, педагог</td><td>Создаёт курсы и тесты, проверяет работы, просматривает успеваемость группы, управляет правилами прокторинга</td><td>Полный доступ к своим курсам, чтение статистики по своим студентам</td></tr>
+<tr><td><strong>Проктор</strong></td><td>Наблюдатель на экзамене</td><td>Мониторит видеосессии, просматривает записи, выносит вердикты по нарушениям</td><td>Доступ к видеосессиям и событиям тревоги назначенных экзаменов</td></tr>
+<tr><td><strong>Администратор</strong></td><td>Сотрудник IT-отдела / деканата</td><td>Управляет пользователями, ролями, интеграциями, системными настройками, логами</td><td>Полный доступ к настройкам, без доступа к содержанию экзаменов</td></tr>
+</tbody></table>
+</div><iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/use-case.drawio"></iframe>
+<hr />
+<h2 id="2-Сценарии-использования"><a class="header" href="#2-Сценарии-использования">2. Сценарии использования</a></h2>
+<hr />
+<h3 id="Сценарий-1-Экзамен-с-прокторингом-в-реальном-времени"><a class="header" href="#Сценарий-1-Экзамен-с-прокторингом-в-реальном-времени">Сценарий 1: Экзамен с прокторингом в реальном времени</a></h3>
+<p><strong>Предусловие:</strong> Преподаватель создал экзамен с режимом «Реальное время». Проктор назначен на сессию. Студент зачислен на курс и получил уведомление.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Студент входит в систему через SSO за 15 минут до начала</li>
+<li>Открывает страницу экзамена — система проверяет расписание, доступ разрешён</li>
+<li>Студент читает политику прокторинга и нажимает «Согласен»; система выполняет camera check</li>
+<li>Студент нажимает «Начать экзамен» — Proctoring Service запрашивает WebRTC-соединение с медиасервером</li>
+<li>Соединение установлено (≤30 сек); в углу экрана — индикатор «Запись ведётся»</li>
+<li>Проктор видит видеопоток студента в портале проктора</li>
+<li>Студент отвечает на вопросы; Assessment Service фиксирует ответы с временными метками</li>
+<li>Proctoring Service детектирует события: уход из кадра, смена вкладки, посторонний звук</li>
+<li>При confidence_score &gt; 0.8 — push-уведомление проктору в течение 5 секунд</li>
+<li>По истечении времени система блокирует возможность ответа и автоматически завершает сессию</li>
+<li>Запись сохраняется в S3; Assessment Service рассчитывает результат по автоматическим вопросам</li>
+</ol>
+<iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/seq-exam-realtime.drawio"></iframe>
+<p><strong>Исключение — разрыв видеосоединения:</strong></p>
+<ol>
+<li>Медиасервер фиксирует разрыв дольше 30 секунд</li>
+<li>LMS+P приостанавливает таймер экзамена и уведомляет студента и проктора</li>
+<li>Студент получает инструкцию перезагрузить страницу</li>
+<li>При восстановлении соединения (&lt;5 минут) таймер возобновляется, сессия продолжается</li>
+<li>Если соединение не восстановлено — проктор принимает решение: продлить сессию или зафиксировать как технический сбой</li>
+</ol>
+<p><strong>Режим деградации — медиасервер полностью недоступен:</strong></p>
+<ol>
+<li>LMS+P не может установить WebRTC-соединение (таймаут 10 сек)</li>
+<li>Система автоматически предлагает студенту переключиться в режим «Асинхронный»</li>
+<li>Студент получает уведомление: «Прямой эфир недоступен, используется запись на устройстве»</li>
+<li>По завершении экзамена браузерная запись загружается в S3 для последующего просмотра проктором</li>
+<li>Проктор уведомляется о переключении режима; сессия помечается <code>proctoring_mode=async_fallback</code></li>
+</ol>
+<hr />
+<h3 id="Сценарий-2-Создание-курса-и-зачисление-студентов"><a class="header" href="#Сценарий-2-Создание-курса-и-зачисление-студентов">Сценарий 2: Создание курса и зачисление студентов</a></h3>
+<p><strong>Предусловие:</strong> Преподаватель авторизован. Курс ещё не создан. SIS содержит актуальные данные о зачислении.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Преподаватель открывает редактор курса, создаёт модули и загружает материалы (PDF, видео)</li>
+<li>Добавляет тест: создаёт вопросы (одиночный выбор, множественный, открытый текст)</li>
+<li>Задаёт настройки теста: время, количество попыток, режим прокторинга</li>
+<li>Нажимает «Опубликовать» — LMS+P запрашивает из SIS список зачисленных студентов</li>
+<li>Студентам предоставляется доступ к курсу; они получают email-уведомление</li>
+<li>Преподаватель просматривает прогресс студентов в разделе успеваемости в режиме реального времени</li>
+</ol>
+<p><strong>Исключение — ошибка загрузки файла:</strong></p>
+<ol>
+<li>Преподаватель загружает файл &gt;2 ГБ или неподдерживаемого формата</li>
+<li>Система отображает ошибку: «Максимальный размер файла — 2 ГБ. Поддерживаемые форматы: PDF, MP4, DOCX, PPTX, PNG, JPEG»</li>
+<li>Курс сохраняется в черновике; материал не загружается</li>
+<li>Преподаватель конвертирует файл и повторяет загрузку</li>
+</ol>
+<p><strong>Режим деградации — SIS недоступен при публикации:</strong></p>
+<ol>
+<li>LMS+P не может получить список зачисленных студентов из SIS</li>
+<li>Система публикует курс, но откладывает автоматическое зачисление в очередь</li>
+<li>При восстановлении SIS — зачисление выполняется автоматически</li>
+<li>Администратор получает уведомление о задержке зачисления с указанием курса и времени ожидания</li>
+</ol>
+<hr />
+<h3 id="Сценарий-3-Асинхронный-прокторинг--проверка-записи"><a class="header" href="#Сценарий-3-Асинхронный-прокторинг--проверка-записи">Сценарий 3: Асинхронный прокторинг — проверка записи</a></h3>
+<p><strong>Предусловие:</strong> Студент прошёл экзамен. Запись загружена в S3. Проктор назначен на проверку записей данного экзамена.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Проктор открывает очередь записей в портале</li>
+<li>Система загружает запись с pre-signed URL из S3 (TTL = 4 часа)</li>
+<li>Проктор просматривает видео; система отображает временную шкалу с метками тревог</li>
+<li>Проктор нажимает на метку тревоги — видео перематывается к событию</li>
+<li>Проктор выносит вердикт по каждому событию: «Нарушение» / «Не нарушение» / «Требует эскалации»</li>
+<li>При выборе «Нарушение» — открывается форма с полем комментария и выбором типа нарушения</li>
+<li>Итоговый вердикт (допустить / не допустить к результатам) сохраняется с <code>proctor_id</code> и <code>timestamp</code></li>
+<li>Преподаватель получает уведомление о вердикте; система обновляет статус результата</li>
+</ol>
+<p><strong>Исключение — запись недоступна в S3:</strong></p>
+<ol>
+<li>При попытке открыть сессию система обнаруживает отсутствие объекта в S3</li>
+<li>Проктор видит статус «Запись недоступна — обратитесь к администратору»</li>
+<li>Администратор получает автоматический алерт с <code>session_id</code> и <code>exam_id</code></li>
+<li>Администратор выясняет причину: сбой загрузки после экзамена или технический сбой на стороне студента</li>
+<li>Принимается решение: провести повторный экзамен или засчитать результат на основе автодетекции событий</li>
+</ol>
+<p><strong>Режим деградации — S3 недоступен во время проверки:</strong></p>
+<ol>
+<li>Проктор пытается открыть запись — S3 возвращает ошибку (timeout или 5xx)</li>
+<li>Система отображает сообщение: «Хранилище временно недоступно. Повторите через несколько минут»</li>
+<li>Событие тревоги и метаданные сессии остаются доступны (хранятся в PostgreSQL)</li>
+<li>Проктор может изучить список автодетектированных событий без видео и отложить вынесение вердикта</li>
+<li>При восстановлении S3 — проктор возвращается к записи с сохранённым прогрессом просмотра</li>
+</ol>
+<hr />
+<h3 id="Сценарий-4-Ручная-проверка-открытых-вопросов"><a class="header" href="#Сценарий-4-Ручная-проверка-открытых-вопросов">Сценарий 4: Ручная проверка открытых вопросов</a></h3>
+<p><strong>Предусловие:</strong> Студент завершил тест с открытыми вопросами. Assessment Service поставил задачи ручной проверки в очередь.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Преподаватель получает email-уведомление о задачах в очереди</li>
+<li>Открывает очередь — видит список ответов (имя студента скрыто, если включена слепая проверка)</li>
+<li>Читает ответ, вводит балл в допустимом диапазоне, добавляет комментарий</li>
+<li>Сохраняет оценку — Assessment Service пересчитывает итоговый балл</li>
+<li>Если все вопросы проверены — статус теста меняется на «Проверено»</li>
+<li>Студент получает уведомление и видит итоговый балл с комментарием преподавателя</li>
+</ol>
+<p><strong>Исключение — преподаватель вводит балл вне допустимого диапазона:</strong></p>
+<ol>
+<li>Преподаватель вводит балл выше максимального (например, 110 из 100)</li>
+<li>Система отображает inline-ошибку: «Балл должен быть от 0 до 100»</li>
+<li>Форма блокирует сохранение до исправления значения</li>
+<li>Преподаватель исправляет балл и сохраняет</li>
+</ol>
+<p><strong>Режим деградации — преподаватель не проверяет задачи &gt;N дней:</strong></p>
+<ol>
+<li>Через 3 дня бездействия система отправляет напоминание преподавателю</li>
+<li>Если через 7 дней очередь не обработана — уведомление администратору с указанием курса и числа непроверенных работ</li>
+<li>Администратор может переназначить задачи другому преподавателю</li>
+<li>Студент, ожидающий результатов &gt;7 дней, получает уведомление: «Проверка задерживается, ожидайте»</li>
+</ol>
+<hr />
+<h3 id="Сценарий-5-Передача-итоговых-оценок-в-деканат"><a class="header" href="#Сценарий-5-Передача-итоговых-оценок-в-деканат">Сценарий 5: Передача итоговых оценок в деканат</a></h3>
+<p><strong>Предусловие:</strong> Все экзамены курса проведены. Преподаватель проверил открытые вопросы. SIS доступен.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Преподаватель открывает раздел «Итоговые оценки» курса</li>
+<li>Проверяет список: все студенты имеют статус «Оценка выставлена»</li>
+<li>Нажимает «Передать в деканат»</li>
+<li>SIS Sync Service отправляет POST-запрос в SIS с массивом оценок: <code>student_id</code>, <code>course_id</code>, <code>grade</code>, <code>grade_date</code>, <code>status</code></li>
+<li>SIS возвращает подтверждение; LMS+P фиксирует статус «Передано в деканат» с timestamp</li>
+<li>Студенты получают email-уведомление о передаче оценок</li>
+</ol>
+<p><strong>Исключение — ошибка валидации в SIS:</strong></p>
+<ol>
+<li>SIS возвращает ошибку: <code>student_id</code> не найден или <code>course_id</code> не соответствует учебному плану</li>
+<li>LMS+P отображает список проблемных записей с кодом ошибки от SIS</li>
+<li>Администратор вручную сверяет данные и исправляет расхождение</li>
+<li>Преподаватель повторяет передачу только для проблемных записей</li>
+</ol>
+<p><strong>Режим деградации — SIS недоступен:</strong></p>
+<ol>
+<li>SIS Sync Service фиксирует HTTP 5xx или timeout — помещает оценки в очередь со статусом «Ожидает передачи»</li>
+<li>Система автоматически повторяет попытку с интервалами: 1, 5, 15, 60 минут</li>
+<li>Администратор видит в дашборде: «Очередь передачи: N записей, следующая попытка через X мин»</li>
+<li>После 5 неудачных попыток — алерт администратору по email</li>
+<li>При восстановлении SIS — передача выполняется автоматически, статус обновляется; студенты уведомляются</li>
+</ol>
+<hr />
+<h2 id="3-Сводная-таблица-сценариев"><a class="header" href="#3-Сводная-таблица-сценариев">3. Сводная таблица сценариев</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>№</th><th>Сценарий</th><th>Критичный сбой</th><th>Деградация (fallback)</th></tr></thead><tbody>
+<tr><td>1</td><td>Экзамен с прокторингом реального времени</td><td>Медиасервер недоступен</td><td>Переключение в асинхронный режим, локальная запись в браузере</td></tr>
+<tr><td>2</td><td>Создание курса и зачисление студентов</td><td>SIS недоступен при публикации</td><td>Откладывание зачисления в очередь, уведомление администратору</td></tr>
+<tr><td>3</td><td>Асинхронная проверка записи</td><td>Запись не загружена в S3 / S3 недоступен</td><td>Алерт администратору; метаданные событий доступны без видео</td></tr>
+<tr><td>4</td><td>Ручная проверка открытых вопросов</td><td>Преподаватель не проверяет</td><td>Напоминание → уведомление администратору → переназначение</td></tr>
+<tr><td>5</td><td>Передача оценок в деканат</td><td>SIS недоступен</td><td>Очередь с автоповтором (1/5/15/60 мин), алерт после 5 попыток</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="Требования"><a class="header" href="#Требования">Требования</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sr-sh--stakeholder-requirements"><a class="header" href="#sr-sh--stakeholder-requirements">SR-SH — Stakeholder Requirements</a></h1>
+<hr />
+<p>Стейкхолдерские требования описывают потребности и ожидания заинтересованных сторон на уровне бизнеса и пользователя — без привязки к технической реализации. Каждое требование трассируется к одному или нескольким системным требованиям.</p>
+<hr />
+<h2 id="Таблица-согласованности-sr--sys"><a class="header" href="#Таблица-согласованности-sr--sys">Таблица согласованности SR → SYS</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>SR</th><th>Краткое описание</th><th>Связанные SYS</th><th>Связанные NFR</th></tr></thead><tbody>
+<tr><td>SR-01</td><td>Запуск экзамена без доп. ПО</td><td>SYS-14, SYS-15</td><td>NFR-10</td></tr>
+<tr><td>SR-02</td><td>Прозрачность прокторинга</td><td>SYS-14, SYS-17, SYS-19</td><td>NFR-05</td></tr>
+<tr><td>SR-03</td><td>Создание курсов без IT</td><td>SYS-05, SYS-06, SYS-07</td><td>NFR-10</td></tr>
+<tr><td>SR-04</td><td>Отчётность успеваемости в реальном времени</td><td>SYS-26, SYS-27</td><td>NFR-03</td></tr>
+<tr><td>SR-05</td><td>Мониторинг ≥20 сессий одновременно</td><td>SYS-20, SYS-23</td><td>NFR-02, NFR-06</td></tr>
+<tr><td>SR-06</td><td>Просмотр записи перед вердиктом</td><td>SYS-16, SYS-20, SYS-29</td><td>NFR-04</td></tr>
+<tr><td>SR-07</td><td>Автопередача оценок в деканат</td><td>SYS-24, SYS-25</td><td>NFR-08</td></tr>
+<tr><td>SR-08</td><td>Управление ролями без работы с БД</td><td>SYS-01, SYS-02</td><td>—</td></tr>
+<tr><td>SR-09</td><td>Соответствие GDPR / 152-ФЗ</td><td>SYS-29, SYS-30, SYS-31, SYS-32</td><td>NFR-04</td></tr>
+<tr><td>SR-10</td><td>Доступность в экзаменационную сессию</td><td>SYS-04</td><td>NFR-01</td></tr>
+<tr><td>SR-11</td><td>Поддержка асинхронного прокторинга</td><td>SYS-14, SYS-16, SYS-20</td><td>NFR-06</td></tr>
+<tr><td>SR-12</td><td>Уведомления о нарушениях в реальном времени</td><td>SYS-23</td><td>NFR-02</td></tr>
+<tr><td>SR-13</td><td>Экспорт отчётов CSV/PDF</td><td>SYS-27</td><td>NFR-03</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="sr-01-Надёжный-доступ-к-экзамену-для-студента"><a class="header" href="#sr-01-Надёжный-доступ-к-экзамену-для-студента">SR-01: Надёжный доступ к экзамену для студента</a></h2>
+<p><strong>Стейкхолдер:</strong> Студент, Образовательная организация</p>
+<p>Студент должен иметь возможность начать экзамен в назначенное время с любого устройства с браузером и веб-камерой, не устанавливая дополнительного ПО (кроме опционального античит-агента), чтобы технические барьеры не влияли на академический результат.</p>
+<p><strong>Приоритет:</strong> Критический</p>
+<hr />
+<h2 id="sr-02-Прозрачность-процесса-прокторинга-для-студента"><a class="header" href="#sr-02-Прозрачность-процесса-прокторинга-для-студента">SR-02: Прозрачность процесса прокторинга для студента</a></h2>
+<p><strong>Стейкхолдер:</strong> Студент, Образовательная организация (соответствие GDPR)</p>
+<p>Студент должен до начала экзамена видеть, какие данные собираются (камера, экран, аудио), на каком основании возникает событие тревоги и как вынесенный вердикт влияет на итоговый результат, чтобы процесс оценивания был справедливым и предсказуемым.</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-03-Инструменты-создания-курсов-без-навыков-программирования"><a class="header" href="#sr-03-Инструменты-создания-курсов-без-навыков-программирования">SR-03: Инструменты создания курсов без навыков программирования</a></h2>
+<p><strong>Стейкхолдер:</strong> Преподаватель</p>
+<p>Преподаватель должен иметь возможность создать курс с материалами, тестами и настройками прокторинга без привлечения IT-специалиста, используя только веб-интерфейс — чтобы скорость разработки курсов не зависела от доступности разработчиков.</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-04-Оперативная-отчётность-об-успеваемости-для-преподавателя"><a class="header" href="#sr-04-Оперативная-отчётность-об-успеваемости-для-преподавателя">SR-04: Оперативная отчётность об успеваемости для преподавателя</a></h2>
+<p><strong>Стейкхолдер:</strong> Преподаватель</p>
+<p>Преподаватель должен видеть успеваемость студентов в режиме реального времени — прогресс по модулям, результаты тестов, сравнение с группой — чтобы своевременно реагировать на отстающих и корректировать учебный план.</p>
+<p><strong>Приоритет:</strong> Средний</p>
+<hr />
+<h2 id="sr-05-Эффективный-мониторинг-нескольких-сессий-для-проктора"><a class="header" href="#sr-05-Эффективный-мониторинг-нескольких-сессий-для-проктора">SR-05: Эффективный мониторинг нескольких сессий для проктора</a></h2>
+<p><strong>Стейкхолдер:</strong> Проктор, Образовательная организация</p>
+<p>Проктор должен иметь возможность наблюдать за не менее чем 20 сессиями одновременно с автоматической расстановкой приоритетов — тревоги с высоким риском (confidence_score &gt; 0.8) должны выводиться на первый план без ручного поиска.</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-06-Полная-запись-сессии-перед-вынесением-вердикта"><a class="header" href="#sr-06-Полная-запись-сессии-перед-вынесением-вердикта">SR-06: Полная запись сессии перед вынесением вердикта</a></h2>
+<p><strong>Стейкхолдер:</strong> Проктор, Студент (справедливость)</p>
+<p>Проктор должен иметь возможность просмотреть полную видеозапись сессии перед вынесением финального вердикта, а не основываться только на автоматической детекции, чтобы исключить ложноположительные блокировки и обеспечить справедливость оценки.</p>
+<p><strong>Приоритет:</strong> Критический</p>
+<hr />
+<h2 id="sr-07-Автоматическая-передача-оценок-в-деканат"><a class="header" href="#sr-07-Автоматическая-передача-оценок-в-деканат">SR-07: Автоматическая передача оценок в деканат</a></h2>
+<p><strong>Стейкхолдер:</strong> Администратор, Образовательная организация</p>
+<p>Администратор не должен вручную переносить итоговые оценки из LMS+P в систему деканата — передача должна выполняться автоматически после подтверждения преподавателем с гарантией доставки (retry при сбоях).</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-08-Управление-доступом-и-ролями-без-технических-знаний"><a class="header" href="#sr-08-Управление-доступом-и-ролями-без-технических-знаний">SR-08: Управление доступом и ролями без технических знаний</a></h2>
+<p><strong>Стейкхолдер:</strong> Администратор</p>
+<p>Администратор должен иметь возможность управлять пользователями, ролями и зачислением на курсы через веб-интерфейс без работы с базой данных или API напрямую — чтобы операционная нагрузка на IT-отдел была минимальной.</p>
+<p><strong>Приоритет:</strong> Средний</p>
+<hr />
+<h2 id="sr-09-Соответствие-требованиям-приватности-gdpr--152-ФЗ"><a class="header" href="#sr-09-Соответствие-требованиям-приватности-gdpr--152-ФЗ">SR-09: Соответствие требованиям приватности (GDPR / 152-ФЗ)</a></h2>
+<p><strong>Стейкхолдер:</strong> Образовательная организация, Студент, Юридический отдел</p>
+<p>Система должна обеспечивать хранение видеозаписей экзаменов только в течение установленного срока, предоставлять студенту возможность запросить удаление своих данных и получить информацию о том, кто имел доступ к его записям — для соответствия законодательству о персональных данных.</p>
+<p><strong>Приоритет:</strong> Критический</p>
+<hr />
+<h2 id="sr-10-Доступность-системы-в-период-экзаменационных-сессий"><a class="header" href="#sr-10-Доступность-системы-в-период-экзаменационных-сессий">SR-10: Доступность системы в период экзаменационных сессий</a></h2>
+<p><strong>Стейкхолдер:</strong> Образовательная организация, Студенты, Преподаватели</p>
+<p>Система должна обеспечивать бесперебойную работу в период плановых экзаменационных сессий с пиковыми нагрузками, не допуская отказов, влияющих на ход экзамена — так как любой сбой в это время имеет прямые академические последствия.</p>
+<p><strong>Приоритет:</strong> Критический</p>
+<hr />
+<h2 id="sr-11-Поддержка-асинхронного-прокторинга"><a class="header" href="#sr-11-Поддержка-асинхронного-прокторинга">SR-11: Поддержка асинхронного прокторинга</a></h2>
+<p><strong>Стейкхолдер:</strong> Образовательная организация, Администратор</p>
+<p>Образовательная организация должна иметь возможность выбрать режим асинхронного прокторинга (без проктора в реальном времени), при котором запись проверяется после экзамена, чтобы снизить операционные затраты при массовых тестированиях.</p>
+<p><strong>Приоритет:</strong> Средний</p>
+<hr />
+<h2 id="sr-12-Уведомления-о-нарушениях-в-режиме-реального-времени"><a class="header" href="#sr-12-Уведомления-о-нарушениях-в-режиме-реального-времени">SR-12: Уведомления о нарушениях в режиме реального времени</a></h2>
+<p><strong>Стейкхолдер:</strong> Проктор</p>
+<p>Проктор должен получать мгновенное уведомление при обнаружении события тревоги высокого приоритета (посторонний человек в кадре, смена браузера дольше 10 секунд) в течение не более 5 секунд — чтобы иметь возможность оперативного вмешательства во время экзамена.</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-13-Экспорт-отчётов-успеваемости"><a class="header" href="#sr-13-Экспорт-отчётов-успеваемости">SR-13: Экспорт отчётов успеваемости</a></h2>
+<p><strong>Стейкхолдер:</strong> Преподаватель, Администратор</p>
+<p>Преподаватель и администратор должны иметь возможность экспортировать отчёты об успеваемости в форматах CSV и PDF для передачи в сторонние системы, печати или архивирования.</p>
+<p><strong>Приоритет:</strong> Средний</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sr-sys--system-requirements"><a class="header" href="#sr-sys--system-requirements">SR-SYS — System Requirements</a></h1>
+<hr />
+<p>Системные требования описывают поведение системы на техническом уровне. Каждое требование атомарно, проверяемо и трассируется к стейкхолдерскому требованию.</p>
+<hr />
+<h2 id="1-Аутентификация-и-управление-доступом"><a class="header" href="#1-Аутентификация-и-управление-доступом">1. Аутентификация и управление доступом</a></h2>
+<p><strong>SYS-01</strong> <em>(← SR-08)</em>
+Система должна поддерживать аутентификацию через OIDC/SAML 2.0 с внешним IdP; прямая аутентификация по логину/паролю внутри LMS+P не используется.</p>
+<p><strong>SYS-02</strong> <em>(← SR-08)</em>
+Система должна применять ролевую модель доступа (RBAC) с ролями: Студент, Преподаватель, Проктор, Администратор. Каждая роль имеет явно определённый набор разрешений; пересечение разрешений между ролями возможно только через явное назначение нескольких ролей.</p>
+<p><strong>SYS-03</strong> <em>(← SR-10)</em>
+После успешной аутентификации через SSO система должна создавать сессионный JWT-токен с TTL 8 часов. По истечении токена — перенаправлять на IdP для повторной аутентификации без потери контекста (redirect_uri сохраняется).</p>
+<p><strong>SYS-04</strong> <em>(← SR-10)</em>
+При недоступности IdP система должна возвращать страницу с понятным сообщением об ошибке. Активные сессии с действующим JWT не прерываются. Обход аутентификации не допускается.</p>
+<hr />
+<h2 id="2-Управление-курсами"><a class="header" href="#2-Управление-курсами">2. Управление курсами</a></h2>
+<p><strong>SYS-05</strong> <em>(← SR-03)</em>
+Система должна позволять преподавателю создавать курс с иерархической структурой: Курс → Модули → Уроки → Задания, с возможностью вложенности не менее 3 уровней. Курс должен поддерживать черновик и опубликованное состояние.</p>
+<p><strong>SYS-06</strong> <em>(← SR-03)</em>
+Система должна поддерживать загрузку учебных материалов следующих форматов: PDF, MP4, DOCX, PPTX, PNG, JPEG. Максимальный размер одного файла — 2 ГБ. При превышении лимита — информативное сообщение об ошибке без потери других данных курса.</p>
+<p><strong>SYS-07</strong> <em>(← SR-03)</em>
+Система должна предоставлять конструктор тестов с типами вопросов: одиночный выбор, множественный выбор, текстовый ввод, сопоставление. Минимальное количество вопросов в тесте — 1; порядок вопросов может быть фиксированным или случайным.</p>
+<p><strong>SYS-08</strong> <em>(← SR-03, SR-07)</em>
+При публикации курса система должна автоматически запрашивать из SIS список зачисленных студентов и предоставлять им доступ. При недоступности SIS — зачисление откладывается в очередь и выполняется при восстановлении.</p>
+<hr />
+<h2 id="3-Тестирование-и-оценивание"><a class="header" href="#3-Тестирование-и-оценивание">3. Тестирование и оценивание</a></h2>
+<p><strong>SYS-09</strong> <em>(← SR-01)</em>
+Система должна фиксировать ответы студента с временными метками каждый раз при переходе между вопросами. Ответы сохраняются на сервере немедленно; при разрыве соединения прогресс не теряется (localStorage как клиентский кэш, синхронизируется при восстановлении).</p>
+<p><strong>SYS-10</strong> <em>(← SR-01)</em>
+По истечении отведённого времени система должна автоматически завершить сессию и сохранить все текущие ответы студента, включая ответ на текущий открытый вопрос.</p>
+<p><strong>SYS-11</strong> <em>(← SR-01, SR-04)</em>
+Система должна автоматически оценивать вопросы типов «одиночный выбор», «множественный выбор» и «сопоставление» немедленно после завершения теста. Результат отображается студенту сразу.</p>
+<p><strong>SYS-12</strong> <em>(← SR-04)</em>
+Для вопросов типа «текстовый ввод» система должна добавлять задачу в очередь ручной проверки преподавателя с привязкой к <code>student_id</code>, <code>test_id</code>, <code>question_id</code>, <code>submission_timestamp</code>.</p>
+<p><strong>SYS-13</strong> <em>(← SR-04)</em>
+Итоговый балл по тесту должен рассчитываться только после проверки всех вопросов (автоматических и ручных) и сохраняться в БД вместе с <code>completion_timestamp</code>. До завершения всех ручных проверок статус теста — <code>pending_review</code>.</p>
+<hr />
+<h2 id="4-Прокторинг"><a class="header" href="#4-Прокторинг">4. Прокторинг</a></h2>
+<p><strong>SYS-14</strong> <em>(← SR-01, SR-02, SR-11)</em>
+Система должна поддерживать три режима прокторинга: <code>none</code> (без прокторинга), <code>async</code> (запись для последующей проверки), <code>realtime</code> (проктор наблюдает онлайн). Режим задаётся преподавателем на уровне теста.</p>
+<p><strong>SYS-15</strong> <em>(← SR-01)</em>
+В режиме <code>realtime</code> система должна устанавливать WebRTC-соединение не позднее чем через 30 секунд после нажатия «Начать экзамен» (p95). При ошибке — отображать диагностическое сообщение и предлагать переключение в режим <code>async</code>.</p>
+<p><strong>SYS-16</strong> <em>(← SR-06, SR-11)</em>
+Система должна записывать видеопоток с веб-камеры студента и поток его экрана в течение всей экзаменационной сессии. Запись должна быть загружена в S3 не позднее 5 минут после завершения сессии.</p>
+<p><strong>SYS-17</strong> <em>(← SR-02, SR-05)</em>
+Proctoring Service должен автоматически детектировать следующие события: уход студента из кадра (&gt;5 сек), обнаружение более одного лица, переключение браузерной вкладки или сворачивание окна (&gt;3 сек), посторонняя речь. Каждое событие фиксируется независимо.</p>
+<p><strong>SYS-18</strong> <em>(← SR-02)</em>
+Каждое событие тревоги должно сохраняться с атрибутами: <code>session_id</code>, <code>event_type</code>, <code>timestamp</code>, <code>confidence_score</code> (0.0–1.0), скриншот фрейма (для событий с лицом, TTL pre-signed URL = 1 ч).</p>
+<p><strong>SYS-19</strong> <em>(← SR-06)</em>
+Проктор должен иметь возможность выносить вердикт по каждому событию: «Нарушение» / «Не нарушение» / «Эскалация». Вердикт фиксируется с <code>proctor_id</code>, <code>verdict_timestamp</code> и опциональным комментарием. Вердикт можно изменить до подтверждения итогового решения.</p>
+<p><strong>SYS-20</strong> <em>(← SR-05, SR-06, SR-11)</em>
+В асинхронном режиме система должна предоставлять проктору интерфейс с видеоплеером, временной шкалой событий тревоги и навигацией по меткам. Нажатие на метку перематывает видео к соответствующему моменту.</p>
+<hr />
+<h2 id="5-Расписание-и-уведомления"><a class="header" href="#5-Расписание-и-уведомления">5. Расписание и уведомления</a></h2>
+<p><strong>SYS-21</strong> <em>(← SR-01, SR-10)</em>
+Система должна открывать доступ к экзамену строго в соответствии с расписанием (<code>start_time</code> — <code>end_time</code>): блокировать начало до <code>start_time</code> (HTTP 423), автоматически завершать активные сессии по <code>end_time</code>.</p>
+<p><strong>SYS-22</strong> <em>(← SR-01)</em>
+Система должна отправлять студенту email-уведомление за 24 часа и за 1 час до начала экзамена. Уведомление должно содержать название экзамена, временное окно и ссылку на платформу.</p>
+<p><strong>SYS-23</strong> <em>(← SR-05, SR-12)</em>
+При возникновении события тревоги с <code>confidence_score &gt; 0.8</code> в режиме <code>realtime</code> система должна доставить push-уведомление проктору в интерфейсе в течение 5 секунд от момента детекции.</p>
+<hr />
+<h2 id="6-Интеграция-с-sis-и-отчётность"><a class="header" href="#6-Интеграция-с-sis-и-отчётность">6. Интеграция с SIS и отчётность</a></h2>
+<p><strong>SYS-24</strong> <em>(← SR-07)</em>
+После подтверждения итоговых оценок преподавателем система должна передавать их в SIS через REST API с полями: <code>student_id</code>, <code>course_id</code>, <code>grade</code>, <code>grade_scale</code>, <code>grade_date</code>, <code>status</code>.</p>
+<p><strong>SYS-25</strong> <em>(← SR-07)</em>
+При ошибке передачи в SIS (HTTP 4xx/5xx или timeout) система должна сохранять оценки в очередь и повторять попытку с интервалами 1, 5, 15, 60 минут. После 5 неудачных попыток — email-уведомление администратору.</p>
+<p><strong>SYS-26</strong> <em>(← SR-04)</em>
+Система должна предоставлять преподавателю отчёт по курсу со следующими метриками: средний балл, распределение оценок (гистограмма), процент успешно сдавших, прогресс по модулям. Данные обновляются в реальном времени.</p>
+<p><strong>SYS-27</strong> <em>(← SR-13)</em>
+Система должна поддерживать экспорт отчётов в форматах CSV и PDF. Время формирования отчёта до 10 000 записей — не более 10 секунд.</p>
+<hr />
+<h2 id="7-Безопасность-и-приватность"><a class="header" href="#7-Безопасность-и-приватность">7. Безопасность и приватность</a></h2>
+<p><strong>SYS-28</strong> <em>(← SR-09, SR-10)</em>
+Все API-эндпоинты должны быть доступны только по HTTPS с TLS 1.2 и выше. HTTP-запросы перенаправляются на HTTPS (301). HSTS включён для всех доменов.</p>
+<p><strong>SYS-29</strong> <em>(← SR-06, SR-09)</em>
+Видеозаписи экзаменов должны храниться в S3 с шифрованием AES-256 (SSE-S3 или SSE-KMS) и быть доступны только через pre-signed URL с TTL не более 4 часов.</p>
+<p><strong>SYS-30</strong> <em>(← SR-09)</em>
+Система должна обеспечивать возможность удаления всех персональных данных студента (GDPR Right to Erasure) по запросу администратора. Операция должна завершаться в течение 30 дней с момента запроса и включать: профиль, ответы, видеозаписи, аудит-логи (за исключением данных, требуемых для юридической отчётности).</p>
+<p><strong>SYS-31</strong> <em>(← SR-09)</em>
+Система должна вести аудит-лог всех обращений к видеозаписям с полями: <code>user_id</code>, <code>role</code>, <code>session_id</code>, <code>access_timestamp</code>, <code>action</code> (<code>view</code> / <code>download</code> / <code>delete</code>). Аудит-лог неизменяем.</p>
+<p><strong>SYS-32</strong> <em>(← SR-09)</em>
+Видеозаписи должны автоматически удаляться из S3 по истечении настраиваемого срока хранения (по умолчанию 90 дней, минимум 30 дней, максимум 365 дней). Удаление выполняется через S3 lifecycle policy.</p>
+<hr />
+<h2 id="8-Дополнительные-системные-требования"><a class="header" href="#8-Дополнительные-системные-требования">8. Дополнительные системные требования</a></h2>
+<p><strong>SYS-33</strong> <em>(← SR-10)</em>
+Система должна применять rate limiting на все публичные API-эндпоинты. Лимит для неаутентифицированных запросов — 20 запросов/мин с одного IP. Лимит для аутентифицированных — 300 запросов/мин с одного <code>user_id</code>.</p>
+<p><strong>SYS-34</strong> <em>(← SR-08)</em>
+Администратор должен иметь возможность настраивать интеграции (IdP, SIS, S3, SMTP) через веб-интерфейс без редактирования конфигурационных файлов или перезапуска сервисов.</p>
+<p><strong>SYS-35</strong> <em>(← SR-10)</em>
+Система должна реализовывать circuit breaker для всех вызовов внешних сервисов (IdP, SIS, SMTP, S3, WebRTC Медиасервер). При срабатывании — fallback-поведение согласно CONOPS, уведомление администратору.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nfr--Нефункциональные-требования"><a class="header" href="#nfr--Нефункциональные-требования">NFR — Нефункциональные требования</a></h1>
+<hr />
+<p>Нефункциональные требования определяют качественные характеристики системы. Каждое NFR привязано к измеримым метрикам и методу проверки.</p>
+<hr />
+<h2 id="Таблица-согласованности-nfr--sys"><a class="header" href="#Таблица-согласованности-nfr--sys">Таблица согласованности NFR → SYS</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>NFR</th><th>Область</th><th>Связанные SYS</th><th>Ключевая метрика</th></tr></thead><tbody>
+<tr><td>NFR-01</td><td>Доступность</td><td>SYS-03, SYS-04, SYS-21, SYS-35</td><td>Uptime ≥ 99.9% в сессию</td></tr>
+<tr><td>NFR-02</td><td>Производительность видеопотока</td><td>SYS-15, SYS-23</td><td>Задержка ≤ 500 мс</td></tr>
+<tr><td>NFR-03</td><td>Производительность API</td><td>SYS-09, SYS-11, SYS-26, SYS-27</td><td>p95 ≤ 500 мс</td></tr>
+<tr><td>NFR-04</td><td>Приватность и защита данных</td><td>SYS-28, SYS-29, SYS-30, SYS-31, SYS-32</td><td>100% шифрование + 0 нарушений TTL</td></tr>
+<tr><td>NFR-05</td><td>Качество детекции</td><td>SYS-17, SYS-18, SYS-19</td><td>FPR ≤ 15%</td></tr>
+<tr><td>NFR-06</td><td>Масштабируемость</td><td>SYS-14, SYS-15, SYS-16</td><td>≥ 500 одновременных сессий</td></tr>
+<tr><td>NFR-07</td><td>Безопасность</td><td>SYS-28, SYS-29, SYS-33</td><td>0 критических уязвимостей</td></tr>
+<tr><td>NFR-08</td><td>Отказоустойчивость и деградация</td><td>SYS-09, SYS-24, SYS-25, SYS-35</td><td>0% потери ответов при разрыве</td></tr>
+<tr><td>NFR-09</td><td>Наблюдаемость</td><td>SYS-33, SYS-34</td><td>MTTD ≤ 2 мин</td></tr>
+<tr><td>NFR-10</td><td>Совместимость браузеров</td><td>SYS-15</td><td>≥ 97% успешный WebRTC в 4 браузерах</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-01-Доступность"><a class="header" href="#nfr-01-Доступность">NFR-01: Доступность</a></h2>
+<p><strong>Описание:</strong>
+Система должна быть доступна для проведения экзаменов в соответствии с академическим расписанием. Плановое обслуживание не должно проводиться в период экзаменационных сессий.</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>Горизонтальное масштабирование API-сервисов (минимум 2 реплики каждого)</li>
+<li>PostgreSQL с потоковой репликацией и автофейловером (Patroni)</li>
+<li>Health checks (<code>/health</code>, <code>/ready</code>) для всех сервисов</li>
+<li>Blue/green deployment для обновлений без даунтайма</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>Uptime в период экзаменационной сессии</td><td>≥ 99.9% (≤ 43 мин/мес)</td><td>Prometheus/Grafana, внешний мониторинг</td></tr>
+<tr><td>Uptime в обычный период</td><td>≥ 99.5%</td><td>Prometheus/Grafana</td></tr>
+<tr><td>Плановое окно обслуживания</td><td>≤ 4 ч/мес, только вне сессий</td><td>Регламент обслуживания</td></tr>
+<tr><td>RTO (Recovery Time Objective)</td><td>≤ 15 минут</td><td>Тест восстановления</td></tr>
+<tr><td>RPO (Recovery Point Objective)</td><td>≤ 5 минут</td><td>Тест потери данных</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-02-Производительность-видеопотока"><a class="header" href="#nfr-02-Производительность-видеопотока">NFR-02: Производительность видеопотока</a></h2>
+<p><strong>Описание:</strong>
+Система должна обеспечивать стабильную передачу видеопотока прокторинга без заметных задержек и артефактов.</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>WebRTC с адаптивным битрейтом (REMB, TWCC)</li>
+<li>Медиасервер с горизонтальным масштабированием воркеров</li>
+<li>CDN для раздачи статики и записей</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>Задержка видеопотока (glass-to-glass)</td><td>≤ 500 мс</td><td>Инструментальное измерение</td></tr>
+<tr><td>Качество видео</td><td>≥ 720p при стабильном канале</td><td>Конфигурация WebRTC</td></tr>
+<tr><td>Время установления WebRTC-соединения (p95)</td><td>≤ 30 сек</td><td>Нагрузочный тест</td></tr>
+<tr><td>Максимальное число одновременных сессий</td><td>≥ 500</td><td>Нагрузочный тест</td></tr>
+<tr><td>Процент успешных подключений</td><td>≥ 97%</td><td>Мониторинг</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-03-Производительность-api"><a class="header" href="#nfr-03-Производительность-api">NFR-03: Производительность API</a></h2>
+<p><strong>Описание:</strong>
+Основные операции системы должны отвечать в пределах допустимого времени при расчётной нагрузке.</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>Redis-кэш для горячих данных (курсы, профили, расписание)</li>
+<li>Индексы в PostgreSQL, connection pooling (PgBouncer)</li>
+<li>Асинхронная обработка через RabbitMQ для уведомлений и передачи в SIS</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>Время ответа API (p95, основные операции)</td><td>≤ 500 мс</td><td>Нагрузочный тест (k6/JMeter)</td></tr>
+<tr><td>Время ответа API (p99)</td><td>≤ 2000 мс</td><td>Нагрузочный тест</td></tr>
+<tr><td>Пропускная способность</td><td>≥ 200 RPS</td><td>Нагрузочный тест</td></tr>
+<tr><td>Время загрузки списка курсов</td><td>≤ 1 сек</td><td>Функциональный тест</td></tr>
+<tr><td>Время экспорта отчёта (10 000 записей)</td><td>≤ 10 сек</td><td>Функциональный тест</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-04-Приватность-и-защита-данных"><a class="header" href="#nfr-04-Приватность-и-защита-данных">NFR-04: Приватность и защита данных</a></h2>
+<p><strong>Описание:</strong>
+Система должна соответствовать требованиям GDPR и 152-ФЗ в части обработки персональных данных и видеозаписей.</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>Видеозаписи доступны только через pre-signed URL с ограниченным TTL</li>
+<li>Аудит-лог всех обращений к записям (неизменяемый)</li>
+<li>Автоматическое удаление записей по истечении срока (S3 lifecycle)</li>
+<li>Право на удаление данных студента в течение 30 дней</li>
+<li>Данные хранятся только в юрисдикции, согласованной с заказчиком</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>Доля записей с просроченным TTL pre-signed URL, доступных публично</td><td>0%</td><td>Аудит S3 policy</td></tr>
+<tr><td>Срок выполнения запроса на удаление данных</td><td>≤ 30 дней</td><td>Функциональный тест</td></tr>
+<tr><td>Покрытие аудит-логом доступов к записям</td><td>100%</td><td>Инспекция кода + тест</td></tr>
+<tr><td>Уязвимости класса OWASP Top 10</td><td>0 критических</td><td>Penetration testing</td></tr>
+<tr><td>Хранение видеозаписей в зашифрованном виде</td><td>100%</td><td>Инспекция конфигурации S3</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-05-Справедливость-прокторинга-качество-детекции"><a class="header" href="#nfr-05-Справедливость-прокторинга-качество-детекции">NFR-05: Справедливость прокторинга (качество детекции)</a></h2>
+<p><strong>Описание:</strong>
+Автоматическая детекция нарушений должна минимизировать ложноположительные срабатывания, не наказывая добросовестных студентов, и одновременно сохранять достаточную чувствительность к реальным нарушениям.</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>Confidence score для каждого события — проктор принимает итоговое решение</li>
+<li>Пороговые значения настраиваются администратором</li>
+<li>Регулярный анализ вердиктов для калибровки модели (feedback loop)</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>False Positive Rate (ложные тревоги, вердикт «не нарушение»)</td><td>≤ 15%</td><td>Анализ вердиктов за период</td></tr>
+<tr><td>False Negative Rate (пропущенные нарушения)</td><td>≤ 5%</td><td>Аудит выборки сессий</td></tr>
+<tr><td>Доля событий с confidence_score &gt; 0.8</td><td>≥ 70% от всех тревог</td><td>Мониторинг</td></tr>
+<tr><td>Среднее время вынесения вердикта проктором</td><td>≤ 5 минут на сессию</td><td>Инструментальное</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-06-Масштабируемость"><a class="header" href="#nfr-06-Масштабируемость">NFR-06: Масштабируемость</a></h2>
+<p><strong>Описание:</strong>
+Система должна поддерживать рост числа одновременных пользователей и экзаменационных сессий без изменения архитектуры.</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>Stateless API-сервисы — горизонтальное масштабирование через Kubernetes HPA</li>
+<li>Медиасервер — масштабирование по числу активных сессий (K8s KEDA)</li>
+<li>Шардирование БД по <code>organization_id</code> при росте &gt;10 000 организаций</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>Максимальное число одновременных пользователей</td><td>≥ 10 000</td><td>Расчётное моделирование</td></tr>
+<tr><td>Максимальное число одновременных экзаменационных сессий</td><td>≥ 500</td><td>Нагрузочный тест</td></tr>
+<tr><td>Время добавления нового экземпляра API (K8s scale-out)</td><td>≤ 60 сек</td><td>Kubernetes тест</td></tr>
+<tr><td>Линейность прироста производительности</td><td>+75% при удвоении ресурсов</td><td>Нагрузочный тест</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-07-Безопасность"><a class="header" href="#nfr-07-Безопасность">NFR-07: Безопасность</a></h2>
+<p><strong>Описание:</strong>
+Система должна защищать данные студентов, академические результаты и видеозаписи от несанкционированного доступа.</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>Все коммуникации только по HTTPS (TLS 1.2+), HSTS</li>
+<li>JWT-токены с коротким TTL (8 ч) и механизмом отзыва (blacklist в Redis)</li>
+<li>Rate limiting на всех публичных API (SYS-33)</li>
+<li>Разграничение данных организаций (multi-tenancy isolation через <code>organization_id</code>)</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>Критические уязвимости (CVSS ≥ 9.0)</td><td>0</td><td>Penetration testing (OWASP)</td></tr>
+<tr><td>Высокие уязвимости (CVSS 7.0–8.9)</td><td>0 неустранённых в продакшне</td><td>Penetration testing</td></tr>
+<tr><td>Доля трафика по HTTPS</td><td>100%</td><td>Инспекция конфигурации</td></tr>
+<tr><td>Изоляция данных между организациями</td><td>0 нарушений</td><td>Тест на кросс-тенант доступ</td></tr>
+<tr><td>MTTD несанкционированного доступа</td><td>≤ 2 мин</td><td>Мониторинг + алерты</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-08-Отказоустойчивость-и-деградация"><a class="header" href="#nfr-08-Отказоустойчивость-и-деградация">NFR-08: Отказоустойчивость и деградация</a></h2>
+<p><strong>Описание:</strong>
+При сбое отдельных компонентов или внешних систем система должна сохранять работоспособность в деградированном режиме, не теряя данные.</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>Circuit breaker для всех вызовов внешних сервисов (SYS-35)</li>
+<li>RabbitMQ с persistent messages для уведомлений и передачи оценок</li>
+<li>Graceful degradation: при недоступности медиасервера — асинхронный режим</li>
+<li>localStorage на клиенте как fallback для несохранённых ответов</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>Потеря данных ответов студента при разрыве соединения</td><td>0%</td><td>Тест с симуляцией разрыва</td></tr>
+<tr><td>Время обнаружения сбоя (MTTD)</td><td>≤ 2 мин</td><td>Мониторинг (Prometheus)</td></tr>
+<tr><td>Время восстановления (MTTR)</td><td>≤ 15 мин</td><td>Тест восстановления</td></tr>
+<tr><td>Доля успешных retry для передачи оценок в SIS</td><td>≥ 99%</td><td>Анализ логов</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-09-Наблюдаемость"><a class="header" href="#nfr-09-Наблюдаемость">NFR-09: Наблюдаемость</a></h2>
+<p><strong>Описание:</strong>
+Система должна предоставлять достаточно информации для мониторинга, диагностики инцидентов и анализа производительности.</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>Структурированные JSON-логи (INFO/WARN/ERROR) во всех сервисах</li>
+<li>Prometheus-метрики: RPS, error rate, latency (p50/p95/p99)</li>
+<li>Distributed tracing (OpenTelemetry / Jaeger)</li>
+<li>Grafana-дашборды: технические метрики + бизнес-метрики (активные сессии, события тревоги)</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>MTTD инцидента через алерты</td><td>≤ 2 мин</td><td>Мониторинг</td></tr>
+<tr><td>Срок хранения логов</td><td>≥ 90 дней</td><td>Конфигурация</td></tr>
+<tr><td>Трассируемость запроса от API до БД (критические пути)</td><td>100%</td><td>Инспекция</td></tr>
+<tr><td>Доступность дашбордов Grafana</td><td>≥ 99.9%</td><td>Мониторинг</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="nfr-10-Совместимость-браузеров-и-устройств"><a class="header" href="#nfr-10-Совместимость-браузеров-и-устройств">NFR-10: Совместимость браузеров и устройств</a></h2>
+<p><strong>Описание:</strong>
+Студент должен иметь возможность пройти экзамен с прокторингом в современном браузере без установки дополнительного ПО (кроме опционального античит-агента).</p>
+<p><strong>Реализация:</strong></p>
+<ul>
+<li>Поддержка WebRTC в Chrome, Firefox, Edge, Safari (последние 2 мажорные версии)</li>
+<li>Адаптивный UI для разрешений от 1024×768</li>
+<li>Graceful degradation при отсутствии WebRTC — сообщение с инструкцией по обновлению браузера</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Метрика</th><th>Целевое значение</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>Поддерживаемые браузеры</td><td>Chrome, Firefox, Edge, Safari (2 последние мажорные версии)</td><td>Тест на матрице браузеров</td></tr>
+<tr><td>Успешный запуск WebRTC в поддерживаемых браузерах</td><td>≥ 97%</td><td>Функциональный тест</td></tr>
+<tr><td>Минимальное разрешение экрана</td><td>1024×768</td><td>UI-тест</td></tr>
+<tr><td>Время первой загрузки страницы экзамена (LTE-соединение, 10 Мбит/с)</td><td>≤ 3 сек</td><td>Lighthouse / WebPageTest</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="Архитектура--lmsp"><a class="header" href="#Архитектура--lmsp">Архитектура — LMS+P</a></h1>
+<hr />
+<h2 id="Содержание-2"><a class="header" href="#Содержание-2">Содержание</a></h2>
+<ol>
+<li><a href="architecture.html#1-%D1%81%D1%82%D0%B8%D0%BB%D1%8C-%D0%B8-%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B2%D0%B0%D1%8F-%D0%B8%D0%B4%D0%B5%D1%8F">Стиль и ключевая идея</a></li>
+<li><a href="architecture.html#2-%D0%B4%D0%B5%D0%BA%D0%BE%D0%BC%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D1%8F-%D0%BD%D0%B0-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80%D1%8B-c4-level-2">Декомпозиция на контейнеры (C4 Level 2)</a></li>
+<li><a href="architecture.html#3-%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D1%8F-adr">Архитектурные решения (ADR)</a></li>
+<li><a href="architecture.html#4-%D0%BE%D0%B1%D1%89%D0%B0%D1%8F-%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C">Общая согласованность</a></li>
+</ol>
+<hr />
+<h2 id="1-Стиль-и-ключевая-идея"><a class="header" href="#1-Стиль-и-ключевая-идея">1. Стиль и ключевая идея</a></h2>
+<p><strong>Стиль архитектуры:</strong> Event-driven микросервисная архитектура с CQRS-подходом для разделения операций обучения/оценивания и аналитики.</p>
+<p><strong>Ключевая идея:</strong> Платформа оркестрирует взаимодействие между студентом, медиасервером, движком прокторинга и внешними системами (SIS, S3, SSO) — обеспечивая сохранность данных и справедливость оценивания даже при частичном сбое внешних зависимостей.</p>
+<p><strong>Три логических слоя:</strong></p>
+<ul>
+<li><strong>Слой входа и безопасности</strong> — API Gateway: проверка JWT от IdP, rate limiting, маршрутизация. Единая точка входа, все коммуникации только по HTTPS.</li>
+<li><strong>Ядро обучения и прокторинга (Command-слой)</strong> — Course, Assessment, Proctoring, Notification Service. Все критические события публикуются в RabbitMQ — гарантия сохранности данных при разрыве соединения.</li>
+<li><strong>Слой управления и аналитики (Query-слой)</strong> — Admin Portal, Reporting Service, SIS Sync Service. Чтение отчётности — из реплики PostgreSQL, чтобы тяжёлые запросы не влияли на приём ответов экзамена.</li>
+</ul>
+<iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/c4-containers.drawio"></iframe>
+<hr />
+<h2 id="2-Декомпозиция-на-контейнеры-c4-level-2"><a class="header" href="#2-Декомпозиция-на-контейнеры-c4-level-2">2. Декомпозиция на контейнеры (C4 Level 2)</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>№</th><th>Контейнер</th><th>Тип</th><th>Обязанность</th><th>Хранит</th><th>Технологии</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>API Gateway</strong></td><td>Сервис</td><td>Аутентификация JWT, rate limiting, маршрутизация запросов к downstream-сервисам</td><td>stateless</td><td>Go / Nginx + Redis</td></tr>
+<tr><td>2</td><td><strong>Course Service</strong></td><td>Сервис</td><td>CRUD курсов, модулей, материалов, тестов; управление публикацией; запрос зачисления из SIS</td><td>stateless</td><td>Go + PostgreSQL</td></tr>
+<tr><td>3</td><td><strong>Assessment Service</strong></td><td>Сервис</td><td>Приём ответов студентов, автоматическое оценивание, управление очередью ручной проверки, расчёт итогового балла</td><td>stateless</td><td>Go + PostgreSQL</td></tr>
+<tr><td>4</td><td><strong>Proctoring Service</strong></td><td>Сервис</td><td>Управление экзаменационными сессиями, WebRTC-сигналинг, детекция тревог, управление вердиктами, интеграция с S3</td><td>stateless</td><td>Go + WebRTC SDK + PostgreSQL</td></tr>
+<tr><td>5</td><td><strong>Notification Service</strong></td><td>Сервис</td><td>Отправка email (SMTP) и push-уведомлений в UI; слушает RabbitMQ-очередь событий</td><td>stateless</td><td>Go + RabbitMQ + SMTP</td></tr>
+<tr><td>6</td><td><strong>SIS Sync Service</strong></td><td>Сервис</td><td>Передача итоговых оценок в SIS; retry-механизм (1/5/15/60 мин); управление очередью <code>grade_sync_queue</code></td><td>stateful (sync_queue в PostgreSQL)</td><td>Go + PostgreSQL + RabbitMQ</td></tr>
+<tr><td>7</td><td><strong>Reporting Service</strong></td><td>Сервис</td><td>Отчёты успеваемости, экспорт CSV/PDF; читает из PostgreSQL-реплики (CQRS Query-сторона)</td><td>stateless</td><td>Go / Python + PostgreSQL replica</td></tr>
+<tr><td>8</td><td><strong>Admin Portal</strong></td><td>SPA + API</td><td>Управление пользователями, ролями, интеграциями; дашборд статусов; аудит-логи</td><td>stateless (сессии в Redis)</td><td>React + Go API + PostgreSQL</td></tr>
+<tr><td>9</td><td><strong>PostgreSQL</strong></td><td>СУБД</td><td>Транзакционные данные: пользователи, курсы, результаты, события прокторинга, вердикты, аудит-логи, sync-очередь</td><td>stateful</td><td>PostgreSQL 15+ с потоковой репликой + PgBouncer</td></tr>
+<tr><td>10</td><td><strong>Redis</strong></td><td>Кэш / Брокер</td><td>Кэш сессий (TTL 8ч), расписания (TTL 24ч), профилей (TTL 5мин); rate limiting счётчики; JWT blacklist</td><td>stateful (RAM + RDB snapshot)</td><td>Redis 7+ + Sentinel</td></tr>
+<tr><td>11</td><td><strong>RabbitMQ</strong></td><td>Брокер сообщений</td><td>Асинхронная доставка событий: <code>exam.answer.saved</code>, <code>exam.session.completed</code>, <code>grade.confirmed</code>, <code>notification.requested</code>, <code>proctoring.alert.detected</code></td><td>stateful (persistent queues)</td><td>RabbitMQ 3.12+</td></tr>
+</tbody></table>
+</div><iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/c4-proctoring-component.drawio"></iframe>
+<hr />
+<h2 id="3-Архитектурные-решения-adr"><a class="header" href="#3-Архитектурные-решения-adr">3. Архитектурные решения (ADR)</a></h2>
+<hr />
+<h3 id="adr-001-webrtc-через-выделенный-медиасервер-sfu-а-не-p2p"><a class="header" href="#adr-001-webrtc-через-выделенный-медиасервер-sfu-а-не-p2p">ADR-001: WebRTC через выделенный медиасервер (SFU), а не P2P</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-15, SYS-16, SYS-20, NFR-02, NFR-06</p>
+<p><strong>Контекст:</strong>
+Прокторинг требует, чтобы проктор мог наблюдать за студентами в реальном времени. Возможны два подхода: P2P WebRTC (браузер студента ↔ браузер проктора) и SFU медиасервер (браузер → сервер → проктор).</p>
+<p><strong>Решение:</strong>
+Использовать выделенный медиасервер (SFU — Selective Forwarding Unit, Janus или MediaSoup). Поток студента публикуется на сервер, проктор подписывается на нужные потоки через сервер.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>SFU (выбрано)</th><th>P2P</th><th>RTMP/HLS</th></tr></thead><tbody>
+<tr><td>Масштабируемость прокторинга (≥20 сессий)</td><td>✅ Да</td><td>❌ Нет</td><td>✅ Да</td></tr>
+<tr><td>Серверная запись</td><td>✅ Да</td><td>❌ Нет</td><td>✅ Да</td></tr>
+<tr><td>Задержка</td><td>✅ &lt; 500 мс</td><td>✅ &lt; 200 мс</td><td>❌ 5–30 сек</td></tr>
+<tr><td>Устойчивость к NAT</td><td>✅ Да</td><td>❌ Проблемы</td><td>✅ Да</td></tr>
+<tr><td>Операционная стоимость</td><td>⚠️ Выше</td><td>✅ Нулевая</td><td>✅ Ниже</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> Централизованная запись и возможность наблюдения за 20+ сессиями одновременно — критические требования NFR-06 (SR-05). Стоимость медиасервера оправдана. RTMP отклонён из-за недопустимой задержки (NFR-02).</p>
+<hr />
+<h3 id="adr-002-Двухрежимный-прокторинг-realtime--async"><a class="header" href="#adr-002-Двухрежимный-прокторинг-realtime--async">ADR-002: Двухрежимный прокторинг (realtime + async)</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-14, SYS-16, SYS-20, NFR-06, SR-11</p>
+<p><strong>Контекст:</strong>
+Разные типы экзаменов требуют разного уровня контроля. Обязательный прокторинг в реальном времени для всех тестов создаёт высокую нагрузку на проктаров и медиасервер — особенно при массовых тестированиях (&gt;500 студентов).</p>
+<p><strong>Решение:</strong>
+Реализовать оба режима прокторинга, выбор на уровне курса/теста.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>Только realtime</th><th>Только async</th><th>Оба режима (выбрано)</th></tr></thead><tbody>
+<tr><td>Возможность вмешательства проктора</td><td>✅</td><td>❌</td><td>✅</td></tr>
+<tr><td>Нагрузка на медиасервер</td><td>❌ Высокая</td><td>✅ Нет</td><td>⚠️ Зависит от режима</td></tr>
+<tr><td>Нагрузка на проктаров</td><td>❌ Высокая</td><td>✅ Гибкая</td><td>✅ Гибкая</td></tr>
+<tr><td>Сложность реализации</td><td>✅ Один путь</td><td>✅ Один путь</td><td>⚠️ Два пути</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> Массовые промежуточные тесты не требуют наблюдения в реальном времени (SR-11). Два режима снижают операционные затраты без потери контроля над итоговыми экзаменами.</p>
+<hr />
+<h3 id="adr-003-event-driven-архитектура-с-rabbitmq-для-критических-событий"><a class="header" href="#adr-003-event-driven-архитектура-с-rabbitmq-для-критических-событий">ADR-003: Event-driven архитектура с RabbitMQ для критических событий</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-09, SYS-24, SYS-25, NFR-08, SR-07</p>
+<p><strong>Контекст:</strong>
+Передача ответов студентов, уведомления, синхронизация с SIS — все эти операции должны гарантированно завершаться даже при временных сбоях внешних систем.</p>
+<p><strong>Решение:</strong>
+RabbitMQ с persistent queues для всех критических событий: <code>exam.answer.saved</code>, <code>exam.session.completed</code>, <code>grade.confirmed</code>, <code>notification.requested</code>. Основной поток синхронный (ответы сохраняются в PostgreSQL), побочные эффекты (уведомления, SIS) — через очередь.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>Синхронный REST</th><th>RabbitMQ (выбрано)</th><th>Kafka</th></tr></thead><tbody>
+<tr><td>Гарантия доставки</td><td>❌ Нет</td><td>✅ Да</td><td>✅ Да</td></tr>
+<tr><td>Изоляция сбоев</td><td>❌ Нет</td><td>✅ Да</td><td>✅ Да</td></tr>
+<tr><td>Сложность эксплуатации</td><td>✅ Простая</td><td>⚠️ Средняя</td><td>❌ Высокая</td></tr>
+<tr><td>Соответствие нагрузке (200 RPS)</td><td>✅</td><td>✅</td><td>⚠️ Избыточно</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> Падение SIS не должно блокировать выставление оценок (SR-07). Kafka избыточна при целевых 200 RPS — RabbitMQ достаточно и проще в эксплуатации.</p>
+<hr />
+<h3 id="adr-004-cqrs-для-разделения-нагрузки-оценивания-и-отчётности"><a class="header" href="#adr-004-cqrs-для-разделения-нагрузки-оценивания-и-отчётности">ADR-004: CQRS для разделения нагрузки оценивания и отчётности</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-26, SYS-27, NFR-03, NFR-01</p>
+<p><strong>Контекст:</strong>
+Тяжёлые отчёты (успеваемость группы, агрегаты по курсу) и транзакционные операции (приём ответов на экзамене, сохранение вердиктов) конкурируют за ресурсы одной БД. В период экзамена запрос отчёта не должен влиять на latency API ответов.</p>
+<p><strong>Решение:</strong>
+Записи — в PostgreSQL master (Assessment/Proctoring Service). Чтение для отчётности — из PostgreSQL streaming replica (Reporting Service). Горячие данные (расписание, профили) — в Redis.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>Единая БД</th><th>CQRS (выбрано)</th></tr></thead><tbody>
+<tr><td>Влияние отчётов на транзакционную нагрузку</td><td>❌ Есть</td><td>✅ Нет (read-replica)</td></tr>
+<tr><td>Независимое масштабирование</td><td>❌</td><td>✅</td></tr>
+<tr><td>Репликационная задержка</td><td>—</td><td>⚠️ До 1 сек</td></tr>
+<tr><td>Сложность</td><td>✅ Простая</td><td>⚠️ Средняя</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> В период пиковой нагрузки (500 экзаменов одновременно) запросы отчётности не должны деградировать API приёма ответов (NFR-01, NFR-03). Задержка репликации до 1 сек приемлема для аналитических отчётов.</p>
+<hr />
+<h3 id="adr-005-Хранение-видеозаписей-в-s3-а-не-в-БД-или-файловой-системе"><a class="header" href="#adr-005-Хранение-видеозаписей-в-s3-а-не-в-БД-или-файловой-системе">ADR-005: Хранение видеозаписей в S3, а не в БД или файловой системе</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-16, SYS-29, SYS-32, NFR-04, NFR-06</p>
+<p><strong>Контекст:</strong>
+Видеозаписи экзаменов могут достигать 1–2 ГБ на сессию. При 500 одновременных экзаменах — сотни гигабайт ежедневно. Хранение в СУБД невозможно, в файловой системе сервиса — не масштабируется и усложняет backup.</p>
+<p><strong>Решение:</strong>
+После завершения сессии Proctoring Service загружает запись в S3-совместимое хранилище. Доступ — только через pre-signed URL с TTL 4 часа. Lifecycle policy удаляет объекты по истечении срока хранения.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>Файловая система</th><th>S3 (выбрано)</th><th>СУБД</th></tr></thead><tbody>
+<tr><td>Масштабируемость</td><td>❌ Ограничена</td><td>✅ Неограничена</td><td>❌ Невозможна</td></tr>
+<tr><td>Lifecycle / TTL</td><td>❌ Вручную</td><td>✅ Из коробки</td><td>❌ Вручную</td></tr>
+<tr><td>Шифрование</td><td>⚠️ Вручную</td><td>✅ SSE-S3/KMS</td><td>⚠️ Частично</td></tr>
+<tr><td>Pre-signed URL</td><td>❌</td><td>✅</td><td>❌</td></tr>
+<tr><td>Стоимость</td><td>⚠️ Зависит от инфра</td><td>✅ Низкая</td><td>❌ Очень высокая</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> S3 — единственный вариант, удовлетворяющий одновременно масштабируемости (NFR-06), требованиям TTL/приватности (SYS-32, NFR-04) и стоимости при объёмах прокторинга.</p>
+<hr />
+<h2 id="4-Общая-согласованность"><a class="header" href="#4-Общая-согласованность">4. Общая согласованность</a></h2>
+<p>Архитектурные решения явно выводятся из требований:</p>
+<div class="table-wrapper"><table><thead><tr><th>Архитектурное решение</th><th>Какие требования обосновывают</th><th>Какие риски снижает</th></tr></thead><tbody>
+<tr><td>SFU медиасервер (ADR-001)</td><td>SYS-15, SYS-16, NFR-02, NFR-06</td><td>Риск №1 (отказ медиасервера), Риск №8 (перегрузка)</td></tr>
+<tr><td>Двухрежимный прокторинг (ADR-002)</td><td>SYS-14, SR-11, NFR-06</td><td>Риск №1 (деградация в async)</td></tr>
+<tr><td>RabbitMQ event-driven (ADR-003)</td><td>SYS-09, SYS-25, NFR-08</td><td>Риск №4 (потеря ответов), Риск №6 (сбой SIS)</td></tr>
+<tr><td>CQRS с репликой (ADR-004)</td><td>SYS-26, SYS-27, NFR-03</td><td>Риск №8 (перегрузка в пике)</td></tr>
+<tr><td>S3 для видеозаписей (ADR-005)</td><td>SYS-16, SYS-29, NFR-04, NFR-06</td><td>Риск №5 (несанкц. доступ), Риск №9 (GDPR)</td></tr>
+</tbody></table>
+</div><iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/state-session.drawio"></iframe>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Интерфейсы-icd-lite--lmsp"><a class="header" href="#Интерфейсы-icd-lite--lmsp">Интерфейсы (ICD-lite) — LMS+P</a></h1>
+<hr />
+<p>Документ описывает контракты взаимодействия между компонентами LMS+P и с внешними системами. Для каждого контракта указаны: endpoint / событие, поля, коды ошибок, версионирование, идемпотентность и retry-поведение.</p>
+<hr />
+<h2 id="Контракт-1-Запуск-экзаменационной-сессии"><a class="header" href="#Контракт-1-Запуск-экзаменационной-сессии">Контракт №1: Запуск экзаменационной сессии</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Endpoint</strong></td><td><code>POST /api/v1/exams/{exam_id}/sessions</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Протокол</strong></td><td>HTTPS, синхронный</td></tr>
+<tr><td><strong>Аутентификация</strong></td><td>Bearer JWT (из SSO)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>Не требуется (409 при дублирующем вызове)</td></tr>
+<tr><td><strong>Retry</strong></td><td>Клиент может повторить при 503; 409 означает «уже создано»</td></tr>
+</tbody></table>
+</div>
+<p><strong>Заголовки запроса:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Заголовок</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>Authorization</code></td><td>string</td><td>✅ Да</td><td><code>Bearer &lt;JWT&gt;</code></td></tr>
+<tr><td><code>Content-Type</code></td><td>string</td><td>✅ Да</td><td><code>application/json</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Тело запроса:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>proctoring_mode</code></td><td>enum</td><td>✅ Да</td><td><code>none</code> / <code>async</code> / <code>realtime</code></td></tr>
+<tr><td><code>device_info</code></td><td>object</td><td>❌ Нет</td><td><code>{"browser": "Chrome/120", "os": "Windows 11"}</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Пример запроса:</strong></p>
+<pre><code class="language-json">{
+  "proctoring_mode": "realtime",
+  "device_info": {"browser": "Chrome/120", "os": "macOS 14"}
+}
+</code></pre>
+<p><strong>Ответы:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>HTTP код</th><th>Ситуация</th><th>Тело ответа</th></tr></thead><tbody>
+<tr><td>201 Created</td><td>Сессия создана</td><td><code>{"session_id": "uuid", "webrtc_offer_url": "wss://...", "start_time": "ISO8601", "duration_minutes": 90}</code></td></tr>
+<tr><td>400 Bad Request</td><td>Неверный режим прокторинга</td><td><code>{"error": "invalid_proctoring_mode", "code": 400, "details": "allowed: none, async, realtime"}</code></td></tr>
+<tr><td>401 Unauthorized</td><td>Токен истёк или отсутствует</td><td><code>{"error": "unauthorized", "code": 401}</code></td></tr>
+<tr><td>403 Forbidden</td><td>Студент не зачислен на курс</td><td><code>{"error": "not_enrolled", "code": 403}</code></td></tr>
+<tr><td>409 Conflict</td><td>Активная сессия уже существует</td><td><code>{"error": "session_already_active", "session_id": "uuid", "code": 409}</code></td></tr>
+<tr><td>423 Locked</td><td>Экзамен вне временного окна</td><td><code>{"error": "exam_not_available", "available_from": "ISO8601", "code": 423}</code></td></tr>
+<tr><td>503 Service Unavailable</td><td>Медиасервер недоступен</td><td><code>{"error": "media_server_unavailable", "suggestion": "async_mode", "code": 503}</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Версионирование:</strong> При breaking changes — <code>/api/v2/exams/{exam_id}/sessions</code>. Старая версия поддерживается 6 месяцев с предупреждением в заголовке ответа <code>Deprecation: true</code>.</p>
+<hr />
+<h2 id="Контракт-2-Сохранение-ответа-студента"><a class="header" href="#Контракт-2-Сохранение-ответа-студента">Контракт №2: Сохранение ответа студента</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Endpoint</strong></td><td><code>POST /api/v1/sessions/{session_id}/answers</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Протокол</strong></td><td>HTTPS, синхронный</td></tr>
+<tr><td><strong>Аутентификация</strong></td><td>Bearer JWT</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>✅ Заголовок <code>Idempotency-Key</code> обязателен. Повторный запрос с тем же ключом возвращает 409 с исходным <code>answer_id</code></td></tr>
+<tr><td><strong>Retry</strong></td><td>Клиент повторяет при 5xx или timeout, используя тот же <code>Idempotency-Key</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Заголовки запроса:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Заголовок</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>Authorization</code></td><td>string</td><td>✅ Да</td><td><code>Bearer &lt;JWT&gt;</code></td></tr>
+<tr><td><code>Idempotency-Key</code></td><td>string(36)</td><td>✅ Да</td><td>UUID, генерируется клиентом. Хранится в Redis 24ч</td></tr>
+<tr><td><code>Content-Type</code></td><td>string</td><td>✅ Да</td><td><code>application/json</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Тело запроса:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>question_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID вопроса</td></tr>
+<tr><td><code>answer</code></td><td>object</td><td>✅ Да</td><td>Зависит от типа вопроса</td></tr>
+<tr><td><code>answer.selected_ids</code></td><td>array[string]</td><td>Для выбора</td><td>UUID выбранных вариантов</td></tr>
+<tr><td><code>answer.text</code></td><td>string</td><td>Для текста</td><td>Текстовый ответ (макс. 10 000 символов)</td></tr>
+<tr><td><code>answer.pairs</code></td><td>array[object]</td><td>Для сопоставления</td><td><code>[{"left_id": "uuid", "right_id": "uuid"}]</code></td></tr>
+<tr><td><code>client_timestamp</code></td><td>int64</td><td>✅ Да</td><td>Unix timestamp на устройстве студента (мс)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Пример запроса (одиночный выбор):</strong></p>
+<pre><code class="language-json">{
+  "question_id": "550e8400-e29b-41d4-a716-446655440000",
+  "answer": {"selected_ids": ["b1a2c3d4-..."]},
+  "client_timestamp": 1716451200000
+}
+</code></pre>
+<p><strong>Ответы:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>HTTP код</th><th>Ситуация</th><th>Тело ответа</th></tr></thead><tbody>
+<tr><td>200 OK</td><td>Ответ сохранён</td><td><code>{"answer_id": "uuid", "saved_at": "ISO8601", "question_id": "uuid"}</code></td></tr>
+<tr><td>400 Bad Request</td><td>Неверный формат ответа</td><td><code>{"error": "invalid_answer_format", "code": 400, "details": "text answer exceeds 10000 chars"}</code></td></tr>
+<tr><td>401 Unauthorized</td><td>Токен истёк</td><td><code>{"error": "unauthorized", "code": 401}</code></td></tr>
+<tr><td>403 Forbidden</td><td>Сессия не принадлежит студенту</td><td><code>{"error": "forbidden", "code": 403}</code></td></tr>
+<tr><td>409 Conflict</td><td>Idempotency-Key уже использован</td><td><code>{"answer_id": "uuid", "status": "existing", "code": 409}</code></td></tr>
+<tr><td>410 Gone</td><td>Сессия завершена (время вышло)</td><td><code>{"error": "session_expired", "completed_at": "ISO8601", "code": 410}</code></td></tr>
+<tr><td>422 Unprocessable</td><td>question_id не принадлежит данной сессии</td><td><code>{"error": "question_not_in_session", "code": 422}</code></td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="Контракт-3-Событие-тревоги-от-proctoring-service-асинхронное"><a class="header" href="#Контракт-3-Событие-тревоги-от-proctoring-service-асинхронное">Контракт №3: Событие тревоги от Proctoring Service (асинхронное)</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Event</strong></td><td><code>proctoring.alert.detected</code></td></tr>
+<tr><td><strong>Протокол</strong></td><td>RabbitMQ, fanout exchange <code>proctoring_events</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Потребители</strong></td><td>Notification Service (push проктору), Proctoring DB Writer (сохранение в PostgreSQL)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>Потребители используют <code>event_id</code> для дедупликации</td></tr>
+<tr><td><strong>Retry / DLQ</strong></td><td>При ошибке обработки — до 3 повторных попыток, затем Dead Letter Queue; алерт администратору</td></tr>
+</tbody></table>
+</div>
+<p><strong>Поля события:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>event_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID события (для дедупликации)</td></tr>
+<tr><td><code>event_version</code></td><td>string</td><td>✅ Да</td><td><code>"v1"</code></td></tr>
+<tr><td><code>session_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID экзаменационной сессии</td></tr>
+<tr><td><code>student_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID студента</td></tr>
+<tr><td><code>exam_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID экзамена</td></tr>
+<tr><td><code>event_type</code></td><td>enum</td><td>✅ Да</td><td><code>face_absent</code> / <code>multiple_faces</code> / <code>tab_switch</code> / <code>foreign_audio</code> / <code>screen_change</code></td></tr>
+<tr><td><code>timestamp</code></td><td>int64</td><td>✅ Да</td><td>Unix timestamp события (мс)</td></tr>
+<tr><td><code>confidence_score</code></td><td>float</td><td>✅ Да</td><td>0.0 – 1.0</td></tr>
+<tr><td><code>frame_url</code></td><td>string</td><td>❌ Нет</td><td>Pre-signed URL скриншота (для face-событий), TTL 1 ч</td></tr>
+<tr><td><code>duration_ms</code></td><td>int</td><td>❌ Нет</td><td>Длительность события в мс (<code>tab_switch</code>, <code>face_absent</code>)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Пример события:</strong></p>
+<pre><code class="language-json">{
+  "event_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "event_version": "v1",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "student_id": "3f2504e0-4f89-11d3-9a0c-0305e82c3301",
+  "exam_id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+  "event_type": "tab_switch",
+  "timestamp": 1716451320000,
+  "confidence_score": 0.95,
+  "duration_ms": 4200
+}
+</code></pre>
+<p><strong>Поведение при ошибках:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Ситуация</th><th>Поведение</th></tr></thead><tbody>
+<tr><td>Ошибка сохранения в PostgreSQL</td><td>Сообщение → DLQ, алерт администратору</td></tr>
+<tr><td>Notification Service недоступен</td><td>Логирует ошибку, не повторяет (push некритичен для хода экзамена)</td></tr>
+<tr><td>Неизвестный <code>event_type</code></td><td>Сообщение отклоняется, пишется в error-лог с <code>event_id</code></td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="Контракт-4-Передача-оценок-в-sis"><a class="header" href="#Контракт-4-Передача-оценок-в-sis">Контракт №4: Передача оценок в SIS</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Endpoint</strong></td><td><code>POST /api/v1/grades</code> (SIS API)</td></tr>
+<tr><td><strong>Версия</strong></td><td>v1 (адаптируется к версии API конкретного SIS через адаптер)</td></tr>
+<tr><td><strong>Протокол</strong></td><td>HTTPS, синхронный</td></tr>
+<tr><td><strong>Аутентификация</strong></td><td>API-ключ (заголовок <code>X-LMS-API-Key</code>)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>✅ SIS должен принимать повторный POST с теми же <code>student_id</code>+<code>course_id</code> без создания дубля (409 = уже записано)</td></tr>
+<tr><td><strong>Retry</strong></td><td>SIS Sync Service: 1, 5, 15, 60 мин; после 5 попыток — алерт администратору</td></tr>
+</tbody></table>
+</div>
+<p><strong>Тело запроса (LMS+P → SIS):</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>student_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID студента в SIS</td></tr>
+<tr><td><code>course_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID курса в SIS</td></tr>
+<tr><td><code>grade</code></td><td>decimal(5,2)</td><td>✅ Да</td><td>Итоговая оценка</td></tr>
+<tr><td><code>grade_scale</code></td><td>string</td><td>✅ Да</td><td><code>100</code> / <code>5</code> / <code>pass_fail</code></td></tr>
+<tr><td><code>grade_date</code></td><td>date</td><td>✅ Да</td><td>Дата выставления (YYYY-MM-DD)</td></tr>
+<tr><td><code>status</code></td><td>enum</td><td>✅ Да</td><td><code>passed</code> / <code>failed</code> / <code>absent</code></td></tr>
+<tr><td><code>lms_submission_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID передачи из LMS+P (для идемпотентности)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Ответы SIS:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>HTTP код</th><th>Ситуация</th><th>Поведение LMS+P</th></tr></thead><tbody>
+<tr><td>200 OK</td><td>Оценка принята</td><td>Статус <code>transferred</code>, запись в аудит-лог, уведомление студенту</td></tr>
+<tr><td>404 Not Found</td><td><code>student_id</code> или <code>course_id</code> не найден</td><td>Статус <code>error</code>, уведомление администратору с деталями</td></tr>
+<tr><td>409 Conflict</td><td>Оценка уже существует</td><td>Статус <code>skipped_duplicate</code>, запись в лог</td></tr>
+<tr><td>422 Unprocessable</td><td>Нарушение бизнес-правил SIS</td><td>Статус <code>error</code>, детали ошибки — администратору</td></tr>
+<tr><td>500 / 503</td><td>SIS недоступен</td><td>Retry: 1/5/15/60 мин; после 5 попыток — алерт</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="Контракт-5-Вердикт-проктора-асинхронное-событие"><a class="header" href="#Контракт-5-Вердикт-проктора-асинхронное-событие">Контракт №5: Вердикт проктора (асинхронное событие)</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Event</strong></td><td><code>proctoring.verdict.submitted</code></td></tr>
+<tr><td><strong>Протокол</strong></td><td>RabbitMQ, direct exchange <code>proctoring_verdicts</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Потребители</strong></td><td>Assessment Service (обновление статуса результата), Notification Service (уведомление преподавателю)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>✅ Assessment Service использует <code>session_id</code> для предотвращения двойного применения вердикта</td></tr>
+<tr><td><strong>Retry</strong></td><td>При ошибке Assessment Service — до 3 повторных попыток с задержкой 30 сек, затем DLQ</td></tr>
+</tbody></table>
+</div>
+<p><strong>Поля события:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Обязательность</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>event_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID события</td></tr>
+<tr><td><code>event_version</code></td><td>string</td><td>✅ Да</td><td><code>"v1"</code></td></tr>
+<tr><td><code>session_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID экзаменационной сессии</td></tr>
+<tr><td><code>proctor_id</code></td><td>string(36)</td><td>✅ Да</td><td>UUID проктора</td></tr>
+<tr><td><code>overall_verdict</code></td><td>enum</td><td>✅ Да</td><td><code>approved</code> / <code>rejected</code> / <code>escalated</code></td></tr>
+<tr><td><code>violation_events</code></td><td>array[object]</td><td>❌ Нет</td><td>Список подтверждённых нарушений: <code>[{"event_id": "uuid", "event_type": "...", "timestamp": int}]</code></td></tr>
+<tr><td><code>comment</code></td><td>string</td><td>❌ Нет</td><td>Комментарий проктора (макс. 2000 символов)</td></tr>
+<tr><td><code>verdict_timestamp</code></td><td>int64</td><td>✅ Да</td><td>Unix timestamp вердикта (мс)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Поведение потребителей:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Потребитель</th><th>Действие при <code>approved</code></th><th>Действие при <code>rejected</code></th><th>Действие при <code>escalated</code></th></tr></thead><tbody>
+<tr><td>Assessment Service</td><td>Итоговый результат доступен студенту</td><td>Результат аннулирован, статус <code>invalidated</code></td><td>Результат заморожен, ждёт решения администратора</td></tr>
+<tr><td>Notification Service</td><td>Email преподавателю: «Вердикт вынесен: допущен»</td><td>Email преподавателю: «Нарушение подтверждено»</td><td>Email администратору: «Требует эскалации»</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="Контракт-6-Получение-pre-signed-url-для-видеозаписи"><a class="header" href="#Контракт-6-Получение-pre-signed-url-для-видеозаписи">Контракт №6: Получение pre-signed URL для видеозаписи</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>Endpoint</strong></td><td><code>GET /api/v1/sessions/{session_id}/recording</code></td></tr>
+<tr><td><strong>Версия</strong></td><td>v1</td></tr>
+<tr><td><strong>Протокол</strong></td><td>HTTPS, синхронный</td></tr>
+<tr><td><strong>Аутентификация</strong></td><td>Bearer JWT (роль: Проктор или Администратор)</td></tr>
+<tr><td><strong>Идемпотентность</strong></td><td>Каждый вызов генерирует новый pre-signed URL с новым TTL</td></tr>
+<tr><td><strong>Retry</strong></td><td>Клиент может повторить при 503</td></tr>
+</tbody></table>
+</div>
+<p><strong>Ответы:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>HTTP код</th><th>Ситуация</th><th>Тело ответа</th></tr></thead><tbody>
+<tr><td>200 OK</td><td>URL сгенерирован</td><td><code>{"url": "https://s3.../...", "expires_at": "ISO8601", "ttl_seconds": 14400}</code></td></tr>
+<tr><td>403 Forbidden</td><td>Недостаточно прав (роль Студент)</td><td><code>{"error": "forbidden", "code": 403}</code></td></tr>
+<tr><td>404 Not Found</td><td>Запись не найдена в S3</td><td><code>{"error": "recording_not_found", "code": 404}</code></td></tr>
+<tr><td>503 Service Unavailable</td><td>S3 недоступен</td><td><code>{"error": "storage_unavailable", "code": 503}</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Аудит:</strong> Каждый вызов фиксируется в <code>access_audit_log</code>: <code>user_id</code>, <code>role</code>, <code>session_id</code>, <code>action=view</code>, <code>access_timestamp</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Реестр-рисков--lmsp"><a class="header" href="#Реестр-рисков--lmsp">Реестр рисков — LMS+P</a></h1>
+<hr />
+<h2 id="Матрица-приоритизации-рисков"><a class="header" href="#Матрица-приоритизации-рисков">Матрица приоритизации рисков</a></h2>
+<p>Оценка по двум осям: <strong>Вероятность</strong> (В) и <strong>Ущерб</strong> (У) — по шкале 1–3 (1=низкий, 2=средний, 3=высокий/критический).
+<strong>Приоритет</strong> = В × У. Чем выше — тем критичнее.</p>
+<div class="table-wrapper"><table><thead><tr><th>№</th><th>Риск</th><th style="text-align: center">Вероятность</th><th style="text-align: center">Ущерб</th><th style="text-align: center">Приоритет</th><th style="text-align: center">Меры снижают до</th></tr></thead><tbody>
+<tr><td>R-08</td><td>Перегрузка в начале экзаменационной сессии</td><td style="text-align: center">3</td><td style="text-align: center">3</td><td style="text-align: center"><strong>9</strong></td><td style="text-align: center">Низкий</td></tr>
+<tr><td>R-02</td><td>Высокий FPR детектора нарушений</td><td style="text-align: center">3</td><td style="text-align: center">3</td><td style="text-align: center"><strong>9</strong></td><td style="text-align: center">Низкий</td></tr>
+<tr><td>R-01</td><td>Отказ медиасервера во время экзамена</td><td style="text-align: center">2</td><td style="text-align: center">3</td><td style="text-align: center"><strong>6</strong></td><td style="text-align: center">Средний</td></tr>
+<tr><td>R-04</td><td>Потеря ответов студента при разрыве</td><td style="text-align: center">2</td><td style="text-align: center">3</td><td style="text-align: center"><strong>6</strong></td><td style="text-align: center">Очень низкий</td></tr>
+<tr><td>R-07</td><td>Мошенничество через удалённое управление</td><td style="text-align: center">2</td><td style="text-align: center">3</td><td style="text-align: center"><strong>6</strong></td><td style="text-align: center">Средний</td></tr>
+<tr><td>R-06</td><td>Сбой передачи оценок в SIS</td><td style="text-align: center">2</td><td style="text-align: center">2</td><td style="text-align: center"><strong>4</strong></td><td style="text-align: center">Низкий</td></tr>
+<tr><td>R-10</td><td>Деградация детекции при плохой камере</td><td style="text-align: center">2</td><td style="text-align: center">2</td><td style="text-align: center"><strong>4</strong></td><td style="text-align: center">Низкий</td></tr>
+<tr><td>R-03</td><td>Недоступность SSO/IdP</td><td style="text-align: center">1</td><td style="text-align: center">3</td><td style="text-align: center"><strong>3</strong></td><td style="text-align: center">Низкий</td></tr>
+<tr><td>R-05</td><td>Несанкционированный доступ к записям</td><td style="text-align: center">1</td><td style="text-align: center">3</td><td style="text-align: center"><strong>3</strong></td><td style="text-align: center">Низкий</td></tr>
+<tr><td>R-09</td><td>Нарушение GDPR при хранении записей</td><td style="text-align: center">1</td><td style="text-align: center">3</td><td style="text-align: center"><strong>3</strong></td><td style="text-align: center">Очень низкий</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="Детальный-реестр-рисков"><a class="header" href="#Детальный-реестр-рисков">Детальный реестр рисков</a></h2>
+<hr />
+<h3 id="r-01-Отказ-медиасервера-во-время-экзамена"><a class="header" href="#r-01-Отказ-медиасервера-во-время-экзамена">R-01. Отказ медиасервера во время экзамена</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Технический сбой медиасервера, перегрузка при пиковой нагрузке, сетевой разрыв между LMS+P и медиасервером</td></tr>
+<tr><td><strong>Событие</strong></td><td>WebRTC-соединение разрывается; студент теряет возможность передавать видеопоток</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Экзамен прерывается; прокторинг в реальном времени невозможен; студент несёт психологическую нагрузку</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Средняя (2)</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Высокий (3) — прямое влияние на ход академического экзамена</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>6</td></tr>
+<tr><td><strong>Меры</strong></td><td>Автопереключение в асинхронный режим (локальная запись в браузере); таймер сессии паузируется при разрыве &gt;30 сек; горизонтальное масштабирование медиасервера (K8s KEDA); circuit breaker в Proctoring Service</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Средний — асинхронный режим не обеспечивает наблюдения в реальном времени</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="r-02-Высокий-уровень-ложноположительных-срабатываний-детектора-нарушений"><a class="header" href="#r-02-Высокий-уровень-ложноположительных-срабатываний-детектора-нарушений">R-02. Высокий уровень ложноположительных срабатываний детектора нарушений</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Плохое освещение, очки, маска, движение вентилятора, фоновый шум детектируются как нарушение</td></tr>
+<tr><td><strong>Событие</strong></td><td>Студенты без нарушений получают тревоги; проктор перегружен ложными событиями</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Несправедливые вердикты; жалобы студентов; потеря доверия к системе</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Высокая (3) — особенно при разнородных домашних условиях</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Высокий (3) — репутационный и академический ущерб</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>9</td></tr>
+<tr><td><strong>Меры</strong></td><td>Confidence score + настраиваемый порог; обязательная проверка проктором перед финальным вердиктом; предэкзаменационный camera check; feedback loop для калибровки модели; мониторинг метрики FPR (NFR-05)</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Низкий — FPR ≤ 15% как измеримое NFR; проктор принимает финальное решение</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="r-03-Недоступность-ssoidp-при-проведении-экзаменов"><a class="header" href="#r-03-Недоступность-ssoidp-при-проведении-экзаменов">R-03. Недоступность SSO/IdP при проведении экзаменов</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Технический сбой корпоративного IdP (Keycloak, Azure AD)</td></tr>
+<tr><td><strong>Событие</strong></td><td>Студенты не могут войти в систему; новые сессии не создаются</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Экзамены срываются; требуется перенос; организационный и репутационный ущерб</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Низкая (1) — IdP — критическая инфраструктура организации</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Критический (3)</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>3</td></tr>
+<tr><td><strong>Меры</strong></td><td>JWT с TTL 8 ч — активные сессии не прерываются; мониторинг доступности IdP с алертом заблаговременно; инструкция аварийного входа для администратора; рекомендация: IdP с HA-конфигурацией</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Низкий — активные сессии продолжаются; блокируются только новые входы</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="r-04-Потеря-ответов-студента-при-разрыве-соединения"><a class="header" href="#r-04-Потеря-ответов-студента-при-разрыве-соединения">R-04. Потеря ответов студента при разрыве соединения</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Нестабильный интернет у студента, сбой браузера, разряд устройства</td></tr>
+<tr><td><strong>Событие</strong></td><td>Студент теряет связь; несохранённые ответы могут быть утеряны</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Частичная потеря ответов → несправедливый результат; жалобы и апелляции</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Средняя (2)</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Высокий (3)</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>6</td></tr>
+<tr><td><strong>Меры</strong></td><td>Автосохранение на сервере при каждом переходе между вопросами (SYS-09); <code>Idempotency-Key</code> для предотвращения дублей; localStorage как кэш ответов на стороне клиента; синхронизация при восстановлении соединения</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Очень низкий — потеря возможна только для текущего вопроса, если переход ещё не произошёл</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="r-05-Несанкционированный-доступ-к-видеозаписям-экзаменов"><a class="header" href="#r-05-Несанкционированный-доступ-к-видеозаписям-экзаменов">R-05. Несанкционированный доступ к видеозаписям экзаменов</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Компрометация API-ключа S3; утечка pre-signed URL; ошибка в политиках доступа S3</td></tr>
+<tr><td><strong>Событие</strong></td><td>Посторонние лица получают доступ к видеозаписям без соответствующих прав</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Нарушение приватности студентов; ответственность по GDPR/152-ФЗ; штрафы; репутационный ущерб</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Низкая (1)</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Критический (3)</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>3</td></tr>
+<tr><td><strong>Меры</strong></td><td>Pre-signed URL с TTL 4 ч (SYS-29); аудит-лог всех обращений (SYS-31); ротация S3-ключей; шифрование AES-256 (SYS-29); регулярный аудит политик доступа S3; rate limiting на endpoint получения URL</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Низкий</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="r-06-Сбой-передачи-оценок-в-sis"><a class="header" href="#r-06-Сбой-передачи-оценок-в-sis">R-06. Сбой передачи оценок в SIS</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Плановые работы на SIS; изменение API SIS без уведомления; сетевые проблемы</td></tr>
+<tr><td><strong>Событие</strong></td><td>Оценки из LMS+P не поступают в деканат</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Задержка в академической документации; студенты не видят официальных оценок в деканате</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Средняя (2)</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Средний (2) — оценки не теряются, только задерживаются</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>4</td></tr>
+<tr><td><strong>Меры</strong></td><td>Очередь с retry (1/5/15/60 мин) (SYS-25); алерт администратору после 5 неудач; ручная повторная отправка из UI; мониторинг статуса интеграции на дашборде</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Низкий — данные не теряются, доставка задерживается</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="r-07-Академическое-мошенничество-через-удалённое-управление-устройством"><a class="header" href="#r-07-Академическое-мошенничество-через-удалённое-управление-устройством">R-07. Академическое мошенничество через удалённое управление устройством</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Студент использует TeamViewer, AnyDesk или аналоги во время экзамена</td></tr>
+<tr><td><strong>Событие</strong></td><td>Третья сторона управляет компьютером студента без обнаружения</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Нечестный результат экзамена; несправедливость по отношению к другим студентам</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Средняя (2)</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Высокий (3)</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>6</td></tr>
+<tr><td><strong>Меры</strong></td><td>Опциональный античит-агент (lockdown browser) блокирует сторонние приложения; детекция смены активного окна (SYS-17); анализ поведенческих паттернов (скорость ввода — опционально)</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Средний — без lockdown browser полная защита невозможна</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="r-08-Перегрузка-системы-в-начале-экзаменационной-сессии"><a class="header" href="#r-08-Перегрузка-системы-в-начале-экзаменационной-сессии">R-08. Перегрузка системы в начале экзаменационной сессии</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Все студенты одновременно входят и запускают сессии в первые 5 минут экзамена</td></tr>
+<tr><td><strong>Событие</strong></td><td>Резкий spike нагрузки; API Gateway, Proctoring Service и медиасервер перегружены</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Задержки и отказы в запуске сессий; студенты теряют время экзамена; жалобы и апелляции</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Высокая (3) — предсказуемый паттерн нагрузки</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Высокий (3)</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>9</td></tr>
+<tr><td><strong>Меры</strong></td><td>K8s HPA — автомасштабирование по CPU/RPS (NFR-06); предварительное прогревание пула воркеров медиасервера; rate limiting (SYS-33); нагрузочное тестирование перед каждой сессией; рекомендация: разнесение окон начала экзаменов по 5–10 мин</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Низкий — при правильно настроенном HPA и прогреве воркеров</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="r-09-Несоответствие-требованиям-gdpr-при-хранении-видеозаписей"><a class="header" href="#r-09-Несоответствие-требованиям-gdpr-при-хранении-видеозаписей">R-09. Несоответствие требованиям GDPR при хранении видеозаписей</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Видеозаписи хранятся дольше установленного срока или используются без согласия студента</td></tr>
+<tr><td><strong>Событие</strong></td><td>Нарушение политики хранения персональных данных</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Штрафы по GDPR (до 4% годового оборота); судебные иски студентов; репутационный ущерб</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Низкая (1)</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Критический (3)</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>3</td></tr>
+<tr><td><strong>Меры</strong></td><td>Автоматическое удаление по TTL (S3 lifecycle policy, SYS-32); согласие студента перед экзаменом (SYS-02); аудит удалений; право на удаление данных (SYS-30); хранение в согласованной юрисдикции</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Очень низкий</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="r-10-Деградация-качества-детекции-при-низком-качестве-камеры-студента"><a class="header" href="#r-10-Деградация-качества-детекции-при-низком-качестве-камеры-студента">R-10. Деградация качества детекции при низком качестве камеры студента</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Описание</th></tr></thead><tbody>
+<tr><td><strong>Причина</strong></td><td>Студент использует веб-камеру с низким разрешением или находится при плохом освещении</td></tr>
+<tr><td><strong>Событие</strong></td><td>Proctoring Service не может корректно обнаружить лицо или события нарушений</td></tr>
+<tr><td><strong>Последствие</strong></td><td>Снижение достоверности прокторинга; повышение FPR или пропуск нарушений</td></tr>
+<tr><td><strong>Вероятность</strong></td><td>Средняя (2)</td></tr>
+<tr><td><strong>Ущерб</strong></td><td>Средний (2)</td></tr>
+<tr><td><strong>Приоритет</strong></td><td>4</td></tr>
+<tr><td><strong>Меры</strong></td><td>Предэкзаменационный camera check с оценкой качества изображения; минимальные требования к оборудованию в интерфейсе; fallback: рекомендация улучшить освещение; возможность fallback на асинхронный режим</td></tr>
+<tr><td><strong>Остаточный риск</strong></td><td>Низкий</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="verification--validation-vv--lmsp"><a class="header" href="#verification--validation-vv--lmsp">Verification &amp; Validation (V&amp;V) — LMS+P</a></h1>
+<hr />
+<h2 id="Содержание-3"><a class="header" href="#Содержание-3">Содержание</a></h2>
+<ol>
+<li><a href="vv.html#1-%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0-%D1%82%D1%80%D0%B0%D1%81%D1%81%D0%B8%D1%80%D1%83%D0%B5%D0%BC%D0%BE%D1%81%D1%82%D0%B8">Матрица трассируемости</a></li>
+<li><a href="vv.html#2-%D1%82%D0%B5%D1%81%D1%82-%D0%BA%D0%B5%D0%B9%D1%81%D1%8B">Тест-кейсы</a></li>
+</ol>
+<hr />
+<h2 id="1-Матрица-трассируемости"><a class="header" href="#1-Матрица-трассируемости">1. Матрица трассируемости</a></h2>
+<p>Матрица связывает требования (SR, SYS, NFR) с методом проверки и конкретным артефактом/тест-кейсом.</p>
+<p><strong>Методы проверки:</strong></p>
+<ul>
+<li><strong>Тест</strong> — функциональный или интеграционный тест-кейс</li>
+<li><strong>Нагрузочный тест</strong> — тест производительности (k6 / JMeter)</li>
+<li><strong>Инспекция</strong> — проверка кода, конфигурации или документации</li>
+<li><strong>Анализ</strong> — расчёт или моделирование без запуска системы</li>
+<li><strong>Демо</strong> — демонстрация работающей системы</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>ID требования</th><th>Описание (кратко)</th><th>Метод проверки</th><th>Артефакт / тест-кейс</th></tr></thead><tbody>
+<tr><td><strong>SR-01</strong></td><td>Запуск экзамена без доп. ПО</td><td>Тест + Демо</td><td>ТК-01</td></tr>
+<tr><td><strong>SR-02</strong></td><td>Студент видит политику прокторинга до старта</td><td>Инспекция + Демо</td><td>ТК-01 (шаг согласия)</td></tr>
+<tr><td><strong>SR-03</strong></td><td>Создание курса без IT-специалиста</td><td>Демо</td><td>ТК-13</td></tr>
+<tr><td><strong>SR-04</strong></td><td>Отчётность успеваемости в реальном времени</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SR-05</strong></td><td>Проктор наблюдает ≥20 сессий одновременно</td><td>Нагрузочный тест</td><td>ТК-09</td></tr>
+<tr><td><strong>SR-06</strong></td><td>Просмотр записи перед вердиктом</td><td>Тест</td><td>ТК-05, ТК-12</td></tr>
+<tr><td><strong>SR-07</strong></td><td>Автопередача оценок в SIS с retry</td><td>Тест</td><td>ТК-08</td></tr>
+<tr><td><strong>SR-08</strong></td><td>Управление ролями через UI</td><td>Демо + Инспекция</td><td>Демонстрационный сценарий</td></tr>
+<tr><td><strong>SR-09</strong></td><td>GDPR: удаление данных, аудит-лог</td><td>Тест + Инспекция</td><td>ТК-12</td></tr>
+<tr><td><strong>SR-10</strong></td><td>Доступность ≥99.9% в период сессии</td><td>Анализ + Мониторинг</td><td>Отчёт нагрузочного теста</td></tr>
+<tr><td><strong>SR-11</strong></td><td>Асинхронный прокторинг работает</td><td>Тест</td><td>ТК-06</td></tr>
+<tr><td><strong>SR-12</strong></td><td>Push-уведомление проктору ≤5 сек</td><td>Тест</td><td>ТК-04</td></tr>
+<tr><td><strong>SR-13</strong></td><td>Экспорт CSV/PDF</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-01</strong></td><td>Аутентификация через OIDC/SAML</td><td>Тест + Инспекция</td><td>ТК-01 (шаг SSO)</td></tr>
+<tr><td><strong>SYS-02</strong></td><td>RBAC: 4 роли, явные разрешения</td><td>Инспекция кода</td><td>Обзор кода IAM-модуля</td></tr>
+<tr><td><strong>SYS-03</strong></td><td>JWT TTL = 8 ч, редирект на IdP</td><td>Тест</td><td>Функциональный тест сессий</td></tr>
+<tr><td><strong>SYS-04</strong></td><td>При недоступном IdP: страница ошибки, активные сессии не прерываются</td><td>Тест</td><td>ТК-01 (failure path)</td></tr>
+<tr><td><strong>SYS-05</strong></td><td>Иерархия курсов (≥3 уровня)</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-06</strong></td><td>Форматы файлов, лимит 2 ГБ</td><td>Тест</td><td>ТК-13 (boundary test)</td></tr>
+<tr><td><strong>SYS-07</strong></td><td>Конструктор тестов: 4 типа вопросов</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-08</strong></td><td>Автозачисление из SIS при публикации</td><td>Тест + Интеграционный</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-09</strong></td><td>Автосохранение ответов при разрыве</td><td>Тест</td><td>ТК-03</td></tr>
+<tr><td><strong>SYS-10</strong></td><td>Автозавершение сессии по end_time</td><td>Тест</td><td>ТК-07</td></tr>
+<tr><td><strong>SYS-11</strong></td><td>Автооценивание закрытых вопросов</td><td>Тест</td><td>ТК-07 (пост-условие)</td></tr>
+<tr><td><strong>SYS-12</strong></td><td>Очередь ручной проверки</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-13</strong></td><td>Итоговый балл только после всех проверок</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-14</strong></td><td>Три режима прокторинга</td><td>Тест</td><td>ТК-01, ТК-06</td></tr>
+<tr><td><strong>SYS-15</strong></td><td>WebRTC-соединение ≤30 сек (p95)</td><td>Нагрузочный тест</td><td>ТК-09</td></tr>
+<tr><td><strong>SYS-16</strong></td><td>Запись в S3 ≤5 мин после завершения</td><td>Тест</td><td>ТК-07 (пост-условие)</td></tr>
+<tr><td><strong>SYS-17</strong></td><td>Детекция 4 типов событий</td><td>Тест</td><td>ТК-04</td></tr>
+<tr><td><strong>SYS-18</strong></td><td>Событие тревоги с атрибутами (confidence_score, timestamp)</td><td>Инспекция + Тест</td><td>ТК-04</td></tr>
+<tr><td><strong>SYS-19</strong></td><td>Вердикт проктора с proctor_id и timestamp</td><td>Тест</td><td>ТК-05</td></tr>
+<tr><td><strong>SYS-20</strong></td><td>Видеоплеер с временной шкалой событий</td><td>Тест</td><td>ТК-05</td></tr>
+<tr><td><strong>SYS-21</strong></td><td>Блокировка вне временного окна (HTTP 423)</td><td>Тест</td><td>ТК-02</td></tr>
+<tr><td><strong>SYS-22</strong></td><td>Email за 24 ч и 1 ч до экзамена</td><td>Тест</td><td>Интеграционный тест SMTP</td></tr>
+<tr><td><strong>SYS-23</strong></td><td>Push проктору при confidence &gt; 0.8, ≤5 сек</td><td>Тест</td><td>ТК-04</td></tr>
+<tr><td><strong>SYS-24</strong></td><td>Передача оценок в SIS</td><td>Тест</td><td>ТК-08</td></tr>
+<tr><td><strong>SYS-25</strong></td><td>Retry 1/5/15/60 мин при сбое SIS</td><td>Тест</td><td>ТК-08</td></tr>
+<tr><td><strong>SYS-26</strong></td><td>Отчёт с метриками успеваемости</td><td>Тест</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-27</strong></td><td>Экспорт CSV/PDF ≤10 сек (10k записей)</td><td>Тест + Нагрузочный</td><td>ТК-13</td></tr>
+<tr><td><strong>SYS-28</strong></td><td>HTTPS TLS 1.2+, HSTS</td><td>Инспекция конфигурации</td><td>SSL Labs / конфиг-аудит</td></tr>
+<tr><td><strong>SYS-29</strong></td><td>Pre-signed URL TTL ≤4 ч</td><td>Тест</td><td>ТК-12</td></tr>
+<tr><td><strong>SYS-30</strong></td><td>GDPR: удаление данных ≤30 дней</td><td>Тест</td><td>ТК-12</td></tr>
+<tr><td><strong>SYS-31</strong></td><td>Аудит-лог доступов к записям</td><td>Инспекция + Тест</td><td>ТК-12</td></tr>
+<tr><td><strong>SYS-32</strong></td><td>Автоудаление записей по TTL</td><td>Инспекция конфигурации S3</td><td>Аудит S3 lifecycle policy</td></tr>
+<tr><td><strong>SYS-33</strong></td><td>Rate limiting: 20 req/min неавторизован</td><td>Тест</td><td>ТК-09 (нагрузочный)</td></tr>
+<tr><td><strong>SYS-35</strong></td><td>Circuit breaker для внешних систем</td><td>Тест</td><td>ТК-06, ТК-08</td></tr>
+<tr><td><strong>NFR-01</strong></td><td>Uptime ≥99.9% в период сессии</td><td>Анализ + Мониторинг</td><td>Отчёт мониторинга Prometheus</td></tr>
+<tr><td><strong>NFR-02</strong></td><td>Задержка видео ≤500 мс</td><td>Инструментальный тест</td><td>ТК-09</td></tr>
+<tr><td><strong>NFR-03</strong></td><td>API p95 ≤500 мс</td><td>Нагрузочный тест</td><td>Отчёт k6/JMeter</td></tr>
+<tr><td><strong>NFR-04</strong></td><td>100% шифрование записей, 0 нарушений TTL</td><td>Инспекция + Тест</td><td>ТК-12</td></tr>
+<tr><td><strong>NFR-05</strong></td><td>FPR ≤15%</td><td>Анализ вердиктов</td><td>Аналитический отчёт за период</td></tr>
+<tr><td><strong>NFR-06</strong></td><td>≥500 одновременных сессий</td><td>Нагрузочный тест</td><td>ТК-09</td></tr>
+<tr><td><strong>NFR-07</strong></td><td>0 критических уязвимостей</td><td>Penetration testing</td><td>Отчёт пентеста (OWASP)</td></tr>
+<tr><td><strong>NFR-08</strong></td><td>0% потери ответов при разрыве</td><td>Тест</td><td>ТК-03</td></tr>
+<tr><td><strong>NFR-09</strong></td><td>MTTD ≤2 мин</td><td>Анализ + Мониторинг</td><td>Конфигурация алертов Grafana</td></tr>
+<tr><td><strong>NFR-10</strong></td><td>WebRTC в Chrome/Firefox/Edge/Safari</td><td>Тест на матрице</td><td>ТК-10</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="2-Тест-кейсы"><a class="header" href="#2-Тест-кейсы">2. Тест-кейсы</a></h2>
+<hr />
+<h3 id="ТК-01-Запуск-экзамена-с-прокторингом-в-реальном-времени-e2e-happy-path"><a class="header" href="#ТК-01-Запуск-экзамена-с-прокторингом-в-реальном-времени-e2e-happy-path">ТК-01. Запуск экзамена с прокторингом в реальном времени (E2E happy path)</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-001</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SR-01, SR-02, SYS-01, SYS-14, SYS-15, SYS-16</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>1. Студент авторизован через SSO. 2. Экзамен опубликован с режимом <code>realtime</code>. 3. Текущее время — в пределах окна. 4. Медиасервер доступен. 5. Проктор назначен и авторизован.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент открывает страницу экзамена. 2. Читает политику прокторинга, нажимает «Согласен». 3. Система выполняет camera check. 4. Студент нажимает «Начать экзамен». 5. LMS+P устанавливает WebRTC-соединение с медиасервером. 6. Студент видит вопросы; в углу — «Запись ведётся». 7. Проктор видит видеопоток студента в портале.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Политика прокторинга отображена. 2. WebRTC-соединение установлено ≤30 сек. 3. Видеопоток у проктора. 4. В БД: запись сессии <code>status=active</code>.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td><code>proctoring_sessions</code>: <code>status=active</code>, <code>start_time</code> заполнен.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд, тестовые аккаунты, mock SSO.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-02-Блокировка-доступа-к-экзамену-вне-временного-окна"><a class="header" href="#ТК-02-Блокировка-доступа-к-экзамену-вне-временного-окна">ТК-02. Блокировка доступа к экзамену вне временного окна</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-002</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-21</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Экзамен с окном 10:00–12:00. Студент авторизован.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. В 09:45 студент нажимает «Начать». 2. Фиксировать ответ системы. 3. В 12:05 — повторная попытка.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. 09:45: «Экзамен начнётся в 10:00», кнопка неактивна, HTTP 423. 2. 12:05: «Экзамен завершён», HTTP 423.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Записи о сессиях в БД не созданы.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд с возможностью подмены системного времени.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-03-Сохранение-ответов-при-разрыве-соединения"><a class="header" href="#ТК-03-Сохранение-ответов-при-разрыве-соединения">ТК-03. Сохранение ответов при разрыве соединения</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-003</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-09, NFR-08</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Студент в активной сессии, ответил на 5 вопросов из 10.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент переходит к вопросу №6. 2. Симуляция разрыва (DevTools → Offline). 3. Студент вводит ответ на вопрос №6. 4. Соединение восстанавливается. 5. Студент обновляет страницу.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Ответы 1–5 сохранены на сервере. 2. Ответ №6 из localStorage синхронизирован при восстановлении. 3. Прогресс «5/10» или «6/10» отображён корректно.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Таблица <code>answers</code>: 5 или 6 записей для данной сессии.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Chrome DevTools, тестовый стенд.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-04-Детекция-тревоги--смена-браузерной-вкладки"><a class="header" href="#ТК-04-Детекция-тревоги--смена-браузерной-вкладки">ТК-04. Детекция тревоги — смена браузерной вкладки</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-004</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-17, SYS-18, SYS-23, SR-12</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Студент в активной сессии <code>realtime</code>. Проктор авторизован и наблюдает.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент переключается на другую вкладку и остаётся там 4 секунды. 2. Студент возвращается на страницу экзамена.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Проктор получает push-уведомление о <code>tab_switch</code> в течение 5 сек. 2. В <code>proctoring_events</code>: запись с <code>event_type=tab_switch</code>, <code>confidence_score</code>, <code>duration_ms≈4000</code>. 3. Студенту NOT показывается сообщение о тревоге.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Событие сохранено в БД; студент не уведомлён.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Два браузера (студент + проктор), тестовый стенд.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-05-Вынесение-вердикта-проктором"><a class="header" href="#ТК-05-Вынесение-вердикта-проктором">ТК-05. Вынесение вердикта проктором</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-005</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-19, SYS-20, SR-06</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Сессия завершена. Запись в S3. 2 события: <code>tab_switch</code> и <code>multiple_faces</code>.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Проктор открывает сессию. 2. Нажимает на <code>tab_switch</code> → «Не нарушение». 3. Нажимает на <code>multiple_faces</code>, просматривает скриншот → «Нарушение», тип: «Посторонний», комментарий. 4. «Завершить проверку» → итог: «Не зачтено».</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Оба события получили вердикт с <code>proctor_id</code> и <code>verdict_timestamp</code>. 2. Итоговый статус сессии: <code>rejected</code>. 3. В Assessment Service — событие <code>proctoring.verdict.submitted</code>. 4. Преподаватель уведомлён.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Результат помечен «Аннулирован (нарушение прокторинга)».</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд, предзаполненные данные с mock-событиями.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-06-Переключение-в-асинхронный-режим-при-отказе-медиасервера"><a class="header" href="#ТК-06-Переключение-в-асинхронный-режим-при-отказе-медиасервера">ТК-06. Переключение в асинхронный режим при отказе медиасервера</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-006</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-15, NFR-08, SR-11</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Медиасервер в офлайн (симуляция). Студент начинает экзамен с режимом <code>realtime</code>.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент нажимает «Начать экзамен». 2. Система пытается WebRTC — таймаут 10 сек. 3. Студент видит сообщение и выбирает «Продолжить».</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Через 10 сек: «Прямое наблюдение недоступно. Экзамен будет записан и проверен после». 2. Сессия запускается в <code>async</code> режиме. 3. API: HTTP 503 с <code>suggestion: async_mode</code>.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Сессия создана с <code>proctoring_mode=async_fallback</code>.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд с отключённым медиасервером.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-07-Автоматическое-завершение-сессии-по-истечении-времени"><a class="header" href="#ТК-07-Автоматическое-завершение-сессии-по-истечении-времени">ТК-07. Автоматическое завершение сессии по истечении времени</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-007</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-10, SYS-21, SYS-16</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Экзамен на 5 минут. Студент в активной сессии, ответил на 3 из 5 вопросов.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Студент не нажимает «Завершить». 2. Истекает 5 минут.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Сессия завершена системой в течение 10 сек после <code>end_time</code>. 2. Сохранены все 3 ответа. 3. Студент видит «Время вышло. Ответы сохранены». 4. Статус: <code>completed</code>, <code>completed_by=system</code>. 5. Начат процесс загрузки записи в S3.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Запись видео завершена, идёт загрузка в S3.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд с ускоренным таймером.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-08-Передача-оценок-в-sis-с-retry-при-сбое"><a class="header" href="#ТК-08-Передача-оценок-в-sis-с-retry-при-сбое">ТК-08. Передача оценок в SIS с retry при сбое</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-008</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SR-07, SYS-24, SYS-25</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Преподаватель подтвердил оценки (3 студента). SIS-мок: первые 2 вызова → 503, третий → 200.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Преподаватель нажимает «Передать в деканат». 2. 1-я попытка → 503. 3. Retry через 1 мин → 503. 4. Retry через 5 мин → 200.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. После 3-й попытки оценки переданы. 2. Статус UI: «Передано в деканат». 3. В аудит-логе: 3 записи с кодами 503, 503, 200. 4. Студенты получили email.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td><code>grade_sync_log</code>: 3 записи для данного курса.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>SIS-мок (возвращает 503 первые 2 раза).</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-09-Нагрузочный-тест-500-одновременных-сессий"><a class="header" href="#ТК-09-Нагрузочный-тест-500-одновременных-сессий">ТК-09. Нагрузочный тест: 500 одновременных сессий</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-009</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>NFR-02, NFR-03, NFR-06, SR-10</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>2 реплики каждого сервиса. 500 тестовых аккаунтов. Медиасервер с 4 воркерами.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. k6 запускает 500 сессий за 5 мин (ramp-up). 2. Поддерживает 500 активных сессий 30 мин. 3. Каждая сессия отправляет ответы каждые 30 сек. 4. Фиксируются: latency p95/p99, error rate, время WebRTC.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. API p95 latency ≤ 500 мс. 2. Error rate ≤ 1%. 3. WebRTC установлен у ≥97% сессий ≤30 сек. 4. CPU медиасервера ≤ 80%.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>Все 500 сессий завершились корректно; ни один ответ не потерян.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Нагрузочный стенд, k6, Grafana.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-10-Совместимость-с-браузерами-матрица"><a class="header" href="#ТК-10-Совместимость-с-браузерами-матрица">ТК-10. Совместимость с браузерами (матрица)</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-010</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>NFR-10</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Chrome 120, Firefox 121, Edge 120, Safari 17. Один тестовый аккаунт.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>В каждом браузере: 1. SSO-авторизация. 2. Открыть экзамен. 3. Разрешить камеру. 4. Начать сессию. 5. Ответить на 1 вопрос. 6. Завершить.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>Во всех 4 браузерах: WebRTC установлен, ответ сохранён, сессия завершена корректно.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>4 записи в <code>proctoring_sessions</code> с <code>status=completed</code>.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>BrowserStack или локальный стенд с 4 браузерами.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-11-Идемпотентность-сохранения-ответа"><a class="header" href="#ТК-11-Идемпотентность-сохранения-ответа">ТК-11. Идемпотентность сохранения ответа</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-011</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-09</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Студент в активной сессии. <code>Idempotency-Key = uuid-456</code>.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. POST <code>/answers</code> с ключом uuid-456 → 200, <code>answer_id=A1</code>. 2. Тот же запрос с uuid-456.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Второй запрос: HTTP 409 с <code>answer_id=A1</code>. 2. В таблице <code>answers</code> — одна запись (нет дубля).</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>—</td></tr>
+<tr><td><strong>Окружение</strong></td><td>curl / Postman, тестовый стенд.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-12-Доступ-к-видеозаписи-аудит-лог-и-ttl-url"><a class="header" href="#ТК-12-Доступ-к-видеозаписи-аудит-лог-и-ttl-url">ТК-12. Доступ к видеозаписи, аудит-лог и TTL URL</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-012</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SYS-29, SYS-30, SYS-31, NFR-04, SR-09</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Сессия завершена. Запись в S3. Проктор авторизован.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Проктор открывает запись. 2. LMS+P генерирует pre-signed URL (TTL = 4 ч). 3. Запись воспроизводится. 4. Через 4 ч 5 мин — повторная попытка открыть ту же ссылку.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. URL выдан; запись воспроизводится. 2. В <code>access_audit_log</code>: запись с <code>role=proctor</code>, <code>action=view</code>, <code>session_id</code>. 3. Через 4ч 5мин: ссылка недействительна (403 от S3).</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td><code>access_audit_log</code>: 1 запись для данного проктора.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд, тестовый S3 (MinIO).</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="ТК-13-Полный-цикл-создания-курса-и-получения-результатов"><a class="header" href="#ТК-13-Полный-цикл-создания-курса-и-получения-результатов">ТК-13. Полный цикл создания курса и получения результатов</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Значение</th></tr></thead><tbody>
+<tr><td><strong>ID</strong></td><td>TC-013</td></tr>
+<tr><td><strong>Связанные требования</strong></td><td>SR-03, SR-04, SR-13, SYS-05, SYS-06, SYS-07, SYS-08, SYS-12, SYS-26, SYS-27</td></tr>
+<tr><td><strong>Предусловия</strong></td><td>Преподаватель авторизован. SIS-мок доступен и возвращает 1 студента.</td></tr>
+<tr><td><strong>Шаги</strong></td><td>1. Преподаватель создаёт курс с 2 модулями и тестом (3 вопроса: 2 закрытых + 1 открытый). 2. Загружает PDF-материал (&lt;2 ГБ). 3. Публикует курс. 4. Студент отвечает на тест и завершает его. 5. Преподаватель проверяет открытый вопрос. 6. Преподаватель открывает отчёт успеваемости и экспортирует CSV.</td></tr>
+<tr><td><strong>Ожидаемый результат</strong></td><td>1. Курс создан с иерархией ≥3 уровня. 2. PDF загружен. 3. Студент зачислен автоматически из SIS. 4. Закрытые вопросы оценены автоматически; открытый — в очереди. 5. После ручной проверки — статус «Проверено», итоговый балл рассчитан. 6. Отчёт содержит: средний балл, распределение, прогресс. CSV скачан ≤10 сек.</td></tr>
+<tr><td><strong>Пост-условия</strong></td><td>В БД: курс, тест, 3 ответа, итоговый балл, запись в <code>grade_sync_queue</code>.</td></tr>
+<tr><td><strong>Окружение</strong></td><td>Тестовый стенд, SIS-мок.</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Архитектура - system-engineering-playbook</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/_assets/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">system-engineering-playbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Архитектура--lmsp"><a class="header" href="#Архитектура--lmsp">Архитектура — LMS+P</a></h1>
+<hr />
+<h2 id="Содержание"><a class="header" href="#Содержание">Содержание</a></h2>
+<ol>
+<li><a href="#1-%D1%81%D1%82%D0%B8%D0%BB%D1%8C-%D0%B8-%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B2%D0%B0%D1%8F-%D0%B8%D0%B4%D0%B5%D1%8F">Стиль и ключевая идея</a></li>
+<li><a href="#2-%D0%B4%D0%B5%D0%BA%D0%BE%D0%BC%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D1%8F-%D0%BD%D0%B0-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80%D1%8B-c4-level-2">Декомпозиция на контейнеры (C4 Level 2)</a></li>
+<li><a href="#3-%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D1%8F-adr">Архитектурные решения (ADR)</a></li>
+<li><a href="#4-%D0%BE%D0%B1%D1%89%D0%B0%D1%8F-%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C">Общая согласованность</a></li>
+</ol>
+<hr />
+<h2 id="1-Стиль-и-ключевая-идея"><a class="header" href="#1-Стиль-и-ключевая-идея">1. Стиль и ключевая идея</a></h2>
+<p><strong>Стиль архитектуры:</strong> Event-driven микросервисная архитектура с CQRS-подходом для разделения операций обучения/оценивания и аналитики.</p>
+<p><strong>Ключевая идея:</strong> Платформа оркестрирует взаимодействие между студентом, медиасервером, движком прокторинга и внешними системами (SIS, S3, SSO) — обеспечивая сохранность данных и справедливость оценивания даже при частичном сбое внешних зависимостей.</p>
+<p><strong>Три логических слоя:</strong></p>
+<ul>
+<li><strong>Слой входа и безопасности</strong> — API Gateway: проверка JWT от IdP, rate limiting, маршрутизация. Единая точка входа, все коммуникации только по HTTPS.</li>
+<li><strong>Ядро обучения и прокторинга (Command-слой)</strong> — Course, Assessment, Proctoring, Notification Service. Все критические события публикуются в RabbitMQ — гарантия сохранности данных при разрыве соединения.</li>
+<li><strong>Слой управления и аналитики (Query-слой)</strong> — Admin Portal, Reporting Service, SIS Sync Service. Чтение отчётности — из реплики PostgreSQL, чтобы тяжёлые запросы не влияли на приём ответов экзамена.</li>
+</ul>
+<iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/c4-containers.drawio"></iframe>
+<hr />
+<h2 id="2-Декомпозиция-на-контейнеры-c4-level-2"><a class="header" href="#2-Декомпозиция-на-контейнеры-c4-level-2">2. Декомпозиция на контейнеры (C4 Level 2)</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>№</th><th>Контейнер</th><th>Тип</th><th>Обязанность</th><th>Хранит</th><th>Технологии</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>API Gateway</strong></td><td>Сервис</td><td>Аутентификация JWT, rate limiting, маршрутизация запросов к downstream-сервисам</td><td>stateless</td><td>Go / Nginx + Redis</td></tr>
+<tr><td>2</td><td><strong>Course Service</strong></td><td>Сервис</td><td>CRUD курсов, модулей, материалов, тестов; управление публикацией; запрос зачисления из SIS</td><td>stateless</td><td>Go + PostgreSQL</td></tr>
+<tr><td>3</td><td><strong>Assessment Service</strong></td><td>Сервис</td><td>Приём ответов студентов, автоматическое оценивание, управление очередью ручной проверки, расчёт итогового балла</td><td>stateless</td><td>Go + PostgreSQL</td></tr>
+<tr><td>4</td><td><strong>Proctoring Service</strong></td><td>Сервис</td><td>Управление экзаменационными сессиями, WebRTC-сигналинг, детекция тревог, управление вердиктами, интеграция с S3</td><td>stateless</td><td>Go + WebRTC SDK + PostgreSQL</td></tr>
+<tr><td>5</td><td><strong>Notification Service</strong></td><td>Сервис</td><td>Отправка email (SMTP) и push-уведомлений в UI; слушает RabbitMQ-очередь событий</td><td>stateless</td><td>Go + RabbitMQ + SMTP</td></tr>
+<tr><td>6</td><td><strong>SIS Sync Service</strong></td><td>Сервис</td><td>Передача итоговых оценок в SIS; retry-механизм (1/5/15/60 мин); управление очередью <code>grade_sync_queue</code></td><td>stateful (sync_queue в PostgreSQL)</td><td>Go + PostgreSQL + RabbitMQ</td></tr>
+<tr><td>7</td><td><strong>Reporting Service</strong></td><td>Сервис</td><td>Отчёты успеваемости, экспорт CSV/PDF; читает из PostgreSQL-реплики (CQRS Query-сторона)</td><td>stateless</td><td>Go / Python + PostgreSQL replica</td></tr>
+<tr><td>8</td><td><strong>Admin Portal</strong></td><td>SPA + API</td><td>Управление пользователями, ролями, интеграциями; дашборд статусов; аудит-логи</td><td>stateless (сессии в Redis)</td><td>React + Go API + PostgreSQL</td></tr>
+<tr><td>9</td><td><strong>PostgreSQL</strong></td><td>СУБД</td><td>Транзакционные данные: пользователи, курсы, результаты, события прокторинга, вердикты, аудит-логи, sync-очередь</td><td>stateful</td><td>PostgreSQL 15+ с потоковой репликой + PgBouncer</td></tr>
+<tr><td>10</td><td><strong>Redis</strong></td><td>Кэш / Брокер</td><td>Кэш сессий (TTL 8ч), расписания (TTL 24ч), профилей (TTL 5мин); rate limiting счётчики; JWT blacklist</td><td>stateful (RAM + RDB snapshot)</td><td>Redis 7+ + Sentinel</td></tr>
+<tr><td>11</td><td><strong>RabbitMQ</strong></td><td>Брокер сообщений</td><td>Асинхронная доставка событий: <code>exam.answer.saved</code>, <code>exam.session.completed</code>, <code>grade.confirmed</code>, <code>notification.requested</code>, <code>proctoring.alert.detected</code></td><td>stateful (persistent queues)</td><td>RabbitMQ 3.12+</td></tr>
+</tbody></table>
+</div><iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/c4-proctoring-component.drawio"></iframe>
+<hr />
+<h2 id="3-Архитектурные-решения-adr"><a class="header" href="#3-Архитектурные-решения-adr">3. Архитектурные решения (ADR)</a></h2>
+<hr />
+<h3 id="adr-001-webrtc-через-выделенный-медиасервер-sfu-а-не-p2p"><a class="header" href="#adr-001-webrtc-через-выделенный-медиасервер-sfu-а-не-p2p">ADR-001: WebRTC через выделенный медиасервер (SFU), а не P2P</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-15, SYS-16, SYS-20, NFR-02, NFR-06</p>
+<p><strong>Контекст:</strong>
+Прокторинг требует, чтобы проктор мог наблюдать за студентами в реальном времени. Возможны два подхода: P2P WebRTC (браузер студента ↔ браузер проктора) и SFU медиасервер (браузер → сервер → проктор).</p>
+<p><strong>Решение:</strong>
+Использовать выделенный медиасервер (SFU — Selective Forwarding Unit, Janus или MediaSoup). Поток студента публикуется на сервер, проктор подписывается на нужные потоки через сервер.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>SFU (выбрано)</th><th>P2P</th><th>RTMP/HLS</th></tr></thead><tbody>
+<tr><td>Масштабируемость прокторинга (≥20 сессий)</td><td>✅ Да</td><td>❌ Нет</td><td>✅ Да</td></tr>
+<tr><td>Серверная запись</td><td>✅ Да</td><td>❌ Нет</td><td>✅ Да</td></tr>
+<tr><td>Задержка</td><td>✅ &lt; 500 мс</td><td>✅ &lt; 200 мс</td><td>❌ 5–30 сек</td></tr>
+<tr><td>Устойчивость к NAT</td><td>✅ Да</td><td>❌ Проблемы</td><td>✅ Да</td></tr>
+<tr><td>Операционная стоимость</td><td>⚠️ Выше</td><td>✅ Нулевая</td><td>✅ Ниже</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> Централизованная запись и возможность наблюдения за 20+ сессиями одновременно — критические требования NFR-06 (SR-05). Стоимость медиасервера оправдана. RTMP отклонён из-за недопустимой задержки (NFR-02).</p>
+<hr />
+<h3 id="adr-002-Двухрежимный-прокторинг-realtime--async"><a class="header" href="#adr-002-Двухрежимный-прокторинг-realtime--async">ADR-002: Двухрежимный прокторинг (realtime + async)</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-14, SYS-16, SYS-20, NFR-06, SR-11</p>
+<p><strong>Контекст:</strong>
+Разные типы экзаменов требуют разного уровня контроля. Обязательный прокторинг в реальном времени для всех тестов создаёт высокую нагрузку на проктаров и медиасервер — особенно при массовых тестированиях (&gt;500 студентов).</p>
+<p><strong>Решение:</strong>
+Реализовать оба режима прокторинга, выбор на уровне курса/теста.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>Только realtime</th><th>Только async</th><th>Оба режима (выбрано)</th></tr></thead><tbody>
+<tr><td>Возможность вмешательства проктора</td><td>✅</td><td>❌</td><td>✅</td></tr>
+<tr><td>Нагрузка на медиасервер</td><td>❌ Высокая</td><td>✅ Нет</td><td>⚠️ Зависит от режима</td></tr>
+<tr><td>Нагрузка на проктаров</td><td>❌ Высокая</td><td>✅ Гибкая</td><td>✅ Гибкая</td></tr>
+<tr><td>Сложность реализации</td><td>✅ Один путь</td><td>✅ Один путь</td><td>⚠️ Два пути</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> Массовые промежуточные тесты не требуют наблюдения в реальном времени (SR-11). Два режима снижают операционные затраты без потери контроля над итоговыми экзаменами.</p>
+<hr />
+<h3 id="adr-003-event-driven-архитектура-с-rabbitmq-для-критических-событий"><a class="header" href="#adr-003-event-driven-архитектура-с-rabbitmq-для-критических-событий">ADR-003: Event-driven архитектура с RabbitMQ для критических событий</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-09, SYS-24, SYS-25, NFR-08, SR-07</p>
+<p><strong>Контекст:</strong>
+Передача ответов студентов, уведомления, синхронизация с SIS — все эти операции должны гарантированно завершаться даже при временных сбоях внешних систем.</p>
+<p><strong>Решение:</strong>
+RabbitMQ с persistent queues для всех критических событий: <code>exam.answer.saved</code>, <code>exam.session.completed</code>, <code>grade.confirmed</code>, <code>notification.requested</code>. Основной поток синхронный (ответы сохраняются в PostgreSQL), побочные эффекты (уведомления, SIS) — через очередь.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>Синхронный REST</th><th>RabbitMQ (выбрано)</th><th>Kafka</th></tr></thead><tbody>
+<tr><td>Гарантия доставки</td><td>❌ Нет</td><td>✅ Да</td><td>✅ Да</td></tr>
+<tr><td>Изоляция сбоев</td><td>❌ Нет</td><td>✅ Да</td><td>✅ Да</td></tr>
+<tr><td>Сложность эксплуатации</td><td>✅ Простая</td><td>⚠️ Средняя</td><td>❌ Высокая</td></tr>
+<tr><td>Соответствие нагрузке (200 RPS)</td><td>✅</td><td>✅</td><td>⚠️ Избыточно</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> Падение SIS не должно блокировать выставление оценок (SR-07). Kafka избыточна при целевых 200 RPS — RabbitMQ достаточно и проще в эксплуатации.</p>
+<hr />
+<h3 id="adr-004-cqrs-для-разделения-нагрузки-оценивания-и-отчётности"><a class="header" href="#adr-004-cqrs-для-разделения-нагрузки-оценивания-и-отчётности">ADR-004: CQRS для разделения нагрузки оценивания и отчётности</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-26, SYS-27, NFR-03, NFR-01</p>
+<p><strong>Контекст:</strong>
+Тяжёлые отчёты (успеваемость группы, агрегаты по курсу) и транзакционные операции (приём ответов на экзамене, сохранение вердиктов) конкурируют за ресурсы одной БД. В период экзамена запрос отчёта не должен влиять на latency API ответов.</p>
+<p><strong>Решение:</strong>
+Записи — в PostgreSQL master (Assessment/Proctoring Service). Чтение для отчётности — из PostgreSQL streaming replica (Reporting Service). Горячие данные (расписание, профили) — в Redis.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>Единая БД</th><th>CQRS (выбрано)</th></tr></thead><tbody>
+<tr><td>Влияние отчётов на транзакционную нагрузку</td><td>❌ Есть</td><td>✅ Нет (read-replica)</td></tr>
+<tr><td>Независимое масштабирование</td><td>❌</td><td>✅</td></tr>
+<tr><td>Репликационная задержка</td><td>—</td><td>⚠️ До 1 сек</td></tr>
+<tr><td>Сложность</td><td>✅ Простая</td><td>⚠️ Средняя</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> В период пиковой нагрузки (500 экзаменов одновременно) запросы отчётности не должны деградировать API приёма ответов (NFR-01, NFR-03). Задержка репликации до 1 сек приемлема для аналитических отчётов.</p>
+<hr />
+<h3 id="adr-005-Хранение-видеозаписей-в-s3-а-не-в-БД-или-файловой-системе"><a class="header" href="#adr-005-Хранение-видеозаписей-в-s3-а-не-в-БД-или-файловой-системе">ADR-005: Хранение видеозаписей в S3, а не в БД или файловой системе</a></h3>
+<p><strong>Статус:</strong> Принято
+<strong>Связанные требования:</strong> SYS-16, SYS-29, SYS-32, NFR-04, NFR-06</p>
+<p><strong>Контекст:</strong>
+Видеозаписи экзаменов могут достигать 1–2 ГБ на сессию. При 500 одновременных экзаменах — сотни гигабайт ежедневно. Хранение в СУБД невозможно, в файловой системе сервиса — не масштабируется и усложняет backup.</p>
+<p><strong>Решение:</strong>
+После завершения сессии Proctoring Service загружает запись в S3-совместимое хранилище. Доступ — только через pre-signed URL с TTL 4 часа. Lifecycle policy удаляет объекты по истечении срока хранения.</p>
+<div class="table-wrapper"><table><thead><tr><th>Критерий</th><th>Файловая система</th><th>S3 (выбрано)</th><th>СУБД</th></tr></thead><tbody>
+<tr><td>Масштабируемость</td><td>❌ Ограничена</td><td>✅ Неограничена</td><td>❌ Невозможна</td></tr>
+<tr><td>Lifecycle / TTL</td><td>❌ Вручную</td><td>✅ Из коробки</td><td>❌ Вручную</td></tr>
+<tr><td>Шифрование</td><td>⚠️ Вручную</td><td>✅ SSE-S3/KMS</td><td>⚠️ Частично</td></tr>
+<tr><td>Pre-signed URL</td><td>❌</td><td>✅</td><td>❌</td></tr>
+<tr><td>Стоимость</td><td>⚠️ Зависит от инфра</td><td>✅ Низкая</td><td>❌ Очень высокая</td></tr>
+</tbody></table>
+</div>
+<p><strong>Почему выбрано:</strong> S3 — единственный вариант, удовлетворяющий одновременно масштабируемости (NFR-06), требованиям TTL/приватности (SYS-32, NFR-04) и стоимости при объёмах прокторинга.</p>
+<hr />
+<h2 id="4-Общая-согласованность"><a class="header" href="#4-Общая-согласованность">4. Общая согласованность</a></h2>
+<p>Архитектурные решения явно выводятся из требований:</p>
+<div class="table-wrapper"><table><thead><tr><th>Архитектурное решение</th><th>Какие требования обосновывают</th><th>Какие риски снижает</th></tr></thead><tbody>
+<tr><td>SFU медиасервер (ADR-001)</td><td>SYS-15, SYS-16, NFR-02, NFR-06</td><td>Риск №1 (отказ медиасервера), Риск №8 (перегрузка)</td></tr>
+<tr><td>Двухрежимный прокторинг (ADR-002)</td><td>SYS-14, SR-11, NFR-06</td><td>Риск №1 (деградация в async)</td></tr>
+<tr><td>RabbitMQ event-driven (ADR-003)</td><td>SYS-09, SYS-25, NFR-08</td><td>Риск №4 (потеря ответов), Риск №6 (сбой SIS)</td></tr>
+<tr><td>CQRS с репликой (ADR-004)</td><td>SYS-26, SYS-27, NFR-03</td><td>Риск №8 (перегрузка в пике)</td></tr>
+<tr><td>S3 для видеозаписей (ADR-005)</td><td>SYS-16, SYS-29, NFR-04, NFR-06</td><td>Риск №5 (несанкц. доступ), Риск №9 (GDPR)</td></tr>
+</tbody></table>
+</div><iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/state-session.drawio"></iframe>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="nfr.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="icd.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="nfr.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="icd.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

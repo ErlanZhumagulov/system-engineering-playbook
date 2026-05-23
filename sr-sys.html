@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>SR-SYS — System Requirements - system-engineering-playbook</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/_assets/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">system-engineering-playbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="sr-sys--system-requirements"><a class="header" href="#sr-sys--system-requirements">SR-SYS — System Requirements</a></h1>
+<hr />
+<p>Системные требования описывают поведение системы на техническом уровне. Каждое требование атомарно, проверяемо и трассируется к стейкхолдерскому требованию.</p>
+<hr />
+<h2 id="1-Аутентификация-и-управление-доступом"><a class="header" href="#1-Аутентификация-и-управление-доступом">1. Аутентификация и управление доступом</a></h2>
+<p><strong>SYS-01</strong> <em>(← SR-08)</em>
+Система должна поддерживать аутентификацию через OIDC/SAML 2.0 с внешним IdP; прямая аутентификация по логину/паролю внутри LMS+P не используется.</p>
+<p><strong>SYS-02</strong> <em>(← SR-08)</em>
+Система должна применять ролевую модель доступа (RBAC) с ролями: Студент, Преподаватель, Проктор, Администратор. Каждая роль имеет явно определённый набор разрешений; пересечение разрешений между ролями возможно только через явное назначение нескольких ролей.</p>
+<p><strong>SYS-03</strong> <em>(← SR-10)</em>
+После успешной аутентификации через SSO система должна создавать сессионный JWT-токен с TTL 8 часов. По истечении токена — перенаправлять на IdP для повторной аутентификации без потери контекста (redirect_uri сохраняется).</p>
+<p><strong>SYS-04</strong> <em>(← SR-10)</em>
+При недоступности IdP система должна возвращать страницу с понятным сообщением об ошибке. Активные сессии с действующим JWT не прерываются. Обход аутентификации не допускается.</p>
+<hr />
+<h2 id="2-Управление-курсами"><a class="header" href="#2-Управление-курсами">2. Управление курсами</a></h2>
+<p><strong>SYS-05</strong> <em>(← SR-03)</em>
+Система должна позволять преподавателю создавать курс с иерархической структурой: Курс → Модули → Уроки → Задания, с возможностью вложенности не менее 3 уровней. Курс должен поддерживать черновик и опубликованное состояние.</p>
+<p><strong>SYS-06</strong> <em>(← SR-03)</em>
+Система должна поддерживать загрузку учебных материалов следующих форматов: PDF, MP4, DOCX, PPTX, PNG, JPEG. Максимальный размер одного файла — 2 ГБ. При превышении лимита — информативное сообщение об ошибке без потери других данных курса.</p>
+<p><strong>SYS-07</strong> <em>(← SR-03)</em>
+Система должна предоставлять конструктор тестов с типами вопросов: одиночный выбор, множественный выбор, текстовый ввод, сопоставление. Минимальное количество вопросов в тесте — 1; порядок вопросов может быть фиксированным или случайным.</p>
+<p><strong>SYS-08</strong> <em>(← SR-03, SR-07)</em>
+При публикации курса система должна автоматически запрашивать из SIS список зачисленных студентов и предоставлять им доступ. При недоступности SIS — зачисление откладывается в очередь и выполняется при восстановлении.</p>
+<hr />
+<h2 id="3-Тестирование-и-оценивание"><a class="header" href="#3-Тестирование-и-оценивание">3. Тестирование и оценивание</a></h2>
+<p><strong>SYS-09</strong> <em>(← SR-01)</em>
+Система должна фиксировать ответы студента с временными метками каждый раз при переходе между вопросами. Ответы сохраняются на сервере немедленно; при разрыве соединения прогресс не теряется (localStorage как клиентский кэш, синхронизируется при восстановлении).</p>
+<p><strong>SYS-10</strong> <em>(← SR-01)</em>
+По истечении отведённого времени система должна автоматически завершить сессию и сохранить все текущие ответы студента, включая ответ на текущий открытый вопрос.</p>
+<p><strong>SYS-11</strong> <em>(← SR-01, SR-04)</em>
+Система должна автоматически оценивать вопросы типов «одиночный выбор», «множественный выбор» и «сопоставление» немедленно после завершения теста. Результат отображается студенту сразу.</p>
+<p><strong>SYS-12</strong> <em>(← SR-04)</em>
+Для вопросов типа «текстовый ввод» система должна добавлять задачу в очередь ручной проверки преподавателя с привязкой к <code>student_id</code>, <code>test_id</code>, <code>question_id</code>, <code>submission_timestamp</code>.</p>
+<p><strong>SYS-13</strong> <em>(← SR-04)</em>
+Итоговый балл по тесту должен рассчитываться только после проверки всех вопросов (автоматических и ручных) и сохраняться в БД вместе с <code>completion_timestamp</code>. До завершения всех ручных проверок статус теста — <code>pending_review</code>.</p>
+<hr />
+<h2 id="4-Прокторинг"><a class="header" href="#4-Прокторинг">4. Прокторинг</a></h2>
+<p><strong>SYS-14</strong> <em>(← SR-01, SR-02, SR-11)</em>
+Система должна поддерживать три режима прокторинга: <code>none</code> (без прокторинга), <code>async</code> (запись для последующей проверки), <code>realtime</code> (проктор наблюдает онлайн). Режим задаётся преподавателем на уровне теста.</p>
+<p><strong>SYS-15</strong> <em>(← SR-01)</em>
+В режиме <code>realtime</code> система должна устанавливать WebRTC-соединение не позднее чем через 30 секунд после нажатия «Начать экзамен» (p95). При ошибке — отображать диагностическое сообщение и предлагать переключение в режим <code>async</code>.</p>
+<p><strong>SYS-16</strong> <em>(← SR-06, SR-11)</em>
+Система должна записывать видеопоток с веб-камеры студента и поток его экрана в течение всей экзаменационной сессии. Запись должна быть загружена в S3 не позднее 5 минут после завершения сессии.</p>
+<p><strong>SYS-17</strong> <em>(← SR-02, SR-05)</em>
+Proctoring Service должен автоматически детектировать следующие события: уход студента из кадра (&gt;5 сек), обнаружение более одного лица, переключение браузерной вкладки или сворачивание окна (&gt;3 сек), посторонняя речь. Каждое событие фиксируется независимо.</p>
+<p><strong>SYS-18</strong> <em>(← SR-02)</em>
+Каждое событие тревоги должно сохраняться с атрибутами: <code>session_id</code>, <code>event_type</code>, <code>timestamp</code>, <code>confidence_score</code> (0.0–1.0), скриншот фрейма (для событий с лицом, TTL pre-signed URL = 1 ч).</p>
+<p><strong>SYS-19</strong> <em>(← SR-06)</em>
+Проктор должен иметь возможность выносить вердикт по каждому событию: «Нарушение» / «Не нарушение» / «Эскалация». Вердикт фиксируется с <code>proctor_id</code>, <code>verdict_timestamp</code> и опциональным комментарием. Вердикт можно изменить до подтверждения итогового решения.</p>
+<p><strong>SYS-20</strong> <em>(← SR-05, SR-06, SR-11)</em>
+В асинхронном режиме система должна предоставлять проктору интерфейс с видеоплеером, временной шкалой событий тревоги и навигацией по меткам. Нажатие на метку перематывает видео к соответствующему моменту.</p>
+<hr />
+<h2 id="5-Расписание-и-уведомления"><a class="header" href="#5-Расписание-и-уведомления">5. Расписание и уведомления</a></h2>
+<p><strong>SYS-21</strong> <em>(← SR-01, SR-10)</em>
+Система должна открывать доступ к экзамену строго в соответствии с расписанием (<code>start_time</code> — <code>end_time</code>): блокировать начало до <code>start_time</code> (HTTP 423), автоматически завершать активные сессии по <code>end_time</code>.</p>
+<p><strong>SYS-22</strong> <em>(← SR-01)</em>
+Система должна отправлять студенту email-уведомление за 24 часа и за 1 час до начала экзамена. Уведомление должно содержать название экзамена, временное окно и ссылку на платформу.</p>
+<p><strong>SYS-23</strong> <em>(← SR-05, SR-12)</em>
+При возникновении события тревоги с <code>confidence_score &gt; 0.8</code> в режиме <code>realtime</code> система должна доставить push-уведомление проктору в интерфейсе в течение 5 секунд от момента детекции.</p>
+<hr />
+<h2 id="6-Интеграция-с-sis-и-отчётность"><a class="header" href="#6-Интеграция-с-sis-и-отчётность">6. Интеграция с SIS и отчётность</a></h2>
+<p><strong>SYS-24</strong> <em>(← SR-07)</em>
+После подтверждения итоговых оценок преподавателем система должна передавать их в SIS через REST API с полями: <code>student_id</code>, <code>course_id</code>, <code>grade</code>, <code>grade_scale</code>, <code>grade_date</code>, <code>status</code>.</p>
+<p><strong>SYS-25</strong> <em>(← SR-07)</em>
+При ошибке передачи в SIS (HTTP 4xx/5xx или timeout) система должна сохранять оценки в очередь и повторять попытку с интервалами 1, 5, 15, 60 минут. После 5 неудачных попыток — email-уведомление администратору.</p>
+<p><strong>SYS-26</strong> <em>(← SR-04)</em>
+Система должна предоставлять преподавателю отчёт по курсу со следующими метриками: средний балл, распределение оценок (гистограмма), процент успешно сдавших, прогресс по модулям. Данные обновляются в реальном времени.</p>
+<p><strong>SYS-27</strong> <em>(← SR-13)</em>
+Система должна поддерживать экспорт отчётов в форматах CSV и PDF. Время формирования отчёта до 10 000 записей — не более 10 секунд.</p>
+<hr />
+<h2 id="7-Безопасность-и-приватность"><a class="header" href="#7-Безопасность-и-приватность">7. Безопасность и приватность</a></h2>
+<p><strong>SYS-28</strong> <em>(← SR-09, SR-10)</em>
+Все API-эндпоинты должны быть доступны только по HTTPS с TLS 1.2 и выше. HTTP-запросы перенаправляются на HTTPS (301). HSTS включён для всех доменов.</p>
+<p><strong>SYS-29</strong> <em>(← SR-06, SR-09)</em>
+Видеозаписи экзаменов должны храниться в S3 с шифрованием AES-256 (SSE-S3 или SSE-KMS) и быть доступны только через pre-signed URL с TTL не более 4 часов.</p>
+<p><strong>SYS-30</strong> <em>(← SR-09)</em>
+Система должна обеспечивать возможность удаления всех персональных данных студента (GDPR Right to Erasure) по запросу администратора. Операция должна завершаться в течение 30 дней с момента запроса и включать: профиль, ответы, видеозаписи, аудит-логи (за исключением данных, требуемых для юридической отчётности).</p>
+<p><strong>SYS-31</strong> <em>(← SR-09)</em>
+Система должна вести аудит-лог всех обращений к видеозаписям с полями: <code>user_id</code>, <code>role</code>, <code>session_id</code>, <code>access_timestamp</code>, <code>action</code> (<code>view</code> / <code>download</code> / <code>delete</code>). Аудит-лог неизменяем.</p>
+<p><strong>SYS-32</strong> <em>(← SR-09)</em>
+Видеозаписи должны автоматически удаляться из S3 по истечении настраиваемого срока хранения (по умолчанию 90 дней, минимум 30 дней, максимум 365 дней). Удаление выполняется через S3 lifecycle policy.</p>
+<hr />
+<h2 id="8-Дополнительные-системные-требования"><a class="header" href="#8-Дополнительные-системные-требования">8. Дополнительные системные требования</a></h2>
+<p><strong>SYS-33</strong> <em>(← SR-10)</em>
+Система должна применять rate limiting на все публичные API-эндпоинты. Лимит для неаутентифицированных запросов — 20 запросов/мин с одного IP. Лимит для аутентифицированных — 300 запросов/мин с одного <code>user_id</code>.</p>
+<p><strong>SYS-34</strong> <em>(← SR-08)</em>
+Администратор должен иметь возможность настраивать интеграции (IdP, SIS, S3, SMTP) через веб-интерфейс без редактирования конфигурационных файлов или перезапуска сервисов.</p>
+<p><strong>SYS-35</strong> <em>(← SR-10)</em>
+Система должна реализовывать circuit breaker для всех вызовов внешних сервисов (IdP, SIS, SMTP, S3, WebRTC Медиасервер). При срабатывании — fallback-поведение согласно CONOPS, уведомление администратору.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="sr-sh.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="nfr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="sr-sh.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="nfr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

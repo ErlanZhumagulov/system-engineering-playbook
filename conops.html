@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>CONOPS / OPSCON - system-engineering-playbook</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/_assets/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">system-engineering-playbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="conops--opscon--lmsp"><a class="header" href="#conops--opscon--lmsp">CONOPS / OPSCON — LMS+P</a></h1>
+<hr />
+<h2 id="Содержание"><a class="header" href="#Содержание">Содержание</a></h2>
+<ol>
+<li><a href="#1-%D1%80%D0%BE%D0%BB%D0%B8-%D1%83%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2">Роли участников</a></li>
+<li><a href="#2-%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B8-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F">Сценарии использования</a>
+<ul>
+<li><a href="#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-1-%D1%8D%D0%BA%D0%B7%D0%B0%D0%BC%D0%B5%D0%BD-%D1%81-%D0%BF%D1%80%D0%BE%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3%D0%BE%D0%BC-%D0%B2-%D1%80%D0%B5%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%BC-%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8">Сценарий 1: Экзамен с прокторингом в реальном времени</a></li>
+<li><a href="#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-2-%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BA%D1%83%D1%80%D1%81%D0%B0-%D0%B8-%D0%B7%D0%B0%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2">Сценарий 2: Создание курса и зачисление студентов</a></li>
+<li><a href="#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-3-%D0%B0%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3--%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B8">Сценарий 3: Асинхронный прокторинг — проверка записи</a></li>
+<li><a href="#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-4-%D1%80%D1%83%D1%87%D0%BD%D0%B0%D1%8F-%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8B%D1%85-%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2">Сценарий 4: Ручная проверка открытых вопросов</a></li>
+<li><a href="#%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B9-5-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87%D0%B0-%D0%B8%D1%82%D0%BE%D0%B3%D0%BE%D0%B2%D1%8B%D1%85-%D0%BE%D1%86%D0%B5%D0%BD%D0%BE%D0%BA-%D0%B2-%D0%B4%D0%B5%D0%BA%D0%B0%D0%BD%D0%B0%D1%82">Сценарий 5: Передача итоговых оценок в деканат</a></li>
+</ul>
+</li>
+<li><a href="#3-%D1%81%D0%B2%D0%BE%D0%B4%D0%BD%D0%B0%D1%8F-%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0-%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B5%D0%B2">Сводная таблица сценариев</a></li>
+</ol>
+<hr />
+<h2 id="1-Роли-участников"><a class="header" href="#1-Роли-участников">1. Роли участников</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Роль</th><th>Определение</th><th>Основные действия</th><th>Привилегии в LMS+P</th></tr></thead><tbody>
+<tr><td><strong>Студент</strong></td><td>Обучающийся, зачисленный на курс</td><td>Просматривает курсы, проходит тесты и экзамены, получает оценки</td><td>Доступ только к своим курсам и результатам</td></tr>
+<tr><td><strong>Преподаватель</strong></td><td>Автор курса, педагог</td><td>Создаёт курсы и тесты, проверяет работы, просматривает успеваемость группы, управляет правилами прокторинга</td><td>Полный доступ к своим курсам, чтение статистики по своим студентам</td></tr>
+<tr><td><strong>Проктор</strong></td><td>Наблюдатель на экзамене</td><td>Мониторит видеосессии, просматривает записи, выносит вердикты по нарушениям</td><td>Доступ к видеосессиям и событиям тревоги назначенных экзаменов</td></tr>
+<tr><td><strong>Администратор</strong></td><td>Сотрудник IT-отдела / деканата</td><td>Управляет пользователями, ролями, интеграциями, системными настройками, логами</td><td>Полный доступ к настройкам, без доступа к содержанию экзаменов</td></tr>
+</tbody></table>
+</div><iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/use-case.drawio"></iframe>
+<hr />
+<h2 id="2-Сценарии-использования"><a class="header" href="#2-Сценарии-использования">2. Сценарии использования</a></h2>
+<hr />
+<h3 id="Сценарий-1-Экзамен-с-прокторингом-в-реальном-времени"><a class="header" href="#Сценарий-1-Экзамен-с-прокторингом-в-реальном-времени">Сценарий 1: Экзамен с прокторингом в реальном времени</a></h3>
+<p><strong>Предусловие:</strong> Преподаватель создал экзамен с режимом «Реальное время». Проктор назначен на сессию. Студент зачислен на курс и получил уведомление.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Студент входит в систему через SSO за 15 минут до начала</li>
+<li>Открывает страницу экзамена — система проверяет расписание, доступ разрешён</li>
+<li>Студент читает политику прокторинга и нажимает «Согласен»; система выполняет camera check</li>
+<li>Студент нажимает «Начать экзамен» — Proctoring Service запрашивает WebRTC-соединение с медиасервером</li>
+<li>Соединение установлено (≤30 сек); в углу экрана — индикатор «Запись ведётся»</li>
+<li>Проктор видит видеопоток студента в портале проктора</li>
+<li>Студент отвечает на вопросы; Assessment Service фиксирует ответы с временными метками</li>
+<li>Proctoring Service детектирует события: уход из кадра, смена вкладки, посторонний звук</li>
+<li>При confidence_score &gt; 0.8 — push-уведомление проктору в течение 5 секунд</li>
+<li>По истечении времени система блокирует возможность ответа и автоматически завершает сессию</li>
+<li>Запись сохраняется в S3; Assessment Service рассчитывает результат по автоматическим вопросам</li>
+</ol>
+<iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/ErlanZhumagulov/system-engineering-playbook/main/src/diagrams/seq-exam-realtime.drawio"></iframe>
+<p><strong>Исключение — разрыв видеосоединения:</strong></p>
+<ol>
+<li>Медиасервер фиксирует разрыв дольше 30 секунд</li>
+<li>LMS+P приостанавливает таймер экзамена и уведомляет студента и проктора</li>
+<li>Студент получает инструкцию перезагрузить страницу</li>
+<li>При восстановлении соединения (&lt;5 минут) таймер возобновляется, сессия продолжается</li>
+<li>Если соединение не восстановлено — проктор принимает решение: продлить сессию или зафиксировать как технический сбой</li>
+</ol>
+<p><strong>Режим деградации — медиасервер полностью недоступен:</strong></p>
+<ol>
+<li>LMS+P не может установить WebRTC-соединение (таймаут 10 сек)</li>
+<li>Система автоматически предлагает студенту переключиться в режим «Асинхронный»</li>
+<li>Студент получает уведомление: «Прямой эфир недоступен, используется запись на устройстве»</li>
+<li>По завершении экзамена браузерная запись загружается в S3 для последующего просмотра проктором</li>
+<li>Проктор уведомляется о переключении режима; сессия помечается <code>proctoring_mode=async_fallback</code></li>
+</ol>
+<hr />
+<h3 id="Сценарий-2-Создание-курса-и-зачисление-студентов"><a class="header" href="#Сценарий-2-Создание-курса-и-зачисление-студентов">Сценарий 2: Создание курса и зачисление студентов</a></h3>
+<p><strong>Предусловие:</strong> Преподаватель авторизован. Курс ещё не создан. SIS содержит актуальные данные о зачислении.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Преподаватель открывает редактор курса, создаёт модули и загружает материалы (PDF, видео)</li>
+<li>Добавляет тест: создаёт вопросы (одиночный выбор, множественный, открытый текст)</li>
+<li>Задаёт настройки теста: время, количество попыток, режим прокторинга</li>
+<li>Нажимает «Опубликовать» — LMS+P запрашивает из SIS список зачисленных студентов</li>
+<li>Студентам предоставляется доступ к курсу; они получают email-уведомление</li>
+<li>Преподаватель просматривает прогресс студентов в разделе успеваемости в режиме реального времени</li>
+</ol>
+<p><strong>Исключение — ошибка загрузки файла:</strong></p>
+<ol>
+<li>Преподаватель загружает файл &gt;2 ГБ или неподдерживаемого формата</li>
+<li>Система отображает ошибку: «Максимальный размер файла — 2 ГБ. Поддерживаемые форматы: PDF, MP4, DOCX, PPTX, PNG, JPEG»</li>
+<li>Курс сохраняется в черновике; материал не загружается</li>
+<li>Преподаватель конвертирует файл и повторяет загрузку</li>
+</ol>
+<p><strong>Режим деградации — SIS недоступен при публикации:</strong></p>
+<ol>
+<li>LMS+P не может получить список зачисленных студентов из SIS</li>
+<li>Система публикует курс, но откладывает автоматическое зачисление в очередь</li>
+<li>При восстановлении SIS — зачисление выполняется автоматически</li>
+<li>Администратор получает уведомление о задержке зачисления с указанием курса и времени ожидания</li>
+</ol>
+<hr />
+<h3 id="Сценарий-3-Асинхронный-прокторинг--проверка-записи"><a class="header" href="#Сценарий-3-Асинхронный-прокторинг--проверка-записи">Сценарий 3: Асинхронный прокторинг — проверка записи</a></h3>
+<p><strong>Предусловие:</strong> Студент прошёл экзамен. Запись загружена в S3. Проктор назначен на проверку записей данного экзамена.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Проктор открывает очередь записей в портале</li>
+<li>Система загружает запись с pre-signed URL из S3 (TTL = 4 часа)</li>
+<li>Проктор просматривает видео; система отображает временную шкалу с метками тревог</li>
+<li>Проктор нажимает на метку тревоги — видео перематывается к событию</li>
+<li>Проктор выносит вердикт по каждому событию: «Нарушение» / «Не нарушение» / «Требует эскалации»</li>
+<li>При выборе «Нарушение» — открывается форма с полем комментария и выбором типа нарушения</li>
+<li>Итоговый вердикт (допустить / не допустить к результатам) сохраняется с <code>proctor_id</code> и <code>timestamp</code></li>
+<li>Преподаватель получает уведомление о вердикте; система обновляет статус результата</li>
+</ol>
+<p><strong>Исключение — запись недоступна в S3:</strong></p>
+<ol>
+<li>При попытке открыть сессию система обнаруживает отсутствие объекта в S3</li>
+<li>Проктор видит статус «Запись недоступна — обратитесь к администратору»</li>
+<li>Администратор получает автоматический алерт с <code>session_id</code> и <code>exam_id</code></li>
+<li>Администратор выясняет причину: сбой загрузки после экзамена или технический сбой на стороне студента</li>
+<li>Принимается решение: провести повторный экзамен или засчитать результат на основе автодетекции событий</li>
+</ol>
+<p><strong>Режим деградации — S3 недоступен во время проверки:</strong></p>
+<ol>
+<li>Проктор пытается открыть запись — S3 возвращает ошибку (timeout или 5xx)</li>
+<li>Система отображает сообщение: «Хранилище временно недоступно. Повторите через несколько минут»</li>
+<li>Событие тревоги и метаданные сессии остаются доступны (хранятся в PostgreSQL)</li>
+<li>Проктор может изучить список автодетектированных событий без видео и отложить вынесение вердикта</li>
+<li>При восстановлении S3 — проктор возвращается к записи с сохранённым прогрессом просмотра</li>
+</ol>
+<hr />
+<h3 id="Сценарий-4-Ручная-проверка-открытых-вопросов"><a class="header" href="#Сценарий-4-Ручная-проверка-открытых-вопросов">Сценарий 4: Ручная проверка открытых вопросов</a></h3>
+<p><strong>Предусловие:</strong> Студент завершил тест с открытыми вопросами. Assessment Service поставил задачи ручной проверки в очередь.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Преподаватель получает email-уведомление о задачах в очереди</li>
+<li>Открывает очередь — видит список ответов (имя студента скрыто, если включена слепая проверка)</li>
+<li>Читает ответ, вводит балл в допустимом диапазоне, добавляет комментарий</li>
+<li>Сохраняет оценку — Assessment Service пересчитывает итоговый балл</li>
+<li>Если все вопросы проверены — статус теста меняется на «Проверено»</li>
+<li>Студент получает уведомление и видит итоговый балл с комментарием преподавателя</li>
+</ol>
+<p><strong>Исключение — преподаватель вводит балл вне допустимого диапазона:</strong></p>
+<ol>
+<li>Преподаватель вводит балл выше максимального (например, 110 из 100)</li>
+<li>Система отображает inline-ошибку: «Балл должен быть от 0 до 100»</li>
+<li>Форма блокирует сохранение до исправления значения</li>
+<li>Преподаватель исправляет балл и сохраняет</li>
+</ol>
+<p><strong>Режим деградации — преподаватель не проверяет задачи &gt;N дней:</strong></p>
+<ol>
+<li>Через 3 дня бездействия система отправляет напоминание преподавателю</li>
+<li>Если через 7 дней очередь не обработана — уведомление администратору с указанием курса и числа непроверенных работ</li>
+<li>Администратор может переназначить задачи другому преподавателю</li>
+<li>Студент, ожидающий результатов &gt;7 дней, получает уведомление: «Проверка задерживается, ожидайте»</li>
+</ol>
+<hr />
+<h3 id="Сценарий-5-Передача-итоговых-оценок-в-деканат"><a class="header" href="#Сценарий-5-Передача-итоговых-оценок-в-деканат">Сценарий 5: Передача итоговых оценок в деканат</a></h3>
+<p><strong>Предусловие:</strong> Все экзамены курса проведены. Преподаватель проверил открытые вопросы. SIS доступен.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Преподаватель открывает раздел «Итоговые оценки» курса</li>
+<li>Проверяет список: все студенты имеют статус «Оценка выставлена»</li>
+<li>Нажимает «Передать в деканат»</li>
+<li>SIS Sync Service отправляет POST-запрос в SIS с массивом оценок: <code>student_id</code>, <code>course_id</code>, <code>grade</code>, <code>grade_date</code>, <code>status</code></li>
+<li>SIS возвращает подтверждение; LMS+P фиксирует статус «Передано в деканат» с timestamp</li>
+<li>Студенты получают email-уведомление о передаче оценок</li>
+</ol>
+<p><strong>Исключение — ошибка валидации в SIS:</strong></p>
+<ol>
+<li>SIS возвращает ошибку: <code>student_id</code> не найден или <code>course_id</code> не соответствует учебному плану</li>
+<li>LMS+P отображает список проблемных записей с кодом ошибки от SIS</li>
+<li>Администратор вручную сверяет данные и исправляет расхождение</li>
+<li>Преподаватель повторяет передачу только для проблемных записей</li>
+</ol>
+<p><strong>Режим деградации — SIS недоступен:</strong></p>
+<ol>
+<li>SIS Sync Service фиксирует HTTP 5xx или timeout — помещает оценки в очередь со статусом «Ожидает передачи»</li>
+<li>Система автоматически повторяет попытку с интервалами: 1, 5, 15, 60 минут</li>
+<li>Администратор видит в дашборде: «Очередь передачи: N записей, следующая попытка через X мин»</li>
+<li>После 5 неудачных попыток — алерт администратору по email</li>
+<li>При восстановлении SIS — передача выполняется автоматически, статус обновляется; студенты уведомляются</li>
+</ol>
+<hr />
+<h2 id="3-Сводная-таблица-сценариев"><a class="header" href="#3-Сводная-таблица-сценариев">3. Сводная таблица сценариев</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>№</th><th>Сценарий</th><th>Критичный сбой</th><th>Деградация (fallback)</th></tr></thead><tbody>
+<tr><td>1</td><td>Экзамен с прокторингом реального времени</td><td>Медиасервер недоступен</td><td>Переключение в асинхронный режим, локальная запись в браузере</td></tr>
+<tr><td>2</td><td>Создание курса и зачисление студентов</td><td>SIS недоступен при публикации</td><td>Откладывание зачисления в очередь, уведомление администратору</td></tr>
+<tr><td>3</td><td>Асинхронная проверка записи</td><td>Запись не загружена в S3 / S3 недоступен</td><td>Алерт администратору; метаданные событий доступны без видео</td></tr>
+<tr><td>4</td><td>Ручная проверка открытых вопросов</td><td>Преподаватель не проверяет</td><td>Напоминание → уведомление администратору → переназначение</td></tr>
+<tr><td>5</td><td>Передача оценок в деканат</td><td>SIS недоступен</td><td>Очередь с автоповтором (1/5/15/60 мин), алерт после 5 попыток</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="soi.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="#.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="soi.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="#.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

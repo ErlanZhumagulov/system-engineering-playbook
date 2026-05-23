@@ -1,0 +1,317 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>SR-SH — Stakeholder Requirements - system-engineering-playbook</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/_assets/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">system-engineering-playbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="sr-sh--stakeholder-requirements"><a class="header" href="#sr-sh--stakeholder-requirements">SR-SH — Stakeholder Requirements</a></h1>
+<hr />
+<p>Стейкхолдерские требования описывают потребности и ожидания заинтересованных сторон на уровне бизнеса и пользователя — без привязки к технической реализации. Каждое требование трассируется к одному или нескольким системным требованиям.</p>
+<hr />
+<h2 id="Таблица-согласованности-sr--sys"><a class="header" href="#Таблица-согласованности-sr--sys">Таблица согласованности SR → SYS</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>SR</th><th>Краткое описание</th><th>Связанные SYS</th><th>Связанные NFR</th></tr></thead><tbody>
+<tr><td>SR-01</td><td>Запуск экзамена без доп. ПО</td><td>SYS-14, SYS-15</td><td>NFR-10</td></tr>
+<tr><td>SR-02</td><td>Прозрачность прокторинга</td><td>SYS-14, SYS-17, SYS-19</td><td>NFR-05</td></tr>
+<tr><td>SR-03</td><td>Создание курсов без IT</td><td>SYS-05, SYS-06, SYS-07</td><td>NFR-10</td></tr>
+<tr><td>SR-04</td><td>Отчётность успеваемости в реальном времени</td><td>SYS-26, SYS-27</td><td>NFR-03</td></tr>
+<tr><td>SR-05</td><td>Мониторинг ≥20 сессий одновременно</td><td>SYS-20, SYS-23</td><td>NFR-02, NFR-06</td></tr>
+<tr><td>SR-06</td><td>Просмотр записи перед вердиктом</td><td>SYS-16, SYS-20, SYS-29</td><td>NFR-04</td></tr>
+<tr><td>SR-07</td><td>Автопередача оценок в деканат</td><td>SYS-24, SYS-25</td><td>NFR-08</td></tr>
+<tr><td>SR-08</td><td>Управление ролями без работы с БД</td><td>SYS-01, SYS-02</td><td>—</td></tr>
+<tr><td>SR-09</td><td>Соответствие GDPR / 152-ФЗ</td><td>SYS-29, SYS-30, SYS-31, SYS-32</td><td>NFR-04</td></tr>
+<tr><td>SR-10</td><td>Доступность в экзаменационную сессию</td><td>SYS-04</td><td>NFR-01</td></tr>
+<tr><td>SR-11</td><td>Поддержка асинхронного прокторинга</td><td>SYS-14, SYS-16, SYS-20</td><td>NFR-06</td></tr>
+<tr><td>SR-12</td><td>Уведомления о нарушениях в реальном времени</td><td>SYS-23</td><td>NFR-02</td></tr>
+<tr><td>SR-13</td><td>Экспорт отчётов CSV/PDF</td><td>SYS-27</td><td>NFR-03</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="sr-01-Надёжный-доступ-к-экзамену-для-студента"><a class="header" href="#sr-01-Надёжный-доступ-к-экзамену-для-студента">SR-01: Надёжный доступ к экзамену для студента</a></h2>
+<p><strong>Стейкхолдер:</strong> Студент, Образовательная организация</p>
+<p>Студент должен иметь возможность начать экзамен в назначенное время с любого устройства с браузером и веб-камерой, не устанавливая дополнительного ПО (кроме опционального античит-агента), чтобы технические барьеры не влияли на академический результат.</p>
+<p><strong>Приоритет:</strong> Критический</p>
+<hr />
+<h2 id="sr-02-Прозрачность-процесса-прокторинга-для-студента"><a class="header" href="#sr-02-Прозрачность-процесса-прокторинга-для-студента">SR-02: Прозрачность процесса прокторинга для студента</a></h2>
+<p><strong>Стейкхолдер:</strong> Студент, Образовательная организация (соответствие GDPR)</p>
+<p>Студент должен до начала экзамена видеть, какие данные собираются (камера, экран, аудио), на каком основании возникает событие тревоги и как вынесенный вердикт влияет на итоговый результат, чтобы процесс оценивания был справедливым и предсказуемым.</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-03-Инструменты-создания-курсов-без-навыков-программирования"><a class="header" href="#sr-03-Инструменты-создания-курсов-без-навыков-программирования">SR-03: Инструменты создания курсов без навыков программирования</a></h2>
+<p><strong>Стейкхолдер:</strong> Преподаватель</p>
+<p>Преподаватель должен иметь возможность создать курс с материалами, тестами и настройками прокторинга без привлечения IT-специалиста, используя только веб-интерфейс — чтобы скорость разработки курсов не зависела от доступности разработчиков.</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-04-Оперативная-отчётность-об-успеваемости-для-преподавателя"><a class="header" href="#sr-04-Оперативная-отчётность-об-успеваемости-для-преподавателя">SR-04: Оперативная отчётность об успеваемости для преподавателя</a></h2>
+<p><strong>Стейкхолдер:</strong> Преподаватель</p>
+<p>Преподаватель должен видеть успеваемость студентов в режиме реального времени — прогресс по модулям, результаты тестов, сравнение с группой — чтобы своевременно реагировать на отстающих и корректировать учебный план.</p>
+<p><strong>Приоритет:</strong> Средний</p>
+<hr />
+<h2 id="sr-05-Эффективный-мониторинг-нескольких-сессий-для-проктора"><a class="header" href="#sr-05-Эффективный-мониторинг-нескольких-сессий-для-проктора">SR-05: Эффективный мониторинг нескольких сессий для проктора</a></h2>
+<p><strong>Стейкхолдер:</strong> Проктор, Образовательная организация</p>
+<p>Проктор должен иметь возможность наблюдать за не менее чем 20 сессиями одновременно с автоматической расстановкой приоритетов — тревоги с высоким риском (confidence_score &gt; 0.8) должны выводиться на первый план без ручного поиска.</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-06-Полная-запись-сессии-перед-вынесением-вердикта"><a class="header" href="#sr-06-Полная-запись-сессии-перед-вынесением-вердикта">SR-06: Полная запись сессии перед вынесением вердикта</a></h2>
+<p><strong>Стейкхолдер:</strong> Проктор, Студент (справедливость)</p>
+<p>Проктор должен иметь возможность просмотреть полную видеозапись сессии перед вынесением финального вердикта, а не основываться только на автоматической детекции, чтобы исключить ложноположительные блокировки и обеспечить справедливость оценки.</p>
+<p><strong>Приоритет:</strong> Критический</p>
+<hr />
+<h2 id="sr-07-Автоматическая-передача-оценок-в-деканат"><a class="header" href="#sr-07-Автоматическая-передача-оценок-в-деканат">SR-07: Автоматическая передача оценок в деканат</a></h2>
+<p><strong>Стейкхолдер:</strong> Администратор, Образовательная организация</p>
+<p>Администратор не должен вручную переносить итоговые оценки из LMS+P в систему деканата — передача должна выполняться автоматически после подтверждения преподавателем с гарантией доставки (retry при сбоях).</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-08-Управление-доступом-и-ролями-без-технических-знаний"><a class="header" href="#sr-08-Управление-доступом-и-ролями-без-технических-знаний">SR-08: Управление доступом и ролями без технических знаний</a></h2>
+<p><strong>Стейкхолдер:</strong> Администратор</p>
+<p>Администратор должен иметь возможность управлять пользователями, ролями и зачислением на курсы через веб-интерфейс без работы с базой данных или API напрямую — чтобы операционная нагрузка на IT-отдел была минимальной.</p>
+<p><strong>Приоритет:</strong> Средний</p>
+<hr />
+<h2 id="sr-09-Соответствие-требованиям-приватности-gdpr--152-ФЗ"><a class="header" href="#sr-09-Соответствие-требованиям-приватности-gdpr--152-ФЗ">SR-09: Соответствие требованиям приватности (GDPR / 152-ФЗ)</a></h2>
+<p><strong>Стейкхолдер:</strong> Образовательная организация, Студент, Юридический отдел</p>
+<p>Система должна обеспечивать хранение видеозаписей экзаменов только в течение установленного срока, предоставлять студенту возможность запросить удаление своих данных и получить информацию о том, кто имел доступ к его записям — для соответствия законодательству о персональных данных.</p>
+<p><strong>Приоритет:</strong> Критический</p>
+<hr />
+<h2 id="sr-10-Доступность-системы-в-период-экзаменационных-сессий"><a class="header" href="#sr-10-Доступность-системы-в-период-экзаменационных-сессий">SR-10: Доступность системы в период экзаменационных сессий</a></h2>
+<p><strong>Стейкхолдер:</strong> Образовательная организация, Студенты, Преподаватели</p>
+<p>Система должна обеспечивать бесперебойную работу в период плановых экзаменационных сессий с пиковыми нагрузками, не допуская отказов, влияющих на ход экзамена — так как любой сбой в это время имеет прямые академические последствия.</p>
+<p><strong>Приоритет:</strong> Критический</p>
+<hr />
+<h2 id="sr-11-Поддержка-асинхронного-прокторинга"><a class="header" href="#sr-11-Поддержка-асинхронного-прокторинга">SR-11: Поддержка асинхронного прокторинга</a></h2>
+<p><strong>Стейкхолдер:</strong> Образовательная организация, Администратор</p>
+<p>Образовательная организация должна иметь возможность выбрать режим асинхронного прокторинга (без проктора в реальном времени), при котором запись проверяется после экзамена, чтобы снизить операционные затраты при массовых тестированиях.</p>
+<p><strong>Приоритет:</strong> Средний</p>
+<hr />
+<h2 id="sr-12-Уведомления-о-нарушениях-в-режиме-реального-времени"><a class="header" href="#sr-12-Уведомления-о-нарушениях-в-режиме-реального-времени">SR-12: Уведомления о нарушениях в режиме реального времени</a></h2>
+<p><strong>Стейкхолдер:</strong> Проктор</p>
+<p>Проктор должен получать мгновенное уведомление при обнаружении события тревоги высокого приоритета (посторонний человек в кадре, смена браузера дольше 10 секунд) в течение не более 5 секунд — чтобы иметь возможность оперативного вмешательства во время экзамена.</p>
+<p><strong>Приоритет:</strong> Высокий</p>
+<hr />
+<h2 id="sr-13-Экспорт-отчётов-успеваемости"><a class="header" href="#sr-13-Экспорт-отчётов-успеваемости">SR-13: Экспорт отчётов успеваемости</a></h2>
+<p><strong>Стейкхолдер:</strong> Преподаватель, Администратор</p>
+<p>Преподаватель и администратор должны иметь возможность экспортировать отчёты об успеваемости в форматах CSV и PDF для передачи в сторонние системы, печати или архивирования.</p>
+<p><strong>Приоритет:</strong> Средний</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="#.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="sr-sys.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="#.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="sr-sys.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
