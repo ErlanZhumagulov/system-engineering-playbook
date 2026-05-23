@@ -1,0 +1,142 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="LMS+P — C4 Container Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="450" y="20" width="700" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- SoI Boundary -->
+    <mxCell id="boundary" value="LMS+P — System of Interest" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.lean_mapping.electronic_info_flow_edge;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#0066CC;strokeWidth=2;dashed=1;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#0066CC;" vertex="1" parent="1">
+      <mxGeometry x="230" y="70" width="1080" height="820" as="geometry" />
+    </mxCell>
+
+    <!-- Layer 1: API Gateway -->
+    <mxCell id="gateway" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;br&gt;[Go / Nginx + Redis]&lt;br&gt;&lt;br&gt;JWT-аутентификация, rate limiting,&lt;br&gt;маршрутизация запросов" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;arcSize=5;" vertex="1" parent="1">
+      <mxGeometry x="600" y="100" width="400" height="90" as="geometry" />
+    </mxCell>
+
+    <!-- Layer 2: Core Services -->
+    <mxCell id="course" value="&lt;b&gt;Course Service&lt;/b&gt;&lt;br&gt;[Go + PostgreSQL]&lt;br&gt;&lt;br&gt;Курсы, модули, материалы,&lt;br&gt;тесты; публикация" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;arcSize=5;" vertex="1" parent="1">
+      <mxGeometry x="260" y="260" width="220" height="90" as="geometry" />
+    </mxCell>
+
+    <mxCell id="assessment" value="&lt;b&gt;Assessment Service&lt;/b&gt;&lt;br&gt;[Go + PostgreSQL]&lt;br&gt;&lt;br&gt;Приём ответов, автооценивание,&lt;br&gt;очередь ручной проверки" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;arcSize=5;" vertex="1" parent="1">
+      <mxGeometry x="510" y="260" width="220" height="90" as="geometry" />
+    </mxCell>
+
+    <mxCell id="proctoring" value="&lt;b&gt;Proctoring Service&lt;/b&gt;&lt;br&gt;[Go + WebRTC SDK + PG]&lt;br&gt;&lt;br&gt;Сессии, детекция тревог,&lt;br&gt;вердикты, S3, WebRTC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;arcSize=5;" vertex="1" parent="1">
+      <mxGeometry x="760" y="260" width="220" height="90" as="geometry" />
+    </mxCell>
+
+    <mxCell id="notification" value="&lt;b&gt;Notification Service&lt;/b&gt;&lt;br&gt;[Go + RabbitMQ]&lt;br&gt;&lt;br&gt;Email и push-уведомления;&lt;br&gt;слушает очередь событий" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;arcSize=5;" vertex="1" parent="1">
+      <mxGeometry x="1010" y="260" width="220" height="90" as="geometry" />
+    </mxCell>
+
+    <!-- Layer 3: Management -->
+    <mxCell id="reporting" value="&lt;b&gt;Reporting Service&lt;/b&gt;&lt;br&gt;[Go/Python + PG replica]&lt;br&gt;&lt;br&gt;Отчёты успеваемости,&lt;br&gt;экспорт CSV/PDF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;arcSize=5;" vertex="1" parent="1">
+      <mxGeometry x="260" y="430" width="220" height="90" as="geometry" />
+    </mxCell>
+
+    <mxCell id="sissync" value="&lt;b&gt;SIS Sync Service&lt;/b&gt;&lt;br&gt;[Go + PostgreSQL + MQ]&lt;br&gt;&lt;br&gt;Передача оценок в SIS,&lt;br&gt;retry 1/5/15/60 мин" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;arcSize=5;" vertex="1" parent="1">
+      <mxGeometry x="510" y="430" width="220" height="90" as="geometry" />
+    </mxCell>
+
+    <mxCell id="admin" value="&lt;b&gt;Admin Portal&lt;/b&gt;&lt;br&gt;[React SPA + Go API + PG]&lt;br&gt;&lt;br&gt;Пользователи, роли,&lt;br&gt;интеграции, дашборд" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;arcSize=5;" vertex="1" parent="1">
+      <mxGeometry x="760" y="430" width="220" height="90" as="geometry" />
+    </mxCell>
+
+    <!-- Layer 4: Storage -->
+    <mxCell id="postgres" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br&gt;[PostgreSQL 15 + replica + PgBouncer]&lt;br&gt;&lt;br&gt;Пользователи, курсы, ответы,&lt;br&gt;прокторинг, аудит-логи" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="310" y="620" width="200" height="100" as="geometry" />
+    </mxCell>
+
+    <mxCell id="redis" value="&lt;b&gt;Redis&lt;/b&gt;&lt;br&gt;[Redis 7 + Sentinel]&lt;br&gt;&lt;br&gt;Кэш сессий, расписания,&lt;br&gt;rate limiting, JWT blacklist" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="570" y="620" width="200" height="100" as="geometry" />
+    </mxCell>
+
+    <mxCell id="rabbitmq" value="&lt;b&gt;RabbitMQ&lt;/b&gt;&lt;br&gt;[RabbitMQ 3.12+]&lt;br&gt;&lt;br&gt;Асинхронные события:&lt;br&gt;ответы, оценки, уведомления" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="830" y="620" width="200" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- External Systems (outside boundary) -->
+    <mxCell id="idp" value="&lt;b&gt;IdP / SSO&lt;/b&gt;&lt;br&gt;[Keycloak / Azure AD]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="80" y="100" width="160" height="70" as="geometry" />
+    </mxCell>
+
+    <mxCell id="webrtcext" value="&lt;b&gt;WebRTC Медиасервер&lt;/b&gt;&lt;br&gt;[Janus / MediaSoup]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1400" y="260" width="180" height="70" as="geometry" />
+    </mxCell>
+
+    <mxCell id="s3ext" value="&lt;b&gt;S3-хранилище&lt;/b&gt;&lt;br&gt;[AWS S3 / MinIO]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1400" y="360" width="180" height="70" as="geometry" />
+    </mxCell>
+
+    <mxCell id="sisext" value="&lt;b&gt;SIS / Деканат&lt;/b&gt;&lt;br&gt;[REST API]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1400" y="460" width="180" height="70" as="geometry" />
+    </mxCell>
+
+    <mxCell id="smtpext" value="&lt;b&gt;SMTP-сервер&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1400" y="560" width="180" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Edges -->
+    <mxCell id="e_idp_gw" value="OIDC/SAML" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;" edge="1" source="idp" target="gateway" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e_gw_course" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="gateway" target="course" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_gw_assess" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="gateway" target="assessment" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_gw_proct" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="gateway" target="proctoring" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_gw_admin" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="gateway" target="admin" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e_assess_mq" value="exam.answer.saved&lt;br&gt;grade.confirmed" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;dashed=1;" edge="1" source="assessment" target="rabbitmq" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_proct_mq" value="proctoring.alert&lt;br&gt;verdict.submitted" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;dashed=1;" edge="1" source="proctoring" target="rabbitmq" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_mq_notif" value="notification.requested" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;dashed=1;" edge="1" source="rabbitmq" target="notification" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_mq_sis" value="grade.confirmed" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;dashed=1;" edge="1" source="rabbitmq" target="sissync" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e_proct_webrtc" value="WebRTC сигналинг" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="proctoring" target="webrtcext" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_proct_s3" value="upload recording" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="proctoring" target="s3ext" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_sis_ext" value="POST /grades" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="sissync" target="sisext" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_notif_smtp" value="SMTP" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="notification" target="smtpext" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e_svc_pg" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="course" target="postgres" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_assess_pg" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="assessment" target="postgres" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_rep_pg" value="replica (CQRS)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;dashed=1;" edge="1" source="reporting" target="postgres" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_gw_redis" value="rate limit&lt;br&gt;JWT blacklist" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="gateway" target="redis" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+  </root>
+</mxGraphModel>

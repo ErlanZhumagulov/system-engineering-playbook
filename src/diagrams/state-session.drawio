@@ -1,0 +1,129 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="LMS+P — State Machine: Жизненный цикл экзаменационной сессии" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="20" width="1200" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- Initial state -->
+    <mxCell id="init" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
+      <mxGeometry x="760" y="90" width="30" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- States -->
+    <mxCell id="scheduled" value="&lt;b&gt;SCHEDULED&lt;/b&gt;&lt;br&gt;Экзамен запланирован.&lt;br&gt;Доступ заблокирован." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="660" y="160" width="230" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="open" value="&lt;b&gt;OPEN&lt;/b&gt;&lt;br&gt;Окно экзамена открыто.&lt;br&gt;Студент может начать." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="660" y="310" width="230" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="active" value="&lt;b&gt;ACTIVE&lt;/b&gt;&lt;br&gt;Сессия идёт.&lt;br&gt;Запись ведётся. Ответы сохраняются." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="660" y="460" width="230" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="paused" value="&lt;b&gt;PAUSED&lt;/b&gt;&lt;br&gt;Разрыв WebRTC &gt;30 сек.&lt;br&gt;Таймер остановлен." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="350" y="460" width="230" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="completed" value="&lt;b&gt;COMPLETED&lt;/b&gt;&lt;br&gt;Сессия завершена.&lt;br&gt;Запись загружается в S3." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="660" y="620" width="230" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="aborted" value="&lt;b&gt;ABORTED&lt;/b&gt;&lt;br&gt;Технический сбой.&lt;br&gt;Повторный экзамен." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="350" y="620" width="230" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="under_review" value="&lt;b&gt;UNDER REVIEW&lt;/b&gt;&lt;br&gt;Проктор просматривает&lt;br&gt;запись и события." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="660" y="780" width="230" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="graded" value="&lt;b&gt;GRADED&lt;/b&gt;&lt;br&gt;Вердикт вынесен.&lt;br&gt;Итоговый балл рассчитан." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="660" y="940" width="230" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="transferred" value="&lt;b&gt;TRANSFERRED&lt;/b&gt;&lt;br&gt;Оценка передана в SIS.&lt;br&gt;Студент уведомлён." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="660" y="1080" width="230" height="80" as="geometry" />
+    </mxCell>
+
+    <!-- Final state -->
+    <mxCell id="final" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#ffffff;strokeWidth=4;" vertex="1" parent="1">
+      <mxGeometry x="760" y="1210" width="30" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- Transitions -->
+    <mxCell id="t0" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;" edge="1" source="init" target="scheduled" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="t1" value="start_time наступило" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" source="scheduled" target="open" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="t2" value="Студент нажал «Начать»" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" source="open" target="active" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="t3" value="WebRTC разрыв &gt;30 сек" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" source="active" target="paused" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="t4" value="Соединение восстановлено &lt;5 мин" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;exitX=1;exitY=0.3;entryX=0;entryY=0.3;" edge="1" source="paused" target="active" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="t5" value="Не восстановлено &gt;5 мин / решение проктора" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;strokeColor=#b85450;" edge="1" source="paused" target="aborted" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="t6" value="end_time / студент нажал «Завершить»" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" source="active" target="completed" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="t7_none" value="proctoring_mode=none → балл сразу" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;exitX=1;exitY=0.7;entryX=1;entryY=0.3;" edge="1" source="completed" target="graded" parent="1">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="980" y="660"/><mxPoint x="980" y="980"/></Array></mxGeometry>
+    </mxCell>
+
+    <mxCell id="t7" value="proctoring_mode=async|realtime → запись в S3 готова" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" source="completed" target="under_review" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="t8_approved" value="Вердикт: approved" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;strokeColor=#82b366;" edge="1" source="under_review" target="graded" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="t8_rejected" value="Вердикт: rejected → аннулирован" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;strokeColor=#b85450;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="under_review" target="aborted" parent="1">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="560" y="820"/><mxPoint x="560" y="660"/></Array></mxGeometry>
+    </mxCell>
+
+    <mxCell id="t9" value="Преподаватель подтвердил оценку" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" source="graded" target="transferred" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="t10" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="transferred" target="final" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- end_time closes open state -->
+    <mxCell id="t_open_closed" value="end_time истёк (студент не начал)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="open" target="aborted" parent="1">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="540" y="350"/><mxPoint x="540" y="660"/></Array></mxGeometry>
+    </mxCell>
+
+    <!-- Legend -->
+    <mxCell id="leg_title" value="Легенда" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="460" width="100" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg1" value="Основной путь" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="500" width="200" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg2" value="Деградация / сбой" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="545" width="200" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg3" value="Ожидание действия" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="590" width="200" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg4" value="Проверка / финализация" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="635" width="200" height="30" as="geometry" />
+    </mxCell>
+  </root>
+</mxGraphModel>
