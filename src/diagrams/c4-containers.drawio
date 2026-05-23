@@ -9,7 +9,7 @@
     </mxCell>
 
     <!-- SoI Boundary -->
-    <mxCell id="boundary" value="LMS+P — System of Interest" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.lean_mapping.electronic_info_flow_edge;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#0066CC;strokeWidth=2;dashed=1;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#0066CC;" vertex="1" parent="1">
+    <mxCell id="boundary" value="LMS+P — System of Interest" style="text;html=0;strokeColor=#0066CC;fillColor=#EEF4FF;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=14;fontStyle=1;fontColor=#0066CC;dashed=1;strokeWidth=2;" vertex="1" parent="1">
       <mxGeometry x="230" y="70" width="1080" height="820" as="geometry" />
     </mxCell>
 

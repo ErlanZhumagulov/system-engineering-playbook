@@ -1,150 +1,150 @@
-<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+<mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
   <root>
     <mxCell id="0" />
     <mxCell id="1" parent="0" />
 
     <!-- Title -->
-    <mxCell id="title" value="LMS+P — C4 Context Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;" vertex="1" parent="1">
-      <mxGeometry x="527" y="20" width="600" height="40" as="geometry" />
+    <mxCell id="title" value="LMS+P — C4 Context Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="450" y="20" width="600" height="40" as="geometry" />
     </mxCell>
 
-    <!-- Central System: LMS+P -->
-    <mxCell id="lms" value="&lt;b&gt;LMS+P&lt;/b&gt;&lt;br&gt;[Система]&lt;br&gt;&lt;br&gt;Платформа дистанционного&lt;br&gt;обучения с прокторингом" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;verticalAlign=middle;arcSize=8;" vertex="1" parent="1">
-      <mxGeometry x="627" y="444" width="400" height="120" as="geometry" />
+    <!-- Central System -->
+    <mxCell id="lms" value="LMS+P&#xa;[Система]&#xa;&#xa;Платформа дистанционного&#xa;обучения с прокторингом" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;arcSize=6;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="590" y="440" width="320" height="120" as="geometry" />
     </mxCell>
 
-    <!-- Users -->
-    <mxCell id="student" value="&lt;b&gt;Студент&lt;/b&gt;&lt;br&gt;[Пользователь]&lt;br&gt;&lt;br&gt;Проходит курсы и экзамены,&lt;br&gt;получает оценки" style="shape=mxgraph.archimate3.actor;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
-      <mxGeometry x="100" y="220" width="130" height="100" as="geometry" />
+    <!-- Actors (left column) -->
+    <mxCell id="student" value="Студент&#xa;[Пользователь]&#xa;&#xa;Проходит курсы и экзамены,&#xa;получает оценки" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="180" width="200" height="90" as="geometry" />
     </mxCell>
 
-    <mxCell id="teacher" value="&lt;b&gt;Преподаватель&lt;/b&gt;&lt;br&gt;[Исполнитель]&lt;br&gt;&lt;br&gt;Создаёт курсы, тесты,&lt;br&gt;проверяет работы" style="shape=mxgraph.archimate3.actor;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
-      <mxGeometry x="100" y="444" width="130" height="100" as="geometry" />
+    <mxCell id="teacher" value="Преподаватель&#xa;[Исполнитель]&#xa;&#xa;Создаёт курсы, тесты,&#xa;проверяет работы" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="400" width="200" height="90" as="geometry" />
     </mxCell>
 
-    <mxCell id="proctor" value="&lt;b&gt;Проктор&lt;/b&gt;&lt;br&gt;[Исполнитель]&lt;br&gt;&lt;br&gt;Наблюдает за сессиями,&lt;br&gt;выносит вердикты" style="shape=mxgraph.archimate3.actor;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
-      <mxGeometry x="100" y="660" width="130" height="100" as="geometry" />
+    <mxCell id="proctor" value="Проктор&#xa;[Исполнитель]&#xa;&#xa;Наблюдает за сессиями,&#xa;выносит вердикты" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="600" width="200" height="90" as="geometry" />
     </mxCell>
 
-    <mxCell id="admin" value="&lt;b&gt;Администратор&lt;/b&gt;&lt;br&gt;[Исполнитель]&lt;br&gt;&lt;br&gt;Управляет пользователями,&lt;br&gt;интеграциями, настройками" style="shape=mxgraph.archimate3.actor;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
-      <mxGeometry x="100" y="860" width="130" height="100" as="geometry" />
+    <mxCell id="admin" value="Администратор&#xa;[Исполнитель]&#xa;&#xa;Управляет пользователями,&#xa;интеграциями, настройками" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="800" width="200" height="90" as="geometry" />
     </mxCell>
 
-    <!-- External Systems -->
-    <mxCell id="idp" value="&lt;b&gt;IdP / SSO&lt;/b&gt;&lt;br&gt;[Внешняя система]&lt;br&gt;&lt;br&gt;Keycloak / Azure AD&lt;br&gt;Аутентификация OIDC/SAML" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
-      <mxGeometry x="1130" y="100" width="200" height="100" as="geometry" />
+    <!-- External Systems (right column) -->
+    <mxCell id="idp" value="IdP / SSO&#xa;[Внешняя система]&#xa;&#xa;Keycloak / Azure AD&#xa;Аутентификация OIDC/SAML" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1080" y="100" width="220" height="90" as="geometry" />
     </mxCell>
 
-    <mxCell id="webrtc" value="&lt;b&gt;WebRTC Медиасервер&lt;/b&gt;&lt;br&gt;[Внешняя система]&lt;br&gt;&lt;br&gt;Janus / MediaSoup&lt;br&gt;Видеостриминг (SFU)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
-      <mxGeometry x="1130" y="250" width="200" height="100" as="geometry" />
+    <mxCell id="webrtc" value="WebRTC Медиасервер&#xa;[Внешняя система]&#xa;&#xa;Janus / MediaSoup&#xa;Видеостриминг (SFU)" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1080" y="240" width="220" height="90" as="geometry" />
     </mxCell>
 
-    <mxCell id="s3" value="&lt;b&gt;S3-хранилище&lt;/b&gt;&lt;br&gt;[Внешняя система]&lt;br&gt;&lt;br&gt;AWS S3 / MinIO&lt;br&gt;Объектное хранилище" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
-      <mxGeometry x="1130" y="400" width="200" height="100" as="geometry" />
+    <mxCell id="s3" value="S3-хранилище&#xa;[Внешняя система]&#xa;&#xa;AWS S3 / MinIO&#xa;Видеозаписи сессий" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1080" y="380" width="220" height="90" as="geometry" />
     </mxCell>
 
-    <mxCell id="sis" value="&lt;b&gt;SIS / Деканат&lt;/b&gt;&lt;br&gt;[Внешняя система]&lt;br&gt;&lt;br&gt;REST API&lt;br&gt;Учётная система" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
-      <mxGeometry x="1130" y="550" width="200" height="100" as="geometry" />
+    <mxCell id="sis" value="SIS / Деканат&#xa;[Внешняя система]&#xa;&#xa;REST API&#xa;Учётная система" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1080" y="520" width="220" height="90" as="geometry" />
     </mxCell>
 
-    <mxCell id="smtp" value="&lt;b&gt;SMTP-сервер&lt;/b&gt;&lt;br&gt;[Внешняя система]&lt;br&gt;&lt;br&gt;Почтовая доставка" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
-      <mxGeometry x="1130" y="700" width="200" height="100" as="geometry" />
+    <mxCell id="smtp" value="SMTP-сервер&#xa;[Внешняя система]&#xa;&#xa;Почтовая доставка" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1080" y="660" width="220" height="90" as="geometry" />
     </mxCell>
 
-    <mxCell id="apm" value="&lt;b&gt;APM / Мониторинг&lt;/b&gt;&lt;br&gt;[Внешняя система]&lt;br&gt;&lt;br&gt;Prometheus / Grafana" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=8;" vertex="1" parent="1">
-      <mxGeometry x="1130" y="850" width="200" height="100" as="geometry" />
+    <mxCell id="apm" value="APM / Мониторинг&#xa;[Внешняя система]&#xa;&#xa;Prometheus / Grafana" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1080" y="800" width="220" height="90" as="geometry" />
     </mxCell>
 
-    <mxCell id="bi" value="&lt;b&gt;BI / Аналитика&lt;/b&gt;&lt;br&gt;[Опционально]&lt;br&gt;&lt;br&gt;ETL-выгрузка данных" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;arcSize=8;" vertex="1" parent="1">
-      <mxGeometry x="627" y="940" width="200" height="80" as="geometry" />
+    <mxCell id="bi" value="BI / Аналитика&#xa;[Опционально]&#xa;ETL-выгрузка данных" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="590" y="660" width="160" height="70" as="geometry" />
     </mxCell>
 
-    <mxCell id="anticheat" value="&lt;b&gt;Античит-агент&lt;/b&gt;&lt;br&gt;[Опционально]&lt;br&gt;&lt;br&gt;Lockdown browser" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;arcSize=8;" vertex="1" parent="1">
-      <mxGeometry x="827" y="940" width="200" height="80" as="geometry" />
+    <mxCell id="anticheat" value="Античит-агент&#xa;[Опционально]&#xa;Lockdown browser" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="760" y="660" width="160" height="70" as="geometry" />
     </mxCell>
 
-    <!-- Edges: Users → LMS+P -->
-    <mxCell id="e1" value="Ответы, видеопоток,&lt;br&gt;запуск сессии" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.3;fontSize=10;" edge="1" source="student" target="lms" parent="1">
+    <!-- Edges: Actors to LMS+P -->
+    <mxCell id="e1" value="ответы, видеопоток" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.25;" edge="1" source="student" target="lms" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
-    <mxCell id="e2" value="Курсы, оценки,&lt;br&gt;уведомления" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.4;dashed=1;fontSize=10;" edge="1" source="lms" target="student" parent="1">
-      <mxGeometry relative="1" as="geometry" />
-    </mxCell>
-
-    <mxCell id="e3" value="Материалы, тесты,&lt;br&gt;настройки прокторинга" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;" edge="1" source="teacher" target="lms" parent="1">
-      <mxGeometry relative="1" as="geometry" />
-    </mxCell>
-    <mxCell id="e4" value="Отчёты, очередь проверки" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;fontSize=10;" edge="1" source="lms" target="teacher" parent="1">
+    <mxCell id="e1r" value="курсы, оценки, уведомления" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;exitX=0;exitY=0.25;entryX=1;entryY=0.25;" edge="1" source="lms" target="student" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
 
-    <mxCell id="e5" value="Вердикты по нарушениям" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.7;fontSize=10;" edge="1" source="proctor" target="lms" parent="1">
+    <mxCell id="e2" value="материалы, тесты, настройки" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="teacher" target="lms" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
-    <mxCell id="e6" value="Видеопотоки, тревоги,&lt;br&gt;записи сессий" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;fontSize=10;" edge="1" source="lms" target="proctor" parent="1">
-      <mxGeometry relative="1" as="geometry" />
-    </mxCell>
-
-    <mxCell id="e7" value="Настройки пользователей,&lt;br&gt;интеграций" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.85;fontSize=10;" edge="1" source="admin" target="lms" parent="1">
-      <mxGeometry relative="1" as="geometry" />
-    </mxCell>
-    <mxCell id="e8" value="Логи, статусы,&lt;br&gt;отчёты" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;fontSize=10;" edge="1" source="lms" target="admin" parent="1">
+    <mxCell id="e2r" value="отчёты, очередь проверки" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" source="lms" target="teacher" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
 
-    <!-- Edges: LMS+P → External Systems -->
-    <mxCell id="e9" value="Auth request" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="lms" target="idp" parent="1">
+    <mxCell id="e3" value="вердикты по нарушениям" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.75;" edge="1" source="proctor" target="lms" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
-    <mxCell id="e10" value="JWT + роли" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;fontSize=10;" edge="1" source="idp" target="lms" parent="1">
-      <mxGeometry relative="1" as="geometry" />
-    </mxCell>
-
-    <mxCell id="e11" value="WebRTC сигналинг,&lt;br&gt;команды записи" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="lms" target="webrtc" parent="1">
-      <mxGeometry relative="1" as="geometry" />
-    </mxCell>
-    <mxCell id="e12" value="Статус потока, ID сессии" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;fontSize=10;" edge="1" source="webrtc" target="lms" parent="1">
+    <mxCell id="e3r" value="видеопотоки, тревоги, записи" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;exitX=0;exitY=0.75;entryX=1;entryY=0.75;" edge="1" source="lms" target="proctor" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
 
-    <mxCell id="e13" value="Видеозапись сессии" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="lms" target="s3" parent="1">
+    <mxCell id="e4" value="настройки, управление" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.9;" edge="1" source="admin" target="lms" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
-    <mxCell id="e14" value="Pre-signed URL" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;fontSize=10;" edge="1" source="s3" target="lms" parent="1">
-      <mxGeometry relative="1" as="geometry" />
-    </mxCell>
-
-    <mxCell id="e15" value="Итоговые оценки" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="lms" target="sis" parent="1">
-      <mxGeometry relative="1" as="geometry" />
-    </mxCell>
-    <mxCell id="e16" value="Данные зачисления,&lt;br&gt;учебные планы" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;fontSize=10;" edge="1" source="sis" target="lms" parent="1">
+    <mxCell id="e4r" value="логи, статусы, отчёты" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;exitX=0;exitY=0.9;entryX=1;entryY=0.9;" edge="1" source="lms" target="admin" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
 
-    <mxCell id="e17" value="Письма участникам" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="lms" target="smtp" parent="1">
+    <!-- Edges: LMS+P to External Systems -->
+    <mxCell id="e5" value="auth request" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.1;entryX=0;entryY=0.5;" edge="1" source="lms" target="idp" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e5r" value="JWT + роли" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.1;" edge="1" source="idp" target="lms" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
 
-    <mxCell id="e18" value="Метрики, трейсы, логи" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="lms" target="apm" parent="1">
+    <mxCell id="e6" value="WebRTC сигналинг" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.25;entryX=0;entryY=0.5;" edge="1" source="lms" target="webrtc" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e6r" value="статус потока, ID" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.25;" edge="1" source="webrtc" target="lms" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
 
-    <mxCell id="e19" value="Агрегированные данные (ETL)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="lms" target="bi" parent="1">
+    <mxCell id="e7" value="видеозапись сессии" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="lms" target="s3" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e7r" value="pre-signed URL" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" source="s3" target="lms" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e8" value="итоговые оценки" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.75;entryX=0;entryY=0.5;" edge="1" source="lms" target="sis" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e8r" value="данные зачисления" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.75;" edge="1" source="sis" target="lms" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e9" value="письма участникам" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.9;entryX=0;entryY=0.5;" edge="1" source="lms" target="smtp" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e10" value="метрики, трейсы, логи" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="lms" target="apm" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e11" value="агрег. данные (ETL)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="lms" target="bi" parent="1">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
 
     <!-- Legend -->
     <mxCell id="leg1" value="Пользователи / исполнители" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
-      <mxGeometry x="100" y="1040" width="220" height="30" as="geometry" />
+      <mxGeometry x="80" y="1000" width="230" height="30" as="geometry" />
     </mxCell>
     <mxCell id="leg2" value="Внешние системы (обязательные)" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
-      <mxGeometry x="340" y="1040" width="260" height="30" as="geometry" />
+      <mxGeometry x="330" y="1000" width="260" height="30" as="geometry" />
     </mxCell>
-    <mxCell id="leg3" value="Внешние системы (опциональные)" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
-      <mxGeometry x="620" y="1040" width="260" height="30" as="geometry" />
+    <mxCell id="leg3" value="Опциональные системы" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="610" y="1000" width="210" height="30" as="geometry" />
     </mxCell>
-    <mxCell id="leg4" value="Ядро системы" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
-      <mxGeometry x="900" y="1040" width="180" height="30" as="geometry" />
+    <mxCell id="leg4" value="Ядро системы LMS+P" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="840" y="1000" width="200" height="30" as="geometry" />
     </mxCell>
   </root>
 </mxGraphModel>
