@@ -502,7 +502,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: JWT-токен от IdP (Keycloak / Azure AD). Передаётся в заголовке `Authorization: Bearer <token>`.
+      description: "JWT-токен от IdP (Keycloak / Azure AD). Передаётся в заголовке Authorization: Bearer <token>."
     SISApiKey:
       type: apiKey
       in: header
