@@ -1,187 +1,410 @@
 <mxfile host="app.diagrams.net" version="26.0.14">
-  <diagram name="Page-1">
-<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
-  <root>
-    <mxCell id="0" />
-    <mxCell id="1" parent="0" />
+  <diagram name="Sequence Diagram">
+    <mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
 
-    <!-- Title -->
-    <mxCell id="title" value="Сценарий 1: Экзамен с прокторингом в реальном времени — Sequence Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
-      <mxGeometry x="100" y="20" width="1400" height="40" as="geometry" />
-    </mxCell>
+        <!-- TITLE -->
+        <mxCell id="title" value="Сценарий 1: Экзамен с прокторингом в реальном времени"
+          style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="60" y="15" width="1520" height="40" as="geometry" />
+        </mxCell>
 
-    <!-- Lifeline headers -->
-    <mxCell id="h_student" value="Студент&#xa;(Браузер)" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-      <mxGeometry x="80" y="80" width="100" height="60" as="geometry" />
-    </mxCell>
-    <mxCell id="h_gw" value="&lt;b&gt;API Gateway&lt;/b&gt;" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
-      <mxGeometry x="280" y="80" width="130" height="60" as="geometry" />
-    </mxCell>
-    <mxCell id="h_proct" value="&lt;b&gt;Proctoring&lt;br&gt;Service&lt;/b&gt;" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-      <mxGeometry x="490" y="80" width="130" height="60" as="geometry" />
-    </mxCell>
-    <mxCell id="h_assess" value="&lt;b&gt;Assessment&lt;br&gt;Service&lt;/b&gt;" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-      <mxGeometry x="700" y="80" width="130" height="60" as="geometry" />
-    </mxCell>
-    <mxCell id="h_webrtc" value="&lt;b&gt;WebRTC&lt;br&gt;Медиасервер&lt;/b&gt;" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
-      <mxGeometry x="910" y="80" width="130" height="60" as="geometry" />
-    </mxCell>
-    <mxCell id="h_proctor" value="Проктор&#xa;(Браузер)" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-      <mxGeometry x="1120" y="80" width="100" height="60" as="geometry" />
-    </mxCell>
-    <mxCell id="h_s3" value="&lt;b&gt;S3&lt;/b&gt;" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
-      <mxGeometry x="1300" y="80" width="100" height="60" as="geometry" />
-    </mxCell>
+        <!-- ═══ ACTOR HEADERS ═══ -->
+        <!-- Center X: Student=130, APIGw=310, Proctoring=500, Assessment=690, WebRTC=880, Proctor=1065, S3=1230 -->
 
-    <!-- Lifelines -->
-    <mxCell id="l_student" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1">
-      <mxGeometry x="130" y="150" relative="1" as="geometry"><Array as="points"><mxPoint x="130" y="1080"/></Array></mxGeometry>
-    </mxCell>
-    <mxCell id="l_gw" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1">
-      <mxGeometry x="345" y="140" relative="1" as="geometry"><Array as="points"><mxPoint x="345" y="1080"/></Array></mxGeometry>
-    </mxCell>
-    <mxCell id="l_proct" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1">
-      <mxGeometry x="555" y="140" relative="1" as="geometry"><Array as="points"><mxPoint x="555" y="1080"/></Array></mxGeometry>
-    </mxCell>
-    <mxCell id="l_assess" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1">
-      <mxGeometry x="765" y="140" relative="1" as="geometry"><Array as="points"><mxPoint x="765" y="1080"/></Array></mxGeometry>
-    </mxCell>
-    <mxCell id="l_webrtc" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1">
-      <mxGeometry x="975" y="140" relative="1" as="geometry"><Array as="points"><mxPoint x="975" y="1080"/></Array></mxGeometry>
-    </mxCell>
-    <mxCell id="l_proctor" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1">
-      <mxGeometry x="1170" y="150" relative="1" as="geometry"><Array as="points"><mxPoint x="1170" y="1080"/></Array></mxGeometry>
-    </mxCell>
-    <mxCell id="l_s3" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1">
-      <mxGeometry x="1350" y="140" relative="1" as="geometry"><Array as="points"><mxPoint x="1350" y="1080"/></Array></mxGeometry>
-    </mxCell>
+        <mxCell id="h_student" value="Студент&#xa;(Браузер)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="70" y="75" width="120" height="50" as="geometry" />
+        </mxCell>
 
-    <!-- Step 1: SSO Login -->
-    <mxCell id="step1_label" value="1. SSO-аутентификация" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=11;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
-      <mxGeometry x="80" y="165" width="200" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="m1" value="POST /login (redirect SSO)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="130" y="190" relative="1" as="geometry"><mxPoint x="130" y="190" as="sourcePoint"/><mxPoint x="345" y="190" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m1r" value="JWT token" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="345" y="210" relative="1" as="geometry"><mxPoint x="345" y="210" as="sourcePoint"/><mxPoint x="130" y="210" as="targetPoint"/></mxGeometry>
-    </mxCell>
+        <mxCell id="h_apigw" value="API Gateway"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="250" y="75" width="120" height="50" as="geometry" />
+        </mxCell>
 
-    <!-- Step 2: Open exam page -->
-    <mxCell id="step2_label" value="2. Открытие страницы экзамена + согласие + camera check" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=11;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
-      <mxGeometry x="80" y="235" width="400" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="m2" value="GET /exams/{id} (Bearer JWT)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="130" y="260" relative="1" as="geometry"><mxPoint x="130" y="260" as="sourcePoint"/><mxPoint x="345" y="260" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m2r" value="200 OK (exam data, policy text)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="345" y="278" relative="1" as="geometry"><mxPoint x="345" y="278" as="sourcePoint"/><mxPoint x="130" y="278" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m2b" value="[Студент читает политику и нажимает «Согласен», браузер проверяет камеру]" style="text;html=1;strokeColor=none;fillColor=#fffde7;align=left;fontSize=10;fontStyle=3;" vertex="1" parent="1">
-      <mxGeometry x="145" y="290" width="500" height="20" as="geometry" />
-    </mxCell>
+        <mxCell id="h_proct" value="Proctoring&#xa;Service"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="440" y="75" width="120" height="50" as="geometry" />
+        </mxCell>
 
-    <!-- Step 3: Start exam session -->
-    <mxCell id="step3_label" value="3. Запуск экзаменационной сессии" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=11;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
-      <mxGeometry x="80" y="320" width="300" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="m3" value="POST /exams/{id}/sessions {proctoring_mode: realtime}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="130" y="345" relative="1" as="geometry"><mxPoint x="130" y="345" as="sourcePoint"/><mxPoint x="345" y="345" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m3b" value="validate JWT + check enrollment" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="345" y="362" relative="1" as="geometry"><mxPoint x="345" y="362" as="sourcePoint"/><mxPoint x="555" y="362" as="targetPoint"/></mxGeometry>
-    </mxCell>
+        <mxCell id="h_assess" value="Assessment&#xa;Service"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="630" y="75" width="120" height="50" as="geometry" />
+        </mxCell>
 
-    <!-- Step 4: WebRTC setup -->
-    <mxCell id="step4_label" value="4. Установка WebRTC-соединения (≤30 сек)" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=11;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
-      <mxGeometry x="80" y="385" width="380" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="m4a" value="create session, request WebRTC room" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="555" y="408" relative="1" as="geometry"><mxPoint x="555" y="408" as="sourcePoint"/><mxPoint x="975" y="408" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m4b" value="room_id, ICE servers" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="975" y="425" relative="1" as="geometry"><mxPoint x="975" y="425" as="sourcePoint"/><mxPoint x="555" y="425" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m4c" value="201 Created {session_id, webrtc_offer_url}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="555" y="442" relative="1" as="geometry"><mxPoint x="555" y="442" as="sourcePoint"/><mxPoint x="130" y="442" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m4d" value="SDP offer (WebRTC)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="130" y="460" relative="1" as="geometry"><mxPoint x="130" y="460" as="sourcePoint"/><mxPoint x="975" y="460" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m4e" value="SDP answer + stream started" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="975" y="477" relative="1" as="geometry"><mxPoint x="975" y="477" as="sourcePoint"/><mxPoint x="130" y="477" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m4f" value="subscribe to student stream" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="1170" y="494" relative="1" as="geometry"><mxPoint x="1170" y="494" as="sourcePoint"/><mxPoint x="975" y="494" as="targetPoint"/></mxGeometry>
-    </mxCell>
+        <mxCell id="h_webrtc" value="WebRTC&#xa;Медиасервер"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="820" y="75" width="120" height="50" as="geometry" />
+        </mxCell>
 
-    <!-- Step 5: Answering -->
-    <mxCell id="step5_label" value="5. Студент отвечает на вопросы (автосохранение)" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=11;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
-      <mxGeometry x="80" y="515" width="400" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="m5a" value="POST /sessions/{id}/answers {question_id, answer, Idempotency-Key}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="130" y="540" relative="1" as="geometry"><mxPoint x="130" y="540" as="sourcePoint"/><mxPoint x="765" y="540" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m5b" value="200 OK {answer_id, saved_at}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="765" y="557" relative="1" as="geometry"><mxPoint x="765" y="557" as="sourcePoint"/><mxPoint x="130" y="557" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m5note" value="[повторяется для каждого вопроса]" style="text;html=1;strokeColor=none;fillColor=#fffde7;align=left;fontSize=10;fontStyle=3;" vertex="1" parent="1">
-      <mxGeometry x="145" y="565" width="300" height="20" as="geometry" />
-    </mxCell>
+        <mxCell id="h_proctor" value="Проктор&#xa;(Браузер)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="1005" y="75" width="120" height="50" as="geometry" />
+        </mxCell>
 
-    <!-- Step 6: Alert detection -->
-    <mxCell id="step6_label" value="6. Детекция тревоги (автоматически)" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=11;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
-      <mxGeometry x="80" y="598" width="300" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="m6a" value="tab_switch detected (confidence=0.95)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;strokeColor=#b85450;" edge="1" parent="1">
-      <mxGeometry x="555" y="620" relative="1" as="geometry"><mxPoint x="555" y="620" as="sourcePoint"/><mxPoint x="765" y="620" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m6b" value="publish: proctoring.alert.detected" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;dashed=1;strokeColor=#b85450;" edge="1" parent="1">
-      <mxGeometry x="555" y="638" relative="1" as="geometry"><mxPoint x="555" y="638" as="sourcePoint"/><mxPoint x="1170" y="638" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m6c" value="⚠ Push: tab_switch (≤5 сек)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;strokeColor=#b85450;" edge="1" parent="1">
-      <mxGeometry x="555" y="656" relative="1" as="geometry"><mxPoint x="555" y="656" as="sourcePoint"/><mxPoint x="1170" y="656" as="targetPoint"/></mxGeometry>
-    </mxCell>
+        <mxCell id="h_s3" value="S3"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="1190" y="75" width="80" height="50" as="geometry" />
+        </mxCell>
 
-    <!-- Step 7: Session end -->
-    <mxCell id="step7_label" value="7. Завершение сессии (timeout)" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=11;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
-      <mxGeometry x="80" y="685" width="300" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="m7a" value="[end_time reached] auto-complete session" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="555" y="708" relative="1" as="geometry"><mxPoint x="555" y="708" as="sourcePoint"/><mxPoint x="765" y="708" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m7b" value="stop recording" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="555" y="725" relative="1" as="geometry"><mxPoint x="555" y="725" as="sourcePoint"/><mxPoint x="975" y="725" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m7c" value="«Время вышло. Ответы сохранены»" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="555" y="743" relative="1" as="geometry"><mxPoint x="555" y="743" as="sourcePoint"/><mxPoint x="130" y="743" as="targetPoint"/></mxGeometry>
-    </mxCell>
+        <!-- ═══ LIFELINES ═══ -->
 
-    <!-- Step 8: Upload to S3 -->
-    <mxCell id="step8_label" value="8. Загрузка записи в S3 (≤5 мин)" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=11;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
-      <mxGeometry x="80" y="770" width="300" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="m8a" value="upload recording (MP4)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="975" y="793" relative="1" as="geometry"><mxPoint x="975" y="793" as="sourcePoint"/><mxPoint x="1350" y="793" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m8b" value="200 OK" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="1350" y="810" relative="1" as="geometry"><mxPoint x="1350" y="810" as="sourcePoint"/><mxPoint x="975" y="810" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m8c" value="session.status = completed, recording_url saved" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="975" y="828" relative="1" as="geometry"><mxPoint x="975" y="828" as="sourcePoint"/><mxPoint x="555" y="828" as="targetPoint"/></mxGeometry>
-    </mxCell>
+        <mxCell id="ll_student" style="endArrow=none;dashed=1;strokeColor=#999999;html=1;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="125" as="sourcePoint" />
+            <mxPoint x="130" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
 
-    <!-- Step 9: Auto-grading -->
-    <mxCell id="step9_label" value="9. Автооценивание закрытых вопросов" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=11;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
-      <mxGeometry x="80" y="855" width="350" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="m9a" value="exam.session.completed → auto-grade closed questions" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="555" y="878" relative="1" as="geometry"><mxPoint x="555" y="878" as="sourcePoint"/><mxPoint x="765" y="878" as="targetPoint"/></mxGeometry>
-    </mxCell>
-    <mxCell id="m9b" value="notify: результат доступен" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;dashed=1;endArrow=open;" edge="1" parent="1">
-      <mxGeometry x="765" y="896" relative="1" as="geometry"><mxPoint x="765" y="896" as="sourcePoint"/><mxPoint x="130" y="896" as="targetPoint"/></mxGeometry>
-    </mxCell>
-  </root>
-</mxGraphModel>
+        <mxCell id="ll_apigw" style="endArrow=none;dashed=1;strokeColor=#999999;html=1;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="125" as="sourcePoint" />
+            <mxPoint x="310" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="ll_proct" style="endArrow=none;dashed=1;strokeColor=#999999;html=1;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="125" as="sourcePoint" />
+            <mxPoint x="500" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="ll_assess" style="endArrow=none;dashed=1;strokeColor=#999999;html=1;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="125" as="sourcePoint" />
+            <mxPoint x="690" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="ll_webrtc" style="endArrow=none;dashed=1;strokeColor=#999999;html=1;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="125" as="sourcePoint" />
+            <mxPoint x="880" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="ll_proctor" style="endArrow=none;dashed=1;strokeColor=#999999;html=1;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1065" y="125" as="sourcePoint" />
+            <mxPoint x="1065" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="ll_s3" style="endArrow=none;dashed=1;strokeColor=#999999;html=1;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1230" y="125" as="sourcePoint" />
+            <mxPoint x="1230" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══ SEPARATOR LINE ═══ -->
+        <mxCell id="sep" style="endArrow=none;strokeColor=#cccccc;html=1;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="60" y="145" as="sourcePoint" />
+            <mxPoint x="1290" y="145" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══ MESSAGES ═══ -->
+        <!-- Step gap = 55px, start at y=180 -->
+
+        <!-- 1. SSO login (y=180) -->
+        <mxCell id="lbl1" value="1. Вход через SSO (за 15 мин до начала)"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="160" width="320" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" value="POST /auth (SSO redirect)"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="183" as="sourcePoint" />
+            <mxPoint x="310" y="183" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1r" value="JWT токен"
+          style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="200" as="sourcePoint" />
+            <mxPoint x="130" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 2. Open exam page (y=235) -->
+        <mxCell id="lbl2" value="2. Открытие страницы экзамена"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="218" width="280" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m2" value="GET /exams/{id}"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="240" as="sourcePoint" />
+            <mxPoint x="310" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2r" value="расписание OK, политика прокторинга"
+          style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="258" as="sourcePoint" />
+            <mxPoint x="130" y="258" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 3. Consent + camera check (y=290) -->
+        <mxCell id="lbl3" value="3. Согласие + camera check"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="273" width="250" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m3" value="POST /session (camera check)"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="295" as="sourcePoint" />
+            <mxPoint x="500" y="295" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3r" value="camera OK"
+          style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="313" as="sourcePoint" />
+            <mxPoint x="130" y="313" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 4. Start exam → WebRTC (y=350) -->
+        <mxCell id="lbl4" value="4. Начало экзамена — запрос WebRTC-соединения"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="330" width="380" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m4" value="POST /session/start"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="352" as="sourcePoint" />
+            <mxPoint x="500" y="352" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4b" value="initWebRTC()"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="372" as="sourcePoint" />
+            <mxPoint x="880" y="372" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4c" value="offer SDP"
+          style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="390" as="sourcePoint" />
+            <mxPoint x="500" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 5. Connection established (y=425) -->
+        <mxCell id="lbl5" value="5. Соединение установлено (≤30 сек)"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="407" width="320" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m5" value="webrtc_offer_url → «Запись ведётся»"
+          style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="428" as="sourcePoint" />
+            <mxPoint x="130" y="428" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5b" value="RTCPeerConnection (видео + аудио)"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="447" as="sourcePoint" />
+            <mxPoint x="880" y="447" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 6. Proctor sees stream (y=490) -->
+        <mxCell id="lbl6" value="6. Проктор видит видеопоток"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="472" width="280" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m6" value="видеопоток студента"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="493" as="sourcePoint" />
+            <mxPoint x="1065" y="493" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 7. Answers (y=535) -->
+        <mxCell id="lbl7" value="7. Студент отвечает на вопросы"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="515" width="280" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m7" value="POST /answer (вопрос + timestamp) ×N"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="537" as="sourcePoint" />
+            <mxPoint x="690" y="537" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7r" value="202 Accepted"
+          style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="555" as="sourcePoint" />
+            <mxPoint x="130" y="555" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 8–9. Proctoring events + push alert (y=590) -->
+        <mxCell id="lbl8" value="8–9. Детекция событий и push-уведомление проктору"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="573" width="380" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="note_detect" value="[detect: face_absent / tab_switch&#xa;/ foreign_audio]"
+          style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=left;fontSize=10;fontStyle=3;"
+          vertex="1" parent="1">
+          <mxGeometry x="515" y="590" width="195" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="m8" value="push alert (confidence &gt; 0.8, ≤5 сек)"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="637" as="sourcePoint" />
+            <mxPoint x="1065" y="637" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 10. Exam ends (y=680) -->
+        <mxCell id="lbl10" value="10. Истечение времени — блокировка ответов"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="660" width="360" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m10" value="таймер истёк, сессия завершена"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="682" as="sourcePoint" />
+            <mxPoint x="130" y="682" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 11. Save to S3 + calc result (y=720) -->
+        <mxCell id="lbl11" value="11. Сохранение записи и расчёт результата"
+          style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=left;fontSize=10;fontStyle=2;fontColor=#555555;"
+          vertex="1" parent="1">
+          <mxGeometry x="68" y="702" width="360" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m11a" value="upload recording"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="724" as="sourcePoint" />
+            <mxPoint x="1230" y="724" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11b" value="S3: 200 OK (recording saved)"
+          style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1230" y="743" as="sourcePoint" />
+            <mxPoint x="500" y="743" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11c" value="calculate result (авто-вопросы)"
+          style="endArrow=block;endFill=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="770" as="sourcePoint" />
+            <mxPoint x="690" y="770" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="740" y="770" />
+              <mxPoint x="740" y="795" />
+              <mxPoint x="690" y="795" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11d" value="результат рассчитан, студент уведомлён"
+          style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;"
+          edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="820" as="sourcePoint" />
+            <mxPoint x="130" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══ BOTTOM HEADERS (repeat) ═══ -->
+        <mxCell id="h_student_b" value="Студент&#xa;(Браузер)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="70" y="865" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="h_apigw_b" value="API Gateway"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="250" y="865" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="h_proct_b" value="Proctoring&#xa;Service"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="440" y="865" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="h_assess_b" value="Assessment&#xa;Service"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="630" y="865" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="h_webrtc_b" value="WebRTC&#xa;Медиасервер"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="820" y="865" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="h_proctor_b" value="Проктор&#xa;(Браузер)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="1005" y="865" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="h_s3_b" value="S3"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="1190" y="865" width="80" height="50" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
   </diagram>
 </mxfile>
