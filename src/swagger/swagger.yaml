@@ -1,0 +1,810 @@
+openapi: 3.0.3
+info:
+  title: LMS+P REST API
+  version: 1.0.0
+  description: |
+    **LMS+P** — платформа дистанционного обучения с интегрированным прокторингом.
+
+    Документ охватывает все REST-контракты платформы:
+    - Управление экзаменационными сессиями
+    - Приём ответов студентов (идемпотентный)
+    - Получение pre-signed URL видеозаписи
+    - Передача итоговых оценок в SIS/Деканат
+
+    Async-события RabbitMQ (`proctoring.alert.detected`, `proctoring.verdict.submitted`)
+    описаны в разделе **Async Events** как информационные схемы.
+
+    **Аутентификация:** Bearer JWT (Keycloak / Azure AD, OIDC).
+    **Версионирование:** Breaking changes — переход на `/api/v2/...`, v1 поддерживается 6 месяцев.
+
+servers:
+  - url: https://api.lmsp.example.com/api/v1
+    description: Production
+  - url: https://staging.lmsp.example.com/api/v1
+    description: Staging
+
+tags:
+  - name: Сессии
+    description: Создание и управление экзаменационными сессиями
+  - name: Ответы
+    description: Приём и сохранение ответов студентов (идемпотентный endpoint)
+  - name: Записи
+    description: Получение pre-signed URL видеозаписи прокторинга
+  - name: Оценки
+    description: Передача итоговых оценок во внешнюю систему (SIS / Деканат)
+  - name: Async Events
+    description: |
+      **Информационный раздел.** Эти события передаются через RabbitMQ, не через HTTP.
+      Документация схем приведена для справки разработчиков потребителей.
+
+security:
+  - BearerAuth: []
+
+paths:
+
+  /exams/{exam_id}/sessions:
+    post:
+      tags: [Сессии]
+      summary: Запуск экзаменационной сессии
+      operationId: createExamSession
+      description: |
+        Создаёт экзаменационную сессию для текущего студента.
+        При `proctoring_mode=realtime` — инициализирует WebRTC-комнату на медиасервере.
+        Повторный вызов при активной сессии возвращает **409**.
+        При недоступном медиасервере — возвращает **503** с предложением переключиться в `async`.
+      parameters:
+        - in: path
+          name: exam_id
+          required: true
+          description: UUID экзамена
+          schema:
+            type: string
+            format: uuid
+            example: "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionRequest'
+            examples:
+              realtime:
+                summary: Запуск с прокторингом в реальном времени
+                value:
+                  proctoring_mode: realtime
+                  device_info:
+                    browser: "Chrome/120"
+                    os: "macOS 14"
+              async_mode:
+                summary: Запуск с асинхронным прокторингом
+                value:
+                  proctoring_mode: async
+                  device_info:
+                    browser: "Firefox/121"
+                    os: "Windows 11"
+      responses:
+        '201':
+          description: Сессия создана
+          headers:
+            Location:
+              description: URL созданного ресурса
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionCreatedResponse'
+              example:
+                session_id: "550e8400-e29b-41d4-a716-446655440000"
+                webrtc_offer_url: "wss://media.lmsp.example.com/room/abc123"
+                start_time: "2024-05-23T10:00:00Z"
+                duration_minutes: 90
+        '400':
+          description: Неверный режим прокторинга
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: invalid_proctoring_mode
+                code: 400
+                details: "allowed: none, async, realtime"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Студент не зачислен на курс
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: not_enrolled
+                code: 403
+        '409':
+          description: Активная сессия уже существует
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionConflictResponse'
+              example:
+                error: session_already_active
+                session_id: "550e8400-e29b-41d4-a716-446655440000"
+                code: 409
+        '423':
+          description: Экзамен вне временного окна
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: exam_not_available
+                available_from: "2024-05-23T09:00:00Z"
+                code: 423
+        '503':
+          description: Медиасервер недоступен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: media_server_unavailable
+                suggestion: async_mode
+                code: 503
+
+  /sessions/{session_id}/answers:
+    post:
+      tags: [Ответы]
+      summary: Сохранение ответа студента
+      operationId: saveAnswer
+      description: |
+        Сохраняет ответ студента на один вопрос. **Идемпотентный** — клиент обязан передавать
+        `Idempotency-Key` (UUID). Повторный запрос с тем же ключом возвращает **409** с исходным `answer_id`.
+
+        Поддерживаемые типы ответов:
+        - **Одиночный/множественный выбор** — `answer.selected_ids`
+        - **Открытый текст** — `answer.text` (до 10 000 символов)
+        - **Сопоставление** — `answer.pairs`
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          description: UUID экзаменационной сессии
+          schema:
+            type: string
+            format: uuid
+            example: "550e8400-e29b-41d4-a716-446655440000"
+        - in: header
+          name: Idempotency-Key
+          required: true
+          description: UUID, генерируется клиентом. Хранится в Redis 24 ч.
+          schema:
+            type: string
+            format: uuid
+            example: "7f3d2e1a-4b5c-6d7e-8f9a-0b1c2d3e4f5a"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveAnswerRequest'
+            examples:
+              single_choice:
+                summary: Одиночный выбор
+                value:
+                  question_id: "550e8400-e29b-41d4-a716-446655440000"
+                  answer:
+                    selected_ids: ["b1a2c3d4-e5f6-7890-abcd-ef1234567890"]
+                  client_timestamp: 1716451200000
+              open_text:
+                summary: Открытый ответ
+                value:
+                  question_id: "3f2504e0-4f89-11d3-9a0c-0305e82c3301"
+                  answer:
+                    text: "Ответ студента на открытый вопрос..."
+                  client_timestamp: 1716451260000
+              matching:
+                summary: Сопоставление
+                value:
+                  question_id: "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+                  answer:
+                    pairs:
+                      - left_id: "aaa00001-0000-0000-0000-000000000001"
+                        right_id: "bbb00001-0000-0000-0000-000000000001"
+                      - left_id: "aaa00002-0000-0000-0000-000000000002"
+                        right_id: "bbb00002-0000-0000-0000-000000000002"
+                  client_timestamp: 1716451280000
+      responses:
+        '200':
+          description: Ответ сохранён
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveAnswerResponse'
+              example:
+                answer_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+                saved_at: "2024-05-23T10:15:00Z"
+                question_id: "550e8400-e29b-41d4-a716-446655440000"
+        '400':
+          description: Неверный формат ответа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: invalid_answer_format
+                code: 400
+                details: "text answer exceeds 10000 chars"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Сессия не принадлежит студенту
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: forbidden
+                code: 403
+        '409':
+          description: Idempotency-Key уже использован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdempotencyConflictResponse'
+              example:
+                answer_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+                status: existing
+                code: 409
+        '410':
+          description: Сессия завершена (время вышло)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: session_expired
+                completed_at: "2024-05-23T11:30:00Z"
+                code: 410
+        '422':
+          description: question_id не принадлежит данной сессии
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: question_not_in_session
+                code: 422
+
+  /sessions/{session_id}/recording:
+    get:
+      tags: [Записи]
+      summary: Получение pre-signed URL видеозаписи
+      operationId: getRecordingUrl
+      description: |
+        Генерирует pre-signed URL для доступа к видеозаписи экзаменационной сессии из S3.
+        Доступно только для ролей **Проктор** и **Администратор**.
+
+        Каждый вызов генерирует **новый** URL с TTL 4 часа (14 400 сек).
+        Все обращения фиксируются в `access_audit_log`.
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          description: UUID экзаменационной сессии
+          schema:
+            type: string
+            format: uuid
+            example: "550e8400-e29b-41d4-a716-446655440000"
+      responses:
+        '200':
+          description: Pre-signed URL сгенерирован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordingUrlResponse'
+              example:
+                url: "https://s3.amazonaws.com/lmsp-recordings/session-abc123.mp4?X-Amz-Signature=..."
+                expires_at: "2024-05-23T18:00:00Z"
+                ttl_seconds: 14400
+        '403':
+          description: Недостаточно прав (роль Студент)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: forbidden
+                code: 403
+        '404':
+          description: Запись не найдена в S3
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: recording_not_found
+                code: 404
+        '503':
+          description: S3 временно недоступен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: storage_unavailable
+                code: 503
+
+  /grades:
+    post:
+      tags: [Оценки]
+      summary: Передача итоговой оценки в SIS
+      operationId: submitGrade
+      description: |
+        Отправляет итоговую оценку студента во внешнюю систему SIS (Деканат).
+        Вызывается **SIS Sync Service**, не клиентами напрямую.
+
+        **Аутентификация:** API-ключ (`X-LMS-API-Key`), а не Bearer JWT.
+        **Retry-стратегия:** 1 / 5 / 15 / 60 мин; после 5 попыток — алерт администратору.
+        **Идемпотентность:** повторная передача `student_id`+`course_id` возвращает 409.
+      security:
+        - SISApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitGradeRequest'
+            example:
+              student_id: "3f2504e0-4f89-11d3-9a0c-0305e82c3301"
+              course_id: "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+              grade: 87.50
+              grade_scale: "100"
+              grade_date: "2024-05-23"
+              status: passed
+              lms_submission_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+      responses:
+        '200':
+          description: Оценка принята SIS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GradeSubmittedResponse'
+              example:
+                sis_record_id: "SIS-2024-78901"
+                accepted_at: "2024-05-23T15:00:00Z"
+        '404':
+          description: student_id или course_id не найден в SIS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: student_not_found
+                code: 404
+        '409':
+          description: Оценка уже существует (дубликат)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: grade_already_exists
+                code: 409
+        '422':
+          description: Нарушение бизнес-правил SIS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: business_rule_violation
+                code: 422
+                details: "course_id does not match student's academic plan"
+        '500':
+          description: Внутренняя ошибка SIS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: SIS временно недоступен — SIS Sync Service повторит попытку
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /internal/events/proctoring-alert:
+    post:
+      tags: [Async Events]
+      summary: "[RabbitMQ] proctoring.alert.detected"
+      operationId: proctoringAlertEvent
+      description: |
+        **Это не HTTP-endpoint.** Событие публикуется Proctoring Service в RabbitMQ
+        (fanout exchange `proctoring_events`). Документация приведена для описания схемы.
+
+        **Потребители:** Notification Service (push проктору ≤5 сек), Proctoring DB Writer.
+        **Идемпотентность:** потребители используют `event_id` для дедупликации.
+        **DLQ:** при 3 неудачных попытках — Dead Letter Queue + алерт администратору.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProctoringAlertEvent'
+            example:
+              event_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+              event_version: "v1"
+              session_id: "550e8400-e29b-41d4-a716-446655440000"
+              student_id: "3f2504e0-4f89-11d3-9a0c-0305e82c3301"
+              exam_id: "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+              event_type: tab_switch
+              timestamp: 1716451320000
+              confidence_score: 0.95
+              duration_ms: 4200
+      responses:
+        '200':
+          description: Схема события (документационный ответ)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: accepted
+
+  /internal/events/proctoring-verdict:
+    post:
+      tags: [Async Events]
+      summary: "[RabbitMQ] proctoring.verdict.submitted"
+      operationId: proctoringVerdictEvent
+      description: |
+        **Это не HTTP-endpoint.** Событие публикуется Verdict Handler в RabbitMQ
+        (direct exchange `proctoring_verdicts`). Документация приведена для описания схемы.
+
+        **Потребители:** Assessment Service (обновляет статус результата), Notification Service.
+        **Retry:** до 3 попыток с задержкой 30 сек, затем DLQ.
+        **Идемпотентность:** Assessment Service использует `session_id`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProctoringVerdictEvent'
+            example:
+              event_id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+              event_version: "v1"
+              session_id: "550e8400-e29b-41d4-a716-446655440000"
+              proctor_id: "c0ffee00-dead-beef-cafe-000000000001"
+              overall_verdict: approved
+              violation_events:
+                - event_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+                  event_type: tab_switch
+                  timestamp: 1716451320000
+              comment: "Нарушение незначительное, допустить к результатам."
+              verdict_timestamp: 1716455000000
+      responses:
+        '200':
+          description: Схема события (документационный ответ)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: accepted
+
+components:
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT-токен от IdP (Keycloak / Azure AD). Передаётся в заголовке `Authorization: Bearer <token>`.
+    SISApiKey:
+      type: apiKey
+      in: header
+      name: X-LMS-API-Key
+      description: API-ключ для аутентификации SIS Sync Service в системе SIS.
+
+  responses:
+    Unauthorized:
+      description: Токен отсутствует, истёк или недействителен
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: unauthorized
+            code: 401
+
+  schemas:
+
+    CreateSessionRequest:
+      type: object
+      required: [proctoring_mode]
+      properties:
+        proctoring_mode:
+          type: string
+          enum: [none, async, realtime]
+          description: Режим прокторинга для данной сессии
+        device_info:
+          type: object
+          description: Информация об устройстве студента (опционально)
+          properties:
+            browser:
+              type: string
+              example: "Chrome/120"
+            os:
+              type: string
+              example: "macOS 14"
+
+    SessionCreatedResponse:
+      type: object
+      properties:
+        session_id:
+          type: string
+          format: uuid
+          description: UUID созданной сессии
+        webrtc_offer_url:
+          type: string
+          description: WebSocket URL для SDP-обмена (только при realtime)
+          example: "wss://media.lmsp.example.com/room/abc123"
+        start_time:
+          type: string
+          format: date-time
+          description: Время начала сессии (ISO 8601)
+        duration_minutes:
+          type: integer
+          description: Длительность экзамена в минутах
+          example: 90
+
+    SessionConflictResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: session_already_active
+        session_id:
+          type: string
+          format: uuid
+        code:
+          type: integer
+          example: 409
+
+    SaveAnswerRequest:
+      type: object
+      required: [question_id, answer, client_timestamp]
+      properties:
+        question_id:
+          type: string
+          format: uuid
+          description: UUID вопроса
+        answer:
+          $ref: '#/components/schemas/AnswerBody'
+        client_timestamp:
+          type: integer
+          format: int64
+          description: Unix timestamp на устройстве студента (мс)
+          example: 1716451200000
+
+    AnswerBody:
+      type: object
+      description: |
+        Тело ответа — зависит от типа вопроса.
+        Ровно одно из полей должно быть заполнено.
+      properties:
+        selected_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: UUID выбранных вариантов (одиночный / множественный выбор)
+        text:
+          type: string
+          maxLength: 10000
+          description: Текстовый ответ на открытый вопрос
+        pairs:
+          type: array
+          description: Пары для вопроса-сопоставления
+          items:
+            type: object
+            required: [left_id, right_id]
+            properties:
+              left_id:
+                type: string
+                format: uuid
+              right_id:
+                type: string
+                format: uuid
+
+    SaveAnswerResponse:
+      type: object
+      properties:
+        answer_id:
+          type: string
+          format: uuid
+        saved_at:
+          type: string
+          format: date-time
+        question_id:
+          type: string
+          format: uuid
+
+    IdempotencyConflictResponse:
+      type: object
+      properties:
+        answer_id:
+          type: string
+          format: uuid
+          description: answer_id из исходного запроса
+        status:
+          type: string
+          enum: [existing]
+        code:
+          type: integer
+          example: 409
+
+    RecordingUrlResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Pre-signed URL для доступа к видеозаписи
+          example: "https://s3.amazonaws.com/lmsp-recordings/session-abc123.mp4?..."
+        expires_at:
+          type: string
+          format: date-time
+          description: Время истечения URL (ISO 8601)
+        ttl_seconds:
+          type: integer
+          description: TTL URL в секундах
+          example: 14400
+
+    SubmitGradeRequest:
+      type: object
+      required: [student_id, course_id, grade, grade_scale, grade_date, status, lms_submission_id]
+      properties:
+        student_id:
+          type: string
+          format: uuid
+          description: UUID студента в SIS
+        course_id:
+          type: string
+          format: uuid
+          description: UUID курса в SIS
+        grade:
+          type: number
+          format: double
+          description: Итоговая оценка
+          example: 87.50
+        grade_scale:
+          type: string
+          enum: ["100", "5", "pass_fail"]
+          description: Шкала оценивания
+        grade_date:
+          type: string
+          format: date
+          description: Дата выставления оценки (YYYY-MM-DD)
+          example: "2024-05-23"
+        status:
+          type: string
+          enum: [passed, failed, absent]
+          description: Итоговый статус студента
+        lms_submission_id:
+          type: string
+          format: uuid
+          description: UUID передачи из LMS+P (для идемпотентности)
+
+    GradeSubmittedResponse:
+      type: object
+      properties:
+        sis_record_id:
+          type: string
+          description: Идентификатор записи в SIS
+          example: "SIS-2024-78901"
+        accepted_at:
+          type: string
+          format: date-time
+
+    ProctoringAlertEvent:
+      type: object
+      required: [event_id, event_version, session_id, student_id, exam_id, event_type, timestamp, confidence_score]
+      properties:
+        event_id:
+          type: string
+          format: uuid
+          description: UUID события (для дедупликации у потребителей)
+        event_version:
+          type: string
+          enum: ["v1"]
+        session_id:
+          type: string
+          format: uuid
+        student_id:
+          type: string
+          format: uuid
+        exam_id:
+          type: string
+          format: uuid
+        event_type:
+          type: string
+          enum: [face_absent, multiple_faces, tab_switch, foreign_audio, screen_change]
+          description: Тип детектированного события
+        timestamp:
+          type: integer
+          format: int64
+          description: Unix timestamp события (мс)
+        confidence_score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Уверенность модели. Push отправляется при score > 0.8.
+        frame_url:
+          type: string
+          description: Pre-signed URL скриншота (для face-событий), TTL 1 ч (опционально)
+        duration_ms:
+          type: integer
+          description: Длительность события в мс (для tab_switch, face_absent)
+
+    ProctoringVerdictEvent:
+      type: object
+      required: [event_id, event_version, session_id, proctor_id, overall_verdict, verdict_timestamp]
+      properties:
+        event_id:
+          type: string
+          format: uuid
+        event_version:
+          type: string
+          enum: ["v1"]
+        session_id:
+          type: string
+          format: uuid
+        proctor_id:
+          type: string
+          format: uuid
+        overall_verdict:
+          type: string
+          enum: [approved, rejected, escalated]
+          description: |
+            - `approved` — студент допущен к результатам
+            - `rejected` — результат аннулирован
+            - `escalated` — передано администратору
+        violation_events:
+          type: array
+          description: Список подтверждённых нарушений (опционально)
+          items:
+            type: object
+            properties:
+              event_id:
+                type: string
+                format: uuid
+              event_type:
+                type: string
+              timestamp:
+                type: integer
+                format: int64
+        comment:
+          type: string
+          maxLength: 2000
+          description: Комментарий проктора
+        verdict_timestamp:
+          type: integer
+          format: int64
+          description: Unix timestamp вынесения вердикта (мс)
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Машиночитаемый код ошибки
+        code:
+          type: integer
+          description: HTTP-код ответа
+        details:
+          type: string
+          description: Дополнительные детали ошибки (опционально)
