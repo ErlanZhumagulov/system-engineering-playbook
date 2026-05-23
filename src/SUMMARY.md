@@ -10,3 +10,4 @@
 - [Интерфейсы (ICD-lite)](./icd.md)
 - [Риски](./risks.md)
 - [Verification & Validation](./vv.md)
+- [API (Swagger UI)](./swagger.md)
